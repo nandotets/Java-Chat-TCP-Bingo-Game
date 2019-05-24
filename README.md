@@ -12,3 +12,5 @@ O jogo foi desnvolvido em JAVA para a diciplina de sistemas distribuidos.
 - 128GB de RAM
 - Gentoo Linux
 - Espaço minimo em disco 250GB
+- Nível de paciência +9000
+- QI +9000
