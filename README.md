@@ -1,6 +1,6 @@
-# Bingo
+# BINGOOOO!
 
-Eu não ganhei é só o nome do jogo.
+Eu não ganhei... É só o nome do JOGO.
 
 
 ## Regras do JOGO
