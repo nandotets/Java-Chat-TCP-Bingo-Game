@@ -58,7 +58,8 @@ public class Client extends javax.swing.JFrame {
 
             jsonobjSend.put("COD", "login");
             jsonobjSend.put("NOME", "" + username);
-            bufWr.write(jsonobjSend.toString()+"\n");
+            //System.out.println(jsonobjSend.toString()+"\r\n");
+            bufWr.write(jsonobjSend.toString()+"\r\n");
             bufWr.flush();
 
         } catch (IOException ioex) {
@@ -73,12 +74,13 @@ public class Client extends javax.swing.JFrame {
             jsonobjSend.put("COD", "chat");
             jsonobjSend.put("STATUS", "broad");
             jsonobjSend.put("MSG", msg);
-            bufWr.write(jsonobjSend.toString()+"\n");
+            bufWr.write(jsonobjSend.toString()+"\r\n");
             chatArea.append("→ " + msg + "\r\n");
             setScrollMaximum();
             bufWr.flush();
         } catch (IOException ioex) {
-            System.err.println("Error Send Msg: " + ioex);
+            JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //System.err.println("Error Send Msg: " + ioex);
         }
     }
 
@@ -145,7 +147,8 @@ public class Client extends javax.swing.JFrame {
                 }
             }
         } catch (IOException ioex) {
-            System.err.println("Error Receive Msg: " + ioex);
+            JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //System.err.println("Error Receive Msg: " + ioex);
         }
     }
 
@@ -155,14 +158,16 @@ public class Client extends javax.swing.JFrame {
             try {
                 jsonobjSend.put("COD", "logout");
                 jsonobjSend.put("NOME", "" + this.username);
-                bufWr.write(jsonobjSend.toString()+"\n");
+                System.out.println(jsonobjSend.toString()+"\r\n");
+                bufWr.write(jsonobjSend.toString()+"\r\n");
                 bufWr.close();
                 outWr.close();
                 out.close();
                 connection.close();
                 System.exit(1);
             } catch (Exception ioex) {
-                System.err.println("Error to exit: " + ioex);
+                JOptionPane.showMessageDialog(null, "Error to exit...", "ERROR", JOptionPane.ERROR_MESSAGE);
+                //System.err.println("Error to exit...");
                 System.exit(1);
             }
         }

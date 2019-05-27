@@ -25,7 +25,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import org.json.JSONArray;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -73,20 +73,20 @@ public class Server extends Thread {
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
             clients.add(buffWr);
-            msg = bufRead.readLine();
-            jsonobjReceive = (JSONObject) JSONValue.parse(msg);
-            username = (String) jsonobjReceive.get("NOME");
             while (msg != null) {
-                jsonobjReceive = (JSONObject) JSONValue.parse(bufRead.readLine());
+                msg = bufRead.readLine();
+                jsonobjReceive = (JSONObject) JSONValue.parse(msg);
+                System.out.println(msg);
                 msg = (String) jsonobjReceive.get("COD");
                 switch (msg) {
                     case "login":
                         //LOGIN
+                        username = (String) jsonobjReceive.get("NOME");
                         listaClientes.add(username + " (" + clientIP + ")");
                         jsonobjSend.put("COD", "rlogin");
                         jsonobjSend.put("STATUS", "sucesso");
                         jsonobjSend.put("MSG", "Seja bem-vindo ao CHATeTs " + username + "!");
-                        buffWr.write(jsonobjSend.toString());
+                        buffWr.write(jsonobjSend.toString()+"\r\n");
                         ta.append("** " + username + "(" + clientIP + ")" + " connected!\r\n");
                         setScrollMaximum();
                         broadcastMsg(listaClientes, buffWr, jsonobjSend);
@@ -97,7 +97,7 @@ public class Server extends Thread {
                         jsonobjSend.put("COD", "rlogout");
                         jsonobjSend.put("STATUS", "sucesso");
                         jsonobjSend.put("MSG", username + "se desconectou do CHATeTs...");
-                        buffWr.write(jsonobjSend.toString());
+                        buffWr.write(jsonobjSend.toString()+"\r\n");
                         clients.remove(buffWr);
                         ta.append("** " + username + "(" + clientIP + ")" + " disconnected!\r\n");
                         setScrollMaximum();
@@ -110,7 +110,7 @@ public class Server extends Thread {
                             case "uni":
                                 msg = (String) jsonobjReceive.get("MSG");
                                 username = (String) jsonobjReceive.get("NOME");
-                                broadcastMsg(listaClientes, buffWr, jsonobjSend);
+                                //broadcastMsg(listaClientes, buffWr, jsonobjSend);
                                 break;
                             case "broad":
                                 msg = (String) jsonobjReceive.get("MSG");
@@ -149,11 +149,11 @@ public class Server extends Thread {
                     if (msg.equals("lista")) {
                         for (String list : listaClientes) {
                             jsonObj.put("NOME", list);
-                            jsonArr.put(jsonObj);
+                            jsonArr.add(jsonObj);
                         }
                         jsonSend.put("LISTACLIENTE", jsonArr);
                     }
-                    aux.write(jsonSend.toString());
+                    aux.write(jsonSend.toString()+"\r\n");
                     aux.flush();
                 }
             }
