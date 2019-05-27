@@ -15,9 +15,13 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.Socket;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
 import javax.swing.JTextField;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 /**
  *
@@ -31,6 +35,9 @@ public class Client extends javax.swing.JFrame {
     private BufferedWriter bufWr;
     private String host, username;
     private int port = 0;
+    private static JSONObject jsonobjSend = new JSONObject();
+    private static JSONObject jsonobjReceive = new JSONObject();
+    private ArrayList<String> listaClientes = new ArrayList<>();
 
     /**
      * Creates new form Client
@@ -49,7 +56,9 @@ public class Client extends javax.swing.JFrame {
             outWr = new OutputStreamWriter(out);
             bufWr = new BufferedWriter(outWr);
 
-            bufWr.write(username + "\r\n");
+            jsonobjSend.put("COD", "login");
+            jsonobjSend.put("NOME", "" + username);
+            bufWr.write(jsonobjSend.toString()+"\n");
             bufWr.flush();
 
         } catch (IOException ioex) {
@@ -57,14 +66,15 @@ public class Client extends javax.swing.JFrame {
             configServer();
             connectServer();
         }
-        chatArea.append("• Welcome " + username + "! •\r\n");
-        setScrollMaximum();
     }
 
     public void sendMsg(String msg) {
         try {
-            bufWr.write(msg + "\r\n");
-            chatArea.append("→ " + inTXT.getText() + "\r\n");
+            jsonobjSend.put("COD", "chat");
+            jsonobjSend.put("STATUS", "broad");
+            jsonobjSend.put("MSG", msg);
+            bufWr.write(jsonobjSend.toString()+"\n");
+            chatArea.append("→ " + msg + "\r\n");
             setScrollMaximum();
             bufWr.flush();
         } catch (IOException ioex) {
@@ -77,11 +87,60 @@ public class Client extends javax.swing.JFrame {
             InputStream in = connection.getInputStream();
             InputStreamReader inRd = new InputStreamReader(in);
             BufferedReader bufRd = new BufferedReader(inRd);
-            String msg;
             while (true) {
                 if (bufRd.ready()) {
-                    msg = bufRd.readLine();
-                    chatArea.append(msg + "\r\n");
+                    jsonobjReceive = (JSONObject) JSONValue.parse(bufRd.readLine());
+                    String msg = (String) jsonobjReceive.get("COD");
+                    String user = (String) jsonobjReceive.get("NOME");
+                    switch (msg) {
+                        case "rlogin":
+                            //LOGIN
+                            msg = (String) jsonobjReceive.get("STATUS");
+                            switch (msg) {
+                                case "sucesso":
+                                    msg = (String) jsonobjReceive.get("MSG");
+                                    break;
+                                case "falha":
+                                    msg = (String) jsonobjReceive.get("MSG");
+                                    break;
+                            }
+                            break;
+                        case "rlogout":
+                            //LOGOUT
+                            msg = (String) jsonobjReceive.get("STATUS");
+                            switch (msg) {
+                                case "sucesso":
+                                    msg = (String) jsonobjReceive.get("MSG");
+                                    break;
+                                case "falha":
+                                    msg = (String) jsonobjReceive.get("MSG");
+                                    break;
+                            }
+                            break;
+                        case "chat":
+                            //MSG DE CHAT
+                            msg = (String) jsonobjReceive.get("STATUS");
+                            switch (msg) {
+                                case "uni":
+                                    //UNICAST
+                                    msg = (String) jsonobjReceive.get("MSG");
+                                    break;
+                                case "broad":
+                                    //BROADCAST
+                                    msg = (String) jsonobjReceive.get("MSG");
+                                    break;
+                            }
+                            break;
+                        case "lista":
+                            //LISTA DE ONLINE
+                            JSONArray lista = (JSONArray) jsonobjReceive.get("LISTACLIENTE");
+                            for (int i = 0; i < lista.size(); i++) {
+                                JSONObject o = (JSONObject) lista.get(i);
+                                listaClientes.add((String) o.get("NOME"));
+                            }
+                            break;
+                    }
+                    chatArea.append(user + ": " + msg + "\r\n");
                     setScrollMaximum();
                 }
             }
@@ -94,7 +153,9 @@ public class Client extends javax.swing.JFrame {
         int confirm = JOptionPane.showConfirmDialog(null, "Confirm to exit?", "EXIT", JOptionPane.YES_NO_OPTION);
         if (confirm == 0) {
             try {
-                bufWr.write("EXIT\r\n");
+                jsonobjSend.put("COD", "logout");
+                jsonobjSend.put("NOME", "" + this.username);
+                bufWr.write(jsonobjSend.toString()+"\n");
                 bufWr.close();
                 outWr.close();
                 out.close();

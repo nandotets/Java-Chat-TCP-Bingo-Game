@@ -25,7 +25,9 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import org.json.JSONObject;
+import org.json.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 
 /**
  *
@@ -34,7 +36,7 @@ import org.json.JSONObject;
 public class Server extends Thread {
 
     private static ArrayList<BufferedWriter> clients = new ArrayList<>();
-    private static ArrayList<String> online = new ArrayList<>();
+    private static ArrayList<String> listaClientes = new ArrayList<>();
     private static ServerSocket server;
     private static String username, host, clientIP;
     private Socket connection;
@@ -48,11 +50,11 @@ public class Server extends Thread {
     private static JTextArea ta = new JTextArea(250, 250);
     private static JFrame frame = new JFrame();
     private static JScrollPane jsp;
-    private static JSONObject jsonobj = new JSONObject();
+    private static JSONObject jsonobjSend = new JSONObject();
+    private static JSONObject jsonobjReceive = new JSONObject();
 
     public Server(Socket sClient) {
         this.connection = sClient;
-        ta.append("** " + clientIP + " connected!\r\n");
         setScrollMaximum();
         try {
             in = sClient.getInputStream();
@@ -66,60 +68,98 @@ public class Server extends Thread {
     @Override
     public void run() {
         try {
-            String msg;
-            out = this.connection.getOutputStream();
+            String msg = "";
+            out = connection.getOutputStream();
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
             clients.add(buffWr);
-            msg = username = bufRead.readLine();
-            online.add(username + " (" + clientIP + ")");
-            sendToAllClients(online, buffWr, msg + " connected!\r\n");
+            msg = bufRead.readLine();
+            jsonobjReceive = (JSONObject) JSONValue.parse(msg);
+            username = (String) jsonobjReceive.get("NOME");
             while (msg != null) {
-                msg = bufRead.readLine();
-                if (msg.equals("EXIT")) {
-                    msg = username + " disconnected!\r\n";
-                    online.remove(username + " (" + clientIP + ")");
-                    sendToAllClients(online, buffWr, msg);
-                    ta.append("** " + clientIP + " disconnected!\r\n");
-                    setScrollMaximum();
-                    System.err.println(clientIP + " disconnected!");
-                    clients.remove(buffWr);
-                    break;
-                } else {
-                    sendToAllClients(online, buffWr, msg);
-                    ta.append(username + " → " + msg + "\r\n");
-                    setScrollMaximum();
-                    System.out.println(username + " → " + msg);
+                jsonobjReceive = (JSONObject) JSONValue.parse(bufRead.readLine());
+                msg = (String) jsonobjReceive.get("COD");
+                switch (msg) {
+                    case "login":
+                        //LOGIN
+                        listaClientes.add(username + " (" + clientIP + ")");
+                        jsonobjSend.put("COD", "rlogin");
+                        jsonobjSend.put("STATUS", "sucesso");
+                        jsonobjSend.put("MSG", "Seja bem-vindo ao CHATeTs " + username + "!");
+                        buffWr.write(jsonobjSend.toString());
+                        ta.append("** " + username + "(" + clientIP + ")" + " connected!\r\n");
+                        setScrollMaximum();
+                        broadcastMsg(listaClientes, buffWr, jsonobjSend);
+                        break;
+                    case "logout":
+                        //LOGOUT
+                        listaClientes.remove(username + " (" + clientIP + ")");
+                        jsonobjSend.put("COD", "rlogout");
+                        jsonobjSend.put("STATUS", "sucesso");
+                        jsonobjSend.put("MSG", username + "se desconectou do CHATeTs...");
+                        buffWr.write(jsonobjSend.toString());
+                        clients.remove(buffWr);
+                        ta.append("** " + username + "(" + clientIP + ")" + " disconnected!\r\n");
+                        setScrollMaximum();
+                        broadcastMsg(listaClientes, buffWr, jsonobjSend);
+                        break;
+                    case "chat":
+                        //CHAT
+                        msg = (String) jsonobjReceive.get("STATUS");
+                        switch (msg) {
+                            case "uni":
+                                msg = (String) jsonobjReceive.get("MSG");
+                                username = (String) jsonobjReceive.get("NOME");
+                                broadcastMsg(listaClientes, buffWr, jsonobjSend);
+                                break;
+                            case "broad":
+                                msg = (String) jsonobjReceive.get("MSG");
+                                username = (String) jsonobjReceive.get("NOME");
+                                broadcastMsg(listaClientes, buffWr, jsonobjSend);
+                                ta.append(username + " → " + msg + "\r\n");
+                                setScrollMaximum();
+                                break;
+                        }
+                        break;
                 }
             }
+
         } catch (IOException ioex) {
-            ta.append("** " + clientIP + " disconnected!\r\n");
-            setScrollMaximum();
-            System.err.println(clientIP + " disconnected!");
-            online.remove(username + " (" + clientIP + ")");
-            sendToAllClients(online, buffWr, username + " disconnected!\r\n");
+            listaClientes.remove(username + " (" + clientIP + ")");
+            jsonobjSend.put("COD", "rlogout");
+            jsonobjSend.put("STATUS", "sucesso");
+            jsonobjSend.put("MSG", username + "se desconectou do CHATeTs...");
             clients.remove(buffWr);
+            ta.append("** " + username + "(" + clientIP + ")" + " disconnected!\r\n");
+            setScrollMaximum();
+            broadcastMsg(listaClientes, buffWr, jsonobjSend);
         }
     }
 
-    public void sendToAllClients(ArrayList<String> online, BufferedWriter bufWrOUT, String msg) {
+    public void broadcastMsg(ArrayList<String> listaClientes, BufferedWriter bufWrOUT, JSONObject jsonSend) {
         BufferedWriter bufWrAUX;
+        String msg;
+        JSONObject jsonObj = new JSONObject();
+        JSONArray jsonArr = new JSONArray();
         try {
             for (BufferedWriter aux : clients) {
                 bufWrAUX = (BufferedWriter) aux;
                 if (!(bufWrOUT == bufWrAUX)) {
-                    if (msg.equals(username + " connected!\r\n")) {
-                        aux.write(msg);
-                    } else if (msg.equals(username + " disconnected!\r\n")) {
-                        aux.write(msg);
-                    } else {
-                        aux.write(username + " → " + msg + "\r\n");
+                    msg = (String) jsonSend.get("COD");
+                    if (msg.equals("lista")) {
+                        for (String list : listaClientes) {
+                            jsonObj.put("NOME", list);
+                            jsonArr.put(jsonObj);
+                        }
+                        jsonSend.put("LISTACLIENTE", jsonArr);
                     }
+                    aux.write(jsonSend.toString());
                     aux.flush();
                 }
             }
         } catch (IOException ioex) {
-            System.err.println("Error sendToAllClients()");
+            ta.append("Error to send broadcast message...\r\n");
+            setScrollMaximum();
         }
     }
 
@@ -155,10 +195,7 @@ public class Server extends Thread {
         frame.setLocationRelativeTo(null);
         jsp = new JScrollPane(ta);
         frame.getContentPane().add(jsp);
-        ta.append("Server opened! " + host + ":" + port + "\n");
-        jsonobj.put("hello", "1");
-        jsonobj.put("world", "2");
-        ta.append(jsonobj.toString() + "\r\n");
+        ta.append("Server opened! " + host + ":" + port + "\r\n");
         setScrollMaximum();
         frame.setVisible(true);
     }
