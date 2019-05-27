@@ -60,8 +60,8 @@ public class Server extends Thread {
             in = sClient.getInputStream();
             inRead = new InputStreamReader(in);
             bufRead = new BufferedReader(inRead);
-        } catch (IOException ioex) {
-            System.err.println("Exception Server Constructor: \n" + ioex);
+        } catch (Exception ioex) {
+            JOptionPane.showMessageDialog(null, "Exception Server Constructor", "ERROR SERVER", JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -85,8 +85,13 @@ public class Server extends Thread {
                         listaClientes.add(username + " (" + clientIP + ")");
                         jsonobjSend.put("COD", "rlogin");
                         jsonobjSend.put("STATUS", "sucesso");
+                        buffWr.write(jsonobjSend.toString() + "\r\n");
+                        buffWr.flush();
+                        jsonobjSend.put("COD", "chat");
+                        jsonobjSend.put("STATUS", "broad");
                         jsonobjSend.put("MSG", "Seja bem-vindo ao CHATeTs " + username + "!");
-                        buffWr.write(jsonobjSend.toString()+"\r\n");
+                        buffWr.write(jsonobjSend.toString() + "\r\n");
+                        buffWr.flush();
                         ta.append("** " + username + "(" + clientIP + ")" + " connected!\r\n");
                         setScrollMaximum();
                         broadcastMsg(listaClientes, buffWr, jsonobjSend);
@@ -96,12 +101,15 @@ public class Server extends Thread {
                         listaClientes.remove(username + " (" + clientIP + ")");
                         jsonobjSend.put("COD", "rlogout");
                         jsonobjSend.put("STATUS", "sucesso");
-                        jsonobjSend.put("MSG", username + "se desconectou do CHATeTs...");
-                        buffWr.write(jsonobjSend.toString()+"\r\n");
+                        buffWr.write(jsonobjSend.toString() + "\r\n");
+                        buffWr.flush();
+                        jsonobjSend.put("COD", "chat");
+                        jsonobjSend.put("STATUS", "broad");
+                        jsonobjSend.put("MSG", username + " se desconectou do CHATeTs...");
+                        broadcastMsg(listaClientes, buffWr, jsonobjSend);
                         clients.remove(buffWr);
                         ta.append("** " + username + "(" + clientIP + ")" + " disconnected!\r\n");
                         setScrollMaximum();
-                        broadcastMsg(listaClientes, buffWr, jsonobjSend);
                         break;
                     case "chat":
                         //CHAT
@@ -110,11 +118,13 @@ public class Server extends Thread {
                             case "uni":
                                 msg = (String) jsonobjReceive.get("MSG");
                                 username = (String) jsonobjReceive.get("NOME");
-                                //broadcastMsg(listaClientes, buffWr, jsonobjSend);
+                                jsonobjSend.put("MSG", username + " → " + msg);
+                                broadcastMsg(listaClientes, buffWr, jsonobjSend);
                                 break;
                             case "broad":
                                 msg = (String) jsonobjReceive.get("MSG");
                                 username = (String) jsonobjReceive.get("NOME");
+                                jsonobjSend.put("MSG", username + " → " + msg);
                                 broadcastMsg(listaClientes, buffWr, jsonobjSend);
                                 ta.append(username + " → " + msg + "\r\n");
                                 setScrollMaximum();
@@ -122,17 +132,20 @@ public class Server extends Thread {
                         }
                         break;
                 }
+                jsonobjSend.clear();
+                jsonobjReceive.clear();
             }
 
-        } catch (IOException ioex) {
+        } catch (Exception ex) {
             listaClientes.remove(username + " (" + clientIP + ")");
             jsonobjSend.put("COD", "rlogout");
             jsonobjSend.put("STATUS", "sucesso");
-            jsonobjSend.put("MSG", username + "se desconectou do CHATeTs...");
+            jsonobjSend.put("MSG", username + " se desconectou do CHATeTs...");
             clients.remove(buffWr);
             ta.append("** " + username + "(" + clientIP + ")" + " disconnected!\r\n");
             setScrollMaximum();
             broadcastMsg(listaClientes, buffWr, jsonobjSend);
+            jsonobjSend.clear();
         }
     }
 
@@ -153,11 +166,11 @@ public class Server extends Thread {
                         }
                         jsonSend.put("LISTACLIENTE", jsonArr);
                     }
-                    aux.write(jsonSend.toString()+"\r\n");
+                    aux.write(jsonSend.toString() + "\r\n");
                     aux.flush();
                 }
             }
-        } catch (IOException ioex) {
+        } catch (Exception ex) {
             ta.append("Error to send broadcast message...\r\n");
             setScrollMaximum();
         }

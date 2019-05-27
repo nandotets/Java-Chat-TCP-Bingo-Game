@@ -32,7 +32,7 @@ public class Client extends javax.swing.JFrame {
     private Socket connection;
     private OutputStream out;
     private Writer outWr;
-    private BufferedWriter bufWr;
+    private BufferedWriter buffWr;
     private String host, username;
     private int port = 0;
     private static JSONObject jsonobjSend = new JSONObject();
@@ -54,14 +54,14 @@ public class Client extends javax.swing.JFrame {
 
             out = connection.getOutputStream();
             outWr = new OutputStreamWriter(out);
-            bufWr = new BufferedWriter(outWr);
+            buffWr = new BufferedWriter(outWr);
 
             jsonobjSend.put("COD", "login");
             jsonobjSend.put("NOME", "" + username);
             //System.out.println(jsonobjSend.toString()+"\r\n");
-            bufWr.write(jsonobjSend.toString()+"\r\n");
-            bufWr.flush();
-
+            buffWr.write(jsonobjSend.toString() + "\r\n");
+            buffWr.flush();
+            jsonobjSend.clear();
         } catch (IOException ioex) {
             JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
             configServer();
@@ -73,11 +73,13 @@ public class Client extends javax.swing.JFrame {
         try {
             jsonobjSend.put("COD", "chat");
             jsonobjSend.put("STATUS", "broad");
+            jsonobjSend.put("NOME", username);
             jsonobjSend.put("MSG", msg);
-            bufWr.write(jsonobjSend.toString()+"\r\n");
+            buffWr.write(jsonobjSend.toString() + "\r\n");
             chatArea.append("→ " + msg + "\r\n");
             setScrollMaximum();
-            bufWr.flush();
+            buffWr.flush();
+            jsonobjSend.clear();
         } catch (IOException ioex) {
             JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
             //System.err.println("Error Send Msg: " + ioex);
@@ -93,7 +95,6 @@ public class Client extends javax.swing.JFrame {
                 if (bufRd.ready()) {
                     jsonobjReceive = (JSONObject) JSONValue.parse(bufRd.readLine());
                     String msg = (String) jsonobjReceive.get("COD");
-                    String user = (String) jsonobjReceive.get("NOME");
                     switch (msg) {
                         case "rlogin":
                             //LOGIN
@@ -142,9 +143,12 @@ public class Client extends javax.swing.JFrame {
                             }
                             break;
                     }
-                    chatArea.append(user + ": " + msg + "\r\n");
-                    setScrollMaximum();
+                    if (msg != null) {
+                        chatArea.append(msg + "\r\n");
+                        setScrollMaximum();
+                    }
                 }
+                jsonobjReceive.clear();
             }
         } catch (IOException ioex) {
             JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -158,18 +162,16 @@ public class Client extends javax.swing.JFrame {
             try {
                 jsonobjSend.put("COD", "logout");
                 jsonobjSend.put("NOME", "" + this.username);
-                System.out.println(jsonobjSend.toString()+"\r\n");
-                bufWr.write(jsonobjSend.toString()+"\r\n");
-                bufWr.close();
+                System.out.println(jsonobjSend.toString() + "\r\n");
+                buffWr.write(jsonobjSend.toString() + "\r\n");
+                buffWr.close();
                 outWr.close();
                 out.close();
                 connection.close();
-                System.exit(1);
             } catch (Exception ioex) {
                 JOptionPane.showMessageDialog(null, "Error to exit...", "ERROR", JOptionPane.ERROR_MESSAGE);
-                //System.err.println("Error to exit...");
-                System.exit(1);
             }
+            System.exit(1);
         }
     }
 
@@ -294,6 +296,11 @@ public class Client extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("CHATeTs");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         onlineArea.setEditable(false);
         jScrollPane2.setViewportView(onlineArea);
@@ -427,6 +434,10 @@ public class Client extends javax.swing.JFrame {
     private void menuSettingsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuSettingsActionPerformed
         viewConfigServer();
     }//GEN-LAST:event_menuSettingsActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        exit();
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
