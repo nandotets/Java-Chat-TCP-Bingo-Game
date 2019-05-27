@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package chattcp;
+package Server;
 
+import Tipos.tipoCliente;
 import java.awt.FlowLayout;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,7 +37,7 @@ import org.json.simple.JSONValue;
 public class Server extends Thread {
 
     private static ArrayList<BufferedWriter> clients = new ArrayList<>();
-    private static ArrayList<String> listaClientes = new ArrayList<>();
+    private static ArrayList<tipoCliente> listaClientes = new ArrayList<>();
     private static ServerSocket server;
     private static String username, host, clientIP;
     private Socket connection;
@@ -67,8 +68,9 @@ public class Server extends Thread {
 
     @Override
     public void run() {
+        String msg = "";
+        tipoCliente cliente = new tipoCliente(username, clientIP);
         try {
-            String msg = "";
             out = connection.getOutputStream();
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
@@ -82,7 +84,8 @@ public class Server extends Thread {
                     case "login":
                         //LOGIN
                         username = (String) jsonobjReceive.get("NOME");
-                        listaClientes.add(username + " (" + clientIP + ")");
+                        cliente.setNome(username);
+                        listaClientes.add(cliente);
                         jsonobjSend.put("COD", "rlogin");
                         jsonobjSend.put("STATUS", "sucesso");
                         buffWr.write(jsonobjSend.toString() + "\r\n");
@@ -92,24 +95,30 @@ public class Server extends Thread {
                         jsonobjSend.put("MSG", "Seja bem-vindo ao CHATeTs " + username + "!");
                         buffWr.write(jsonobjSend.toString() + "\r\n");
                         buffWr.flush();
-                        ta.append("** " + username + "(" + clientIP + ")" + " connected!\r\n");
+                        ta.append("** " + cliente.getNome() + "(" + cliente.getIp() + ")" + " connected!\r\n");
                         setScrollMaximum();
+                        broadcastMsg(listaClientes, buffWr, jsonobjSend);
+                        jsonobjSend.clear();
+                        jsonobjSend.put("COD", "lista");
                         broadcastMsg(listaClientes, buffWr, jsonobjSend);
                         break;
                     case "logout":
                         //LOGOUT
-                        listaClientes.remove(username + " (" + clientIP + ")");
+                        listaClientes.remove(cliente);
                         jsonobjSend.put("COD", "rlogout");
                         jsonobjSend.put("STATUS", "sucesso");
                         buffWr.write(jsonobjSend.toString() + "\r\n");
                         buffWr.flush();
                         jsonobjSend.put("COD", "chat");
                         jsonobjSend.put("STATUS", "broad");
-                        jsonobjSend.put("MSG", username + " se desconectou do CHATeTs...");
+                        jsonobjSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
                         broadcastMsg(listaClientes, buffWr, jsonobjSend);
                         clients.remove(buffWr);
-                        ta.append("** " + username + "(" + clientIP + ")" + " disconnected!\r\n");
+                        ta.append("** " + cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!\r\n");
                         setScrollMaximum();
+                        jsonobjSend.clear();
+                        jsonobjSend.put("COD", "lista");
+                        broadcastMsg(listaClientes, buffWr, jsonobjSend);
                         break;
                     case "chat":
                         //CHAT
@@ -137,19 +146,22 @@ public class Server extends Thread {
             }
 
         } catch (Exception ex) {
-            listaClientes.remove(username + " (" + clientIP + ")");
+            listaClientes.remove(cliente);
             jsonobjSend.put("COD", "rlogout");
             jsonobjSend.put("STATUS", "sucesso");
-            jsonobjSend.put("MSG", username + " se desconectou do CHATeTs...");
+            jsonobjSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
             clients.remove(buffWr);
-            ta.append("** " + username + "(" + clientIP + ")" + " disconnected!\r\n");
+            ta.append("** " + cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!\r\n");
             setScrollMaximum();
+            broadcastMsg(listaClientes, buffWr, jsonobjSend);
+            jsonobjSend.clear();
+            jsonobjSend.put("COD", "lista");
             broadcastMsg(listaClientes, buffWr, jsonobjSend);
             jsonobjSend.clear();
         }
     }
 
-    public void broadcastMsg(ArrayList<String> listaClientes, BufferedWriter bufWrOUT, JSONObject jsonSend) {
+    public void broadcastMsg(ArrayList<tipoCliente> listaClientes, BufferedWriter bufWrOUT, JSONObject jsonSend) {
         BufferedWriter bufWrAUX;
         String msg;
         JSONObject jsonObj = new JSONObject();
@@ -160,12 +172,15 @@ public class Server extends Thread {
                 if (!(bufWrOUT == bufWrAUX)) {
                     msg = (String) jsonSend.get("COD");
                     if (msg.equals("lista")) {
-                        for (String list : listaClientes) {
-                            jsonObj.put("NOME", list);
+                        for (tipoCliente list : listaClientes) {
+                            jsonObj.put("NOME", list.getNome());
+                            jsonObj.put("IP", list.getIp());
                             jsonArr.add(jsonObj);
                         }
                         jsonSend.put("LISTACLIENTE", jsonArr);
+                        System.out.println(jsonSend.toString());
                     }
+                    System.out.println(jsonSend.toString());
                     aux.write(jsonSend.toString() + "\r\n");
                     aux.flush();
                 }
@@ -182,6 +197,7 @@ public class Server extends Thread {
             "Server PORT:", field1
         };
         int option = JOptionPane.showConfirmDialog(null, message, "SERVER CONFIG", JOptionPane.OK_CANCEL_OPTION);
+        System.out.println(option);
         if (option == 0) {
             try {
                 port = Integer.parseInt(field1.getText());
@@ -189,7 +205,7 @@ public class Server extends Thread {
                 JOptionPane.showMessageDialog(null, "Invalid Server PORT!", "ERROR SERVER PORT", JOptionPane.ERROR_MESSAGE);
                 configPort();
             }
-        } else if (option == -1 || option == 1) {
+        } else if (option == -1 || option == 2) {
             int confirm = JOptionPane.showConfirmDialog(null, "Cancel to open server?", "EXIT", JOptionPane.YES_NO_OPTION);
             if (confirm == 0) {
                 System.exit(1);
