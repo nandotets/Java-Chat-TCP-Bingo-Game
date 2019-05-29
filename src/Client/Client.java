@@ -130,7 +130,7 @@ public class Client extends javax.swing.JFrame {
                             switch (msg) {
                                 case "uni":
                                     //UNICAST
-                                    msg = (String) jsonobjReceive.get("MSG");
+                                    msg = "(PRIVATE) " +(String) jsonobjReceive.get("MSG");
                                     break;
                                 case "broad":
                                     //BROADCAST

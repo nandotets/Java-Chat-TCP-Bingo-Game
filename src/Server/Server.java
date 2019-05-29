@@ -36,7 +36,6 @@ import org.json.simple.JSONValue;
  */
 public class Server extends Thread {
 
-    private static ArrayList<BufferedWriter> clients = new ArrayList<>();
     private static ArrayList<tipoCliente> listaClientes = new ArrayList<>();
     private static ServerSocket server;
     private static String username, host, clientIP;
@@ -53,6 +52,7 @@ public class Server extends Thread {
     private static JScrollPane jsp;
     private static JSONObject jsonobjSend = new JSONObject();
     private static JSONObject jsonobjReceive = new JSONObject();
+    private static JSONArray list = new JSONArray();
 
     public Server(Socket sClient) {
         this.connection = sClient;
@@ -74,7 +74,7 @@ public class Server extends Thread {
             out = connection.getOutputStream();
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
-            clients.add(buffWr);
+            cliente.setBuffWr(buffWr);
             while (msg != null) {
                 msg = bufRead.readLine();
                 jsonobjReceive = (JSONObject) JSONValue.parse(msg);
@@ -113,7 +113,6 @@ public class Server extends Thread {
                         jsonobjSend.put("STATUS", "broad");
                         jsonobjSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
                         broadcastMsg(listaClientes, buffWr, jsonobjSend);
-                        clients.remove(buffWr);
                         ta.append("** " + cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!\r\n");
                         setScrollMaximum();
                         jsonobjSend.clear();
@@ -127,8 +126,10 @@ public class Server extends Thread {
                             case "uni":
                                 msg = (String) jsonobjReceive.get("MSG");
                                 username = (String) jsonobjReceive.get("NOME");
-                                jsonobjSend.put("MSG", username + " → " + msg);
-                                broadcastMsg(listaClientes, buffWr, jsonobjSend);
+                                jsonobjSend.put("MSG", "(PRIVATE) " + username + " → " + msg);
+                                list = (JSONArray) jsonobjReceive.get("LISTACLIENTE");
+                                jsonobjSend.put("LISTACLIENTES", list);
+                                unicastMsg(listaClientes, jsonobjSend);
                                 break;
                             case "broad":
                                 msg = (String) jsonobjReceive.get("MSG");
@@ -150,7 +151,6 @@ public class Server extends Thread {
             jsonobjSend.put("COD", "rlogout");
             jsonobjSend.put("STATUS", "sucesso");
             jsonobjSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
-            clients.remove(buffWr);
             ta.append("** " + cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!\r\n");
             setScrollMaximum();
             broadcastMsg(listaClientes, buffWr, jsonobjSend);
@@ -167,9 +167,9 @@ public class Server extends Thread {
         JSONObject jsonObj = new JSONObject();
         JSONArray jsonArr = new JSONArray();
         try {
-            for (BufferedWriter aux : clients) {
-                bufWrAUX = (BufferedWriter) aux;
-                if (!(bufWrOUT == bufWrAUX)) {
+            for (tipoCliente clt : listaClientes) {
+                bufWrAUX = (BufferedWriter) clt.getBuffWr();
+                if (bufWrOUT != bufWrAUX) {
                     msg = (String) jsonSend.get("COD");
                     if (msg.equals("lista")) {
                         for (tipoCliente list : listaClientes) {
@@ -181,8 +181,28 @@ public class Server extends Thread {
                         System.out.println(jsonSend.toString());
                     }
                     System.out.println(jsonSend.toString());
-                    aux.write(jsonSend.toString() + "\r\n");
-                    aux.flush();
+                    bufWrAUX.write(jsonSend.toString() + "\r\n");
+                    bufWrAUX.flush();
+                }
+            }
+        } catch (Exception ex) {
+            ta.append("Error to send broadcast message...\r\n");
+            setScrollMaximum();
+        }
+    }
+
+    public void unicastMsg(ArrayList<tipoCliente> listaClientes, JSONObject jsonSend) {
+        try {
+            BufferedWriter bufWrAUX;
+            list = (JSONArray) jsonSend.get("LISTACLIENTES");
+            JSONObject o = (JSONObject) list.get(0);
+
+            for (tipoCliente clt : listaClientes) {
+                if (clt.getIp().equals(o.get("IP"))) {
+                    bufWrAUX = (BufferedWriter) clt.getBuffWr();
+                    System.out.println(jsonSend.toString());
+                    bufWrAUX.write(jsonSend.toString() + "\r\n");
+                    bufWrAUX.flush();
                 }
             }
         } catch (Exception ex) {

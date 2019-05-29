@@ -5,6 +5,8 @@
  */
 package Tipos;
 
+import java.io.BufferedWriter;
+
 /**
  *
  * @author Fernando
@@ -12,6 +14,7 @@ package Tipos;
 public class tipoCliente {
 
     private String nome, ip;
+    private BufferedWriter buffWr;
 
     public tipoCliente(String nome, String ip) {
         this.ip = ip;
@@ -44,6 +47,20 @@ public class tipoCliente {
      */
     public void setIp(String ip) {
         this.ip = ip;
+    }
+
+    /**
+     * @return the buffWr
+     */
+    public BufferedWriter getBuffWr() {
+        return buffWr;
+    }
+
+    /**
+     * @param buffWr the buffWr to set
+     */
+    public void setBuffWr(BufferedWriter buffWr) {
+        this.buffWr = buffWr;
     }
 
 }
