@@ -166,12 +166,6 @@ public class Server extends Thread {
                 Server.jsonSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
                 broadcastMsg(cliente.getBuffWr());
                 ta.append("--> " + cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!\r\n");
-            } else {
-                Server.jsonSend.clear();
-                Server.jsonSend.put("COD", "rlogout");
-                Server.jsonSend.put("STATUS", "falha");
-                broadcastMsg(cliente.getBuffWr());
-                ta.append("SEND: " + Server.jsonSend.toString() + "\r\n");
             }
             sendOnlineListBroadcast();
             setScrollMaximum();
