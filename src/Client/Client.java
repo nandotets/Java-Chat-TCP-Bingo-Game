@@ -15,6 +15,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
@@ -37,8 +38,8 @@ public class Client extends javax.swing.JFrame {
     private BufferedWriter buffWr;
     private String host, username;
     private int port = 0;
-    private static JSONObject jsonobjSend = new JSONObject();
-    private static JSONObject jsonobjReceive = new JSONObject();
+    private static JSONObject jsonSend = new JSONObject();
+    private static JSONObject jsonReceived = new JSONObject();
     public static ArrayList<tipoCliente> listaClientes = new ArrayList<>();
     private DefaultListModel modelList = new DefaultListModel();
 
@@ -59,12 +60,12 @@ public class Client extends javax.swing.JFrame {
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
 
-            jsonobjSend.put("COD", "login");
-            jsonobjSend.put("NOME", "" + username);
-            //System.out.println(jsonobjSend.toString()+"\r\n");
-            buffWr.write(jsonobjSend.toString() + "\r\n");
+            Client.jsonSend.put("COD", "login");
+            Client.jsonSend.put("NOME", username);
+            buffWr.write(Client.jsonSend.toString() + "\r\n");
             buffWr.flush();
-            jsonobjSend.clear();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+            Client.jsonSend.clear();
         } catch (IOException ioex) {
             JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
             configServer();
@@ -72,50 +73,49 @@ public class Client extends javax.swing.JFrame {
         }
     }
 
-    public void sendMsg(String msg) {
+    public void sendMsg(String message) {
         try {
-            jsonobjSend.put("COD", "chat");
-            jsonobjSend.put("STATUS", "broad");
-            jsonobjSend.put("NOME", username);
-            jsonobjSend.put("MSG", msg);
-            buffWr.write(jsonobjSend.toString() + "\r\n");
-            System.out.println("SEND: " + jsonobjSend.toString());
-            chatArea.append("→ " + msg + "\r\n");
+            Client.jsonSend.put("COD", "chat");
+            Client.jsonSend.put("STATUS", "broad");
+            Client.jsonSend.put("NOME", username);
+            Client.jsonSend.put("MSG", message);
+            buffWr.write(Client.jsonSend.toString() + "\r\n");
+            chatArea.append("→ " + message + "\r\n");
             setScrollMaximum();
             buffWr.flush();
-            jsonobjSend.clear();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+            Client.jsonSend.clear();
         } catch (IOException ioex) {
             JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
-            //System.err.println("Error Send Msg: " + ioex);
         }
     }
 
     public void receiveMsg() {
         try {
-            InputStream in = connection.getInputStream();
+            InputStream in = this.connection.getInputStream();
             InputStreamReader inRd = new InputStreamReader(in);
-            BufferedReader bufRd = new BufferedReader(inRd);
+            BufferedReader buffRd = new BufferedReader(inRd);
             while (true) {
-                if (bufRd.ready()) {
-                    jsonobjReceive = (JSONObject) JSONValue.parse(bufRd.readLine());
-                    System.out.println("RECEIVE: " + jsonobjReceive.toString());
-                    String msg = (String) jsonobjReceive.get("COD");
+                if (buffRd.ready()) {
+                    Client.jsonReceived = (JSONObject) JSONValue.parse(buffRd.readLine());
+                    System.out.println("RECEIVE: " + Client.jsonReceived.toString());
+                    String msg = (String) Client.jsonReceived.get("COD");
                     switch (msg) {
                         case "rlogin":
                             //LOGIN
-                            msg = (String) jsonobjReceive.get("STATUS");
+                            msg = (String) Client.jsonReceived.get("STATUS");
                             switch (msg) {
                                 case "sucesso":
-                                    msg = (String) jsonobjReceive.get("MSG");
+                                    msg = (String) Client.jsonReceived.get("MSG");
                                     break;
                                 case "falha":
-                                    msg = (String) jsonobjReceive.get("MSG");
+                                    msg = (String) Client.jsonReceived.get("MSG");
                                     break;
                             }
                             break;
                         case "rlogout":
                             //LOGOUT
-                            msg = (String) jsonobjReceive.get("STATUS");
+                            msg = (String) Client.jsonReceived.get("STATUS");
                             switch (msg) {
                                 case "sucesso":
                                     chatArea.append("Você saiu do chat...\r\n");
@@ -127,6 +127,7 @@ public class Client extends javax.swing.JFrame {
                                     inTXT.setEnabled(false);
                                     bSend.setEnabled(false);
                                     modelList.clear();
+                                    msg = null;
                                     break;
                                 case "falha":
                                     chatArea.append("VOCÊ FALHOU AO SAIR DO CHAT!\r\n");
@@ -136,28 +137,29 @@ public class Client extends javax.swing.JFrame {
                             break;
                         case "chat":
                             //MSG DE CHAT
-                            msg = (String) jsonobjReceive.get("STATUS");
+                            msg = (String) Client.jsonReceived.get("STATUS");
                             switch (msg) {
                                 case "uni":
                                     //UNICAST
-                                    msg = "(PRIVATE) " + (String) jsonobjReceive.get("MSG");
+                                    msg = "(PRIVATE) " + (String) Client.jsonReceived.get("MSG");
                                     break;
                                 case "broad":
                                     //BROADCAST
-                                    msg = (String) jsonobjReceive.get("MSG");
+                                    msg = (String) Client.jsonReceived.get("MSG");
                                     break;
                             }
                             break;
                         case "lista":
                             //LISTA DE ONLINE
-                            JSONArray lista = (JSONArray) jsonobjReceive.get("LISTACLIENTE");
+                            modelList.clear();
+                            Client.listaClientes.clear();
+                            JSONArray lista = (JSONArray) Client.jsonReceived.get("LISTACLIENTE");
                             for (Object obj : lista) {
                                 JSONObject jsonobj = (JSONObject) obj;
                                 tipoCliente clt = new tipoCliente((String) jsonobj.get("NOME"), (String) jsonobj.get("IP"));
-                                listaClientes.add(clt);
+                                Client.listaClientes.add(clt);
                             }
-                            modelList.clear();
-                            for (tipoCliente cliente : listaClientes) {
+                            for (tipoCliente cliente : Client.listaClientes) {
                                 modelList.addElement(cliente.getNome());
                             }
                             break;
@@ -165,7 +167,7 @@ public class Client extends javax.swing.JFrame {
                         default:
                             break;
                     }
-                    if (msg != null && msg != "lista") {
+                    if (msg != null && !msg.equals("lista")) {
                         chatArea.append(msg + "\r\n");
                         setScrollMaximum();
                     }
@@ -173,24 +175,25 @@ public class Client extends javax.swing.JFrame {
             }
         } catch (IOException ioex) {
             JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
-            //System.err.println("Error Receive Msg: " + ioex);
         }
     }
 
-    public void exit() {
+    public Boolean exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "Confirm to exit?", "EXIT", JOptionPane.YES_NO_OPTION);
         if (confirm == 0) {
             try {
-                jsonobjSend.clear();
-                jsonobjSend.put("COD", "logout");
-                jsonobjSend.put("NOME", "" + this.username);
-                buffWr.write(jsonobjSend.toString() + "\r\n");
+                Client.jsonSend.clear();
+                Client.jsonSend.put("COD", "logout");
+                Client.jsonSend.put("NOME", "" + this.username);
+                buffWr.write(Client.jsonSend.toString() + "\r\n");
                 buffWr.flush();
-                System.out.println("SEND: " + jsonobjSend.toString());
+                System.out.println("SEND: " + Client.jsonSend.toString());
+                return true;
             } catch (Exception ioex) {
                 JOptionPane.showMessageDialog(null, "Error to exit...", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
+        return false;
     }
 
     public void configServer() {
@@ -300,6 +303,8 @@ public class Client extends javax.swing.JFrame {
         menuSettings = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -312,7 +317,7 @@ public class Client extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("CHATeTs");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
@@ -400,6 +405,18 @@ public class Client extends javax.swing.JFrame {
         jMenu2.setText("Help");
         jMenuBar1.add(jMenu2);
 
+        jMenu1.setText("Close Program");
+
+        jMenuItem2.setText("System.exit(1);");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -458,10 +475,22 @@ public class Client extends javax.swing.JFrame {
         exit();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        System.exit(1);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
+        try {
+           ServerSocket onlyOne = new ServerSocket(2019); 
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Já existe outro Client aberto nesta máquina!","ERRO",JOptionPane.INFORMATION_MESSAGE);
+            System.exit(1);
+        }   
+        
+        
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -475,19 +504,12 @@ public class Client extends javax.swing.JFrame {
 
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Client.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Client.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Client.class
-                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Client.class
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         Client app = new Client();
@@ -505,9 +527,11 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JTextField inTXT;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
