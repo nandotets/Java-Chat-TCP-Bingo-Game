@@ -37,7 +37,8 @@ public class Client extends javax.swing.JFrame {
     private Writer outWr;
     private BufferedWriter buffWr;
     private String host, username;
-    private int port = 0;
+    private int port;
+    private Boolean exitFlag = false;
     private static JSONObject jsonSend = new JSONObject();
     private static JSONObject jsonReceived = new JSONObject();
     public static ArrayList<tipoCliente> listaClientes = new ArrayList<>();
@@ -128,6 +129,7 @@ public class Client extends javax.swing.JFrame {
                                     bSend.setEnabled(false);
                                     modelList.clear();
                                     msg = null;
+                                    this.exitFlag = true;
                                     break;
                                 case "falha":
                                     chatArea.append("VOCÊ FALHOU AO SAIR DO CHAT!\r\n");
@@ -178,7 +180,7 @@ public class Client extends javax.swing.JFrame {
         }
     }
 
-    public Boolean exit() {
+    public void exit() {
         int confirm = JOptionPane.showConfirmDialog(null, "Confirm to exit?", "EXIT", JOptionPane.YES_NO_OPTION);
         if (confirm == 0) {
             try {
@@ -188,12 +190,10 @@ public class Client extends javax.swing.JFrame {
                 buffWr.write(Client.jsonSend.toString() + "\r\n");
                 buffWr.flush();
                 System.out.println("SEND: " + Client.jsonSend.toString());
-                return true;
             } catch (Exception ioex) {
                 JOptionPane.showMessageDialog(null, "Error to exit...", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
-        return false;
     }
 
     public void configServer() {
@@ -303,8 +303,6 @@ public class Client extends javax.swing.JFrame {
         menuSettings = new javax.swing.JMenuItem();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -405,18 +403,6 @@ public class Client extends javax.swing.JFrame {
         jMenu2.setText("Help");
         jMenuBar1.add(jMenu2);
 
-        jMenu1.setText("Close Program");
-
-        jMenuItem2.setText("System.exit(1);");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItem2);
-
-        jMenuBar1.add(jMenu1);
-
         setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -468,29 +454,32 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_menuSettingsActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        exit();
+        if (this.exitFlag == false) {
+            exit();
+        } else {
+            System.exit(1);
+        }
     }//GEN-LAST:event_formWindowClosing
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
-        exit();
+        if (this.exitFlag == false) {
+            exit();
+        } else {
+            System.exit(1);
+        }
     }//GEN-LAST:event_jMenuItem1ActionPerformed
-
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        System.exit(1);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         try {
-           ServerSocket onlyOne = new ServerSocket(2019); 
+            ServerSocket onlyOne = new ServerSocket(2019);
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Já existe outro Client aberto nesta máquina!","ERRO",JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Já existe outro Client aberto nesta máquina!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
             System.exit(1);
-        }   
-        
-        
+        }
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -509,9 +498,8 @@ public class Client extends javax.swing.JFrame {
                     .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-        
-        //</editor-fold>
 
+        //</editor-fold>
         Client app = new Client();
         app.setVisible(true);
         app.setFocusable(false);
@@ -527,11 +515,9 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JTextField inTXT;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
