@@ -41,7 +41,6 @@ public class Client extends javax.swing.JFrame {
     private static JSONObject jsonobjReceive = new JSONObject();
     private ArrayList<tipoCliente> listaClientes = new ArrayList<>();
     private DefaultListModel modelList = new DefaultListModel();
-    
 
     /**
      * Creates new form Client
@@ -80,6 +79,7 @@ public class Client extends javax.swing.JFrame {
             jsonobjSend.put("NOME", username);
             jsonobjSend.put("MSG", msg);
             buffWr.write(jsonobjSend.toString() + "\r\n");
+            System.out.println("SEND: " + jsonobjSend.toString());
             chatArea.append("→ " + msg + "\r\n");
             setScrollMaximum();
             buffWr.flush();
@@ -98,6 +98,7 @@ public class Client extends javax.swing.JFrame {
             while (true) {
                 if (bufRd.ready()) {
                     jsonobjReceive = (JSONObject) JSONValue.parse(bufRd.readLine());
+                    System.out.println("RECEIVE: " + jsonobjReceive.toString());
                     String msg = (String) jsonobjReceive.get("COD");
                     switch (msg) {
                         case "rlogin":
@@ -117,10 +118,19 @@ public class Client extends javax.swing.JFrame {
                             msg = (String) jsonobjReceive.get("STATUS");
                             switch (msg) {
                                 case "sucesso":
-                                    msg = (String) jsonobjReceive.get("MSG");
+                                    chatArea.append("Você saiu do chat...\r\n");
+                                    setScrollMaximum();
+                                    buffWr.close();
+                                    outWr.close();
+                                    out.close();
+                                    connection.close();
+                                    inTXT.setEnabled(false);
+                                    bSend.setEnabled(false);
+                                    onlineClients.removeAll();
                                     break;
                                 case "falha":
-                                    msg = (String) jsonobjReceive.get("MSG");
+                                    chatArea.append("VOCÊ FALHOU AO SAIR DO CHAT!\r\n");
+                                    setScrollMaximum();
                                     break;
                             }
                             break;
@@ -130,7 +140,7 @@ public class Client extends javax.swing.JFrame {
                             switch (msg) {
                                 case "uni":
                                     //UNICAST
-                                    msg = "(PRIVATE) " +(String) jsonobjReceive.get("MSG");
+                                    msg = "(PRIVATE) " + (String) jsonobjReceive.get("MSG");
                                     break;
                                 case "broad":
                                     //BROADCAST
@@ -138,12 +148,13 @@ public class Client extends javax.swing.JFrame {
                                     break;
                             }
                             break;
+
                         case "lista":
                             //LISTA DE ONLINE
                             JSONArray lista = (JSONArray) jsonobjReceive.get("LISTACLIENTE");
-                            for (int i = 0; i < lista.size(); i++) {
-                                JSONObject o = (JSONObject) lista.get(i);
-                                tipoCliente clt = new tipoCliente((String) o.get("NOME"), (String) o.get("IP"));
+                            for (Object obj : lista) {
+                                JSONObject jsonobj = (JSONObject) obj;
+                                tipoCliente clt = new tipoCliente((String) jsonobj.get("NOME"), (String) jsonobj.get("IP"));
                                 listaClientes.add(clt);
                             }
                             modelList.clear();
@@ -151,8 +162,11 @@ public class Client extends javax.swing.JFrame {
                                 modelList.addElement(cliente.getNome());
                             }
                             break;
+
+                        default:
+                            break;
                     }
-                    if (msg != null) {
+                    if (msg != null && msg != "lista") {
                         chatArea.append(msg + "\r\n");
                         setScrollMaximum();
                     }
@@ -172,14 +186,10 @@ public class Client extends javax.swing.JFrame {
                 jsonobjSend.put("COD", "logout");
                 jsonobjSend.put("NOME", "" + this.username);
                 buffWr.write(jsonobjSend.toString() + "\r\n");
-                buffWr.close();
-                outWr.close();
-                out.close();
-                connection.close();
+                System.out.println("SEND: " + jsonobjSend.toString());
             } catch (Exception ioex) {
                 JOptionPane.showMessageDialog(null, "Error to exit...", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-            System.exit(1);
         }
     }
 
