@@ -125,6 +125,8 @@ public class Server extends Thread {
                             Server.jsonSend.put("COD", "rlogout");
                             Server.jsonSend.put("STATUS", "falha");
                             ta.append("SEND: " + Server.jsonSend.toString() + "\r\n");
+                            cliente.getBuffWr().write(Server.jsonSend.toString() + "\r\n");
+                            cliente.getBuffWr().flush();
                         }
                         setScrollMaximum();
                         break;
