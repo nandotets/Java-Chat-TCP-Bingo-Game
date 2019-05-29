@@ -39,7 +39,7 @@ public class Client extends javax.swing.JFrame {
     private int port = 0;
     private static JSONObject jsonobjSend = new JSONObject();
     private static JSONObject jsonobjReceive = new JSONObject();
-    private ArrayList<tipoCliente> listaClientes = new ArrayList<>();
+    public static ArrayList<tipoCliente> listaClientes = new ArrayList<>();
     private DefaultListModel modelList = new DefaultListModel();
 
     /**
@@ -126,7 +126,7 @@ public class Client extends javax.swing.JFrame {
                                     connection.close();
                                     inTXT.setEnabled(false);
                                     bSend.setEnabled(false);
-                                    onlineClients.removeAll();
+                                    modelList.clear();
                                     break;
                                 case "falha":
                                     chatArea.append("VOCÊ FALHOU AO SAIR DO CHAT!\r\n");
@@ -148,7 +148,6 @@ public class Client extends javax.swing.JFrame {
                                     break;
                             }
                             break;
-
                         case "lista":
                             //LISTA DE ONLINE
                             JSONArray lista = (JSONArray) jsonobjReceive.get("LISTACLIENTE");
@@ -171,7 +170,6 @@ public class Client extends javax.swing.JFrame {
                         setScrollMaximum();
                     }
                 }
-                jsonobjReceive.clear();
             }
         } catch (IOException ioex) {
             JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -183,9 +181,11 @@ public class Client extends javax.swing.JFrame {
         int confirm = JOptionPane.showConfirmDialog(null, "Confirm to exit?", "EXIT", JOptionPane.YES_NO_OPTION);
         if (confirm == 0) {
             try {
+                jsonobjSend.clear();
                 jsonobjSend.put("COD", "logout");
                 jsonobjSend.put("NOME", "" + this.username);
                 buffWr.write(jsonobjSend.toString() + "\r\n");
+                buffWr.flush();
                 System.out.println("SEND: " + jsonobjSend.toString());
             } catch (Exception ioex) {
                 JOptionPane.showMessageDialog(null, "Error to exit...", "ERROR", JOptionPane.ERROR_MESSAGE);

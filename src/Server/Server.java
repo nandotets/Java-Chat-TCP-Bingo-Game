@@ -36,7 +36,7 @@ import org.json.simple.JSONValue;
  */
 public class Server extends Thread {
 
-    private static ArrayList<tipoCliente> listaClientes = new ArrayList<>();
+    public static ArrayList<tipoCliente> listaClientes = new ArrayList<>();
     private static ServerSocket server;
     private Socket connection;
     private InputStream in;
@@ -72,7 +72,7 @@ public class Server extends Thread {
             out = connection.getOutputStream();
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
-            cliente.setBuffWr(buffWr);
+
             while (msg != null) {
                 msg = bufRead.readLine();
                 jsonReceived = (JSONObject) JSONValue.parse(msg);
@@ -81,45 +81,52 @@ public class Server extends Thread {
                 switch (msg) {
                     case "login":
                         //LOGIN
+                        cliente.setBuffWr(buffWr);
                         cliente.setNome((String) jsonReceived.get("NOME"));
-                        listaClientes.add(cliente);
-                        jsonobjSend.clear();
-                        jsonobjSend.put("COD", "rlogin");
-                        jsonobjSend.put("STATUS", "sucesso");
-                        cliente.getBuffWr().write(jsonobjSend.toString() + "\r\n");
+                        Server.listaClientes.add(cliente);
+                        for (tipoCliente listaCliente : listaClientes) {
+                            System.out.println("LISTA: " + listaCliente.getNome());
+                        }
+                        Server.jsonobjSend.clear();
+                        Server.jsonobjSend.put("COD", "rlogin");
+                        Server.jsonobjSend.put("STATUS", "sucesso");
+                        cliente.getBuffWr().write(Server.jsonobjSend.toString() + "\r\n");
                         cliente.getBuffWr().flush();
-                        System.out.println("SEND: " + jsonobjSend.toString());
-                        jsonobjSend.clear();
-                        jsonobjSend.put("COD", "chat");
-                        jsonobjSend.put("STATUS", "broad");
-                        jsonobjSend.put("MSG", "Seja bem-vindo ao CHATeTs " + cliente.getNome() + "!");
-                        cliente.getBuffWr().write(jsonobjSend.toString() + "\r\n");
+                        System.out.println("SEND: " + Server.jsonobjSend.toString());
+                        Server.jsonobjSend.clear();
+                        Server.jsonobjSend.put("COD", "chat");
+                        Server.jsonobjSend.put("STATUS", "broad");
+                        Server.jsonobjSend.put("MSG", "Seja bem-vindo ao CHATeTs " + cliente.getNome() + "!");
+                        cliente.getBuffWr().write(Server.jsonobjSend.toString() + "\r\n");
                         cliente.getBuffWr().flush();
-                        System.out.println("SEND: " + jsonobjSend.toString());
+                        System.out.println("SEND: " + Server.jsonobjSend.toString());
                         ta.append("** " + cliente.getNome() + "(" + cliente.getIp() + ")" + " connected!\r\n");
                         setScrollMaximum();
-                        broadcastMsg(listaClientes, cliente.getBuffWr(), jsonobjSend);
-                        jsonobjSend.clear();
-                        jsonobjSend.put("COD", "lista");
-                        broadcastMsg(listaClientes, cliente.getBuffWr(), jsonobjSend);
+                        broadcastMsg(cliente.getBuffWr());
+                        Server.jsonobjSend.clear();
+                        Server.jsonobjSend.put("COD", "lista");
+                        broadcastMsg(cliente.getBuffWr());
                         break;
                     case "logout":
                         //LOGOUT
-                        listaClientes.remove(cliente);
-                        jsonobjSend.clear();
-                        jsonobjSend.put("COD", "chat");
-                        jsonobjSend.put("STATUS", "broad");
-                        jsonobjSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
-                        broadcastMsg(listaClientes, cliente.getBuffWr(), jsonobjSend);
-                        jsonobjSend.clear();
-                        jsonobjSend.put("COD", "lista");
-                        broadcastMsg(listaClientes, cliente.getBuffWr(), jsonobjSend);
-                        jsonobjSend.clear();
-                        jsonobjSend.put("COD", "rlogout");
-                        jsonobjSend.put("STATUS", "sucesso");
-                        cliente.getBuffWr().write(jsonobjSend.toString() + "\r\n");
+                        cliente.setBuffWr(buffWr);
+                        cliente.setNome((String) jsonReceived.get("NOME"));
+                        cliente.setIp(this.connection.getInetAddress().getHostAddress());
+                        Server.listaClientes.remove(cliente);
+                        Server.jsonobjSend.clear();
+                        Server.jsonobjSend.put("COD", "chat");
+                        Server.jsonobjSend.put("STATUS", "broad");
+                        Server.jsonobjSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
+                        broadcastMsg(cliente.getBuffWr());
+                        Server.jsonobjSend.clear();
+                        Server.jsonobjSend.put("COD", "lista");
+                        broadcastMsg(cliente.getBuffWr());
+                        Server.jsonobjSend.clear();
+                        Server.jsonobjSend.put("COD", "rlogout");
+                        Server.jsonobjSend.put("STATUS", "sucesso");
+                        cliente.getBuffWr().write(Server.jsonobjSend.toString() + "\r\n");
                         cliente.getBuffWr().flush();
-                        System.out.println("SEND: " + jsonobjSend.toString());
+                        System.out.println("SEND: " + Server.jsonobjSend.toString());
                         ta.append("** " + cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!\r\n");
                         setScrollMaximum();
                         break;
@@ -130,19 +137,20 @@ public class Server extends Thread {
                             case "uni":
                                 msg = (String) jsonReceived.get("MSG");
                                 cliente.setNome((String) jsonReceived.get("NOME"));
-                                jsonobjSend.put("MSG", "(PRIVATE) " + cliente.getNome() + " → " + msg);
+                                Server.jsonobjSend.put("MSG", "(PRIVATE) " + cliente.getNome() + " → " + msg);
                                 list = (JSONArray) jsonReceived.get("LISTACLIENTE");
-                                jsonobjSend.put("LISTACLIENTES", list);
-                                unicastMsg(listaClientes, jsonobjSend);
+                                Server.jsonobjSend.put("LISTACLIENTES", list);
+                                unicastMsg(Server.listaClientes, Server.jsonobjSend);
                                 break;
                             case "broad":
                                 msg = (String) jsonReceived.get("MSG");
                                 cliente.setNome((String) jsonReceived.get("NOME"));
-                                jsonobjSend.clear();
-                                jsonobjSend.put("COD", "chat");
-                                jsonobjSend.put("STATUS", "broad");
-                                jsonobjSend.put("MSG", cliente.getNome() + " → " + msg);
-                                broadcastMsg(listaClientes, cliente.getBuffWr(), jsonobjSend);
+                                Server.jsonobjSend.clear();
+                                Server.jsonobjSend.put("COD", "chat");
+                                Server.jsonobjSend.put("STATUS", "broad");
+                                Server.jsonobjSend.put("MSG", cliente.getNome() + " → " + msg);
+                                broadcastMsg(cliente.getBuffWr());
+                                Server.jsonobjSend.clear();
                                 ta.append(cliente.getNome() + " → " + msg + "\r\n");
                                 setScrollMaximum();
                                 break;
@@ -152,41 +160,39 @@ public class Server extends Thread {
             }
 
         } catch (Exception ex) {
-            listaClientes.remove(cliente);
-            jsonobjSend.clear();
-            jsonobjSend.put("COD", "chat");
-            jsonobjSend.put("STATUS", "broad");
-            jsonobjSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
-            broadcastMsg(listaClientes, cliente.getBuffWr(), jsonobjSend);
+            Server.listaClientes.remove(cliente);
+            Server.jsonobjSend.clear();
+            Server.jsonobjSend.put("COD", "chat");
+            Server.jsonobjSend.put("STATUS", "broad");
+            Server.jsonobjSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
+            broadcastMsg(cliente.getBuffWr());
             ta.append("** " + cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!\r\n");
             setScrollMaximum();
-            jsonobjSend.clear();
-            jsonobjSend.put("COD", "lista");
-            broadcastMsg(listaClientes, cliente.getBuffWr(), jsonobjSend);
+            Server.jsonobjSend.clear();
+            Server.jsonobjSend.put("COD", "lista");
+            broadcastMsg(cliente.getBuffWr());
         }
     }
 
-    public void broadcastMsg(ArrayList<tipoCliente> listaClientes, BufferedWriter bufWrOUT, JSONObject jsonSend) {
+    public void broadcastMsg(BufferedWriter bufWrOUT) {
         BufferedWriter bufWrAUX;
-        String msg = (String) jsonSend.get("COD");
-        JSONObject jsonObj = new JSONObject();
+        String msg = (String) Server.jsonobjSend.get("COD");
         JSONArray jsonArr = new JSONArray();
         try {
             if (msg.equals("lista")) {
-                for (tipoCliente clt : listaClientes) {
+                for (tipoCliente clt : Server.listaClientes) {
+                    JSONObject jsonObj = new JSONObject();
                     jsonObj.put("NOME", clt.getNome());
                     jsonObj.put("IP", clt.getIp());
                     jsonArr.add(jsonObj);
-                    jsonObj.clear();
                 }
-                jsonSend.put("LISTACLIENTE", jsonArr);
-                System.out.println("listaClientes: " + jsonSend.toString());
+                Server.jsonobjSend.put("LISTACLIENTE", jsonArr);
             }
-            for (tipoCliente clt : listaClientes) {
-                bufWrAUX = (BufferedWriter) clt.getBuffWr();
+            for (tipoCliente clients : Server.listaClientes) {
+                bufWrAUX = (BufferedWriter) clients.getBuffWr();
                 if (!(bufWrOUT == bufWrAUX)) {
-                    System.out.println("SEND TO "+clt.getNome()+": " + jsonSend.toString());
-                    bufWrAUX.write(jsonSend.toString() + "\r\n");
+                    System.out.println("SEND TO " + clients.getNome() + ": " + Server.jsonobjSend.toString());
+                    bufWrAUX.write(Server.jsonobjSend.toString() + "\r\n");
                     bufWrAUX.flush();
                 }
             }
