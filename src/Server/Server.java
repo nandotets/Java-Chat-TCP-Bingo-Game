@@ -67,7 +67,7 @@ public class Server extends Thread {
     @Override
     public void run() {
         String msg = "";
-        tipoCliente cliente = new tipoCliente("", this.connection.getInetAddress().getHostAddress());
+        tipoCliente cliente = new tipoCliente("", this.connection.getInetAddress().getHostAddress(), String.valueOf(this.connection.getPort()));
         try {
             out = connection.getOutputStream();
             outWr = new OutputStreamWriter(out);
@@ -107,6 +107,7 @@ public class Server extends Thread {
                         cliente.setBuffWr(buffWr);
                         cliente.setNome((String) Server.jsonReceived.get("NOME"));
                         cliente.setIp(this.connection.getInetAddress().getHostAddress());
+                        cliente.setPorta(String.valueOf(this.connection.getPort()));
                         if (Server.listaClientes.remove(cliente)) {
                             sendOnlineListBroadcast();
                             Server.jsonSend.clear();
@@ -136,11 +137,13 @@ public class Server extends Thread {
                         switch (msg) {
                             case "uni":
                                 msg = (String) Server.jsonReceived.get("MSG");
-                                cliente.setNome((String) Server.jsonReceived.get("NOME"));
-                                Server.jsonSend.put("MSG", "(PRIVATE) " + cliente.getNome() + " → " + msg);
-                                onlineList = (JSONArray) Server.jsonReceived.get("LISTACLIENTE");
-                                Server.jsonSend.put("LISTACLIENTES", onlineList);
-                                unicastMsg(Server.listaClientes, Server.jsonSend);
+                                Server.jsonSend.clear();
+                                Server.jsonSend.put("NOME", (String) Server.jsonReceived.get("NOME"));
+                                Server.jsonSend.put("MSG", "(PRIVATE FROM " + cliente.getNome() + ") → " + msg);
+                                Server.jsonSend.put("STATUS", "uni");
+                                JSONArray arr = (JSONArray) Server.jsonReceived.get("LISTACLIENTE");
+                                JSONObject cDestino = (JSONObject) arr.get(0);
+                                unicastMsg(cDestino);
                                 break;
                             case "broad":
                                 msg = (String) Server.jsonReceived.get("MSG");
@@ -204,6 +207,7 @@ public class Server extends Thread {
                 JSONObject jsonObj = new JSONObject();
                 jsonObj.put("NOME", clt.getNome());
                 jsonObj.put("IP", clt.getIp());
+                jsonObj.put("PORTA", clt.getPorta());
                 jsonArr.add(jsonObj);
             }
             Server.jsonSend.put("LISTACLIENTE", jsonArr);
@@ -223,22 +227,22 @@ public class Server extends Thread {
         }
     }
 
-    public void unicastMsg(ArrayList<tipoCliente> listaClientes, JSONObject jsonSend) {
+    public void unicastMsg(JSONObject cDestino) {
         try {
-            BufferedWriter bufWrAUX;
-            onlineList = (JSONArray) jsonSend.get("LISTACLIENTES");
-            JSONObject o = (JSONObject) onlineList.get(0);
-
-            for (tipoCliente clt : listaClientes) {
-                if (clt.getIp().equals(o.get("IP"))) {
-                    bufWrAUX = (BufferedWriter) clt.getBuffWr();
-                    System.out.println(jsonSend.toString());
-                    bufWrAUX.write(jsonSend.toString() + "\r\n");
-                    bufWrAUX.flush();
+            for (tipoCliente clients : Server.listaClientes) {
+                String nome = clients.getNome();
+                String ip = clients.getIp();
+                if (nome.equals(cDestino.get("NOME").toString()) && ip.equals(cDestino.get("IP").toString())) {
+                    ta.append("SEND TO '" + clients.getNome() + "': " + Server.jsonSend.toString() + "\r\n");
+                    clients.getBuffWr().write(Server.jsonSend.toString() + "\r\n");
+                    clients.getBuffWr().flush();
+                    break;
                 }
             }
+            Server.jsonSend.clear();
         } catch (Exception ex) {
-            ta.append("Error to send broadcast message...\r\n");
+            ta.append("Error to send unicast message...\r\n");
+            System.err.println("Error to send unicast message: " + ex);
             setScrollMaximum();
         }
     }
@@ -248,6 +252,8 @@ public class Server extends Thread {
         Object[] message = {
             "Server PORT:", field1
         };
+
+        field1.setText("123");
         int option = JOptionPane.showConfirmDialog(null, message, "SERVER CONFIG", JOptionPane.OK_CANCEL_OPTION);
         if (option == 0) {
             try {

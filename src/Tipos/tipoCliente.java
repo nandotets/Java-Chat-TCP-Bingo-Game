@@ -13,12 +13,13 @@ import java.io.BufferedWriter;
  */
 public class tipoCliente {
 
-    private String nome, ip;
+    private String nome, ip, porta;
     private BufferedWriter buffWr;
 
-    public tipoCliente(String nome, String ip) {
+    public tipoCliente(String nome, String ip, String porta) {
         this.ip = ip;
         this.nome = nome;
+        this.porta = porta;
     }
 
     /**
@@ -61,6 +62,20 @@ public class tipoCliente {
      */
     public void setBuffWr(BufferedWriter buffWr) {
         this.buffWr = buffWr;
+    }
+
+    /**
+     * @return the porta
+     */
+    public String getPorta() {
+        return porta;
+    }
+
+    /**
+     * @param porta the porta to set
+     */
+    public void setPorta(String porta) {
+        this.porta = porta;
     }
 
 }

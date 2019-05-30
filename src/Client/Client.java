@@ -16,8 +16,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -39,20 +41,32 @@ public class Client extends javax.swing.JFrame {
     private BufferedWriter buffWr;
     private String host, username;
     private int port;
-    private Boolean exitFlag = false;
-    private static JSONObject jsonSend = new JSONObject();
-    private static JSONObject jsonReceived = new JSONObject();
-    public static ArrayList<tipoCliente> listaClientes = new ArrayList<>();
-    private DefaultListModel modelList = new DefaultListModel();
+    private Boolean exitFlag = false, receiveFlag = true;
+    private static JSONObject jsonSend;
+    private static JSONObject jsonReceived;
+    public static ArrayList<tipoCliente> listaClientes;
+    private DefaultListModel modelList;
 
     /**
      * Creates new form Client
      */
     public Client() {
         initComponents();
+        
+        jsonSend = new JSONObject();
+        jsonReceived = new JSONObject();
+        listaClientes = new ArrayList<>();
+        modelList = new DefaultListModel();
+        
         this.setLocationRelativeTo(null);
         onlineClients.setModel(modelList);
         popupmenu.setLayout(new GridLayout(5, 5));
+        inTXT.setEnabled(true);
+        bSend.setEnabled(true);
+        bEmotes.setEnabled(true);
+        cbPrivate.setEnabled(true);
+        menuExit.setEnabled(true);
+        bLogin.setEnabled(false);
     }
 
     public void connectServer() {
@@ -77,20 +91,59 @@ public class Client extends javax.swing.JFrame {
     }
 
     public void sendMsg(String message) {
-        try {
-            Client.jsonSend.put("COD", "chat");
-            Client.jsonSend.put("STATUS", "broad");
-            Client.jsonSend.put("NOME", username);
-            Client.jsonSend.put("MSG", message);
-            buffWr.write(Client.jsonSend.toString() + "\r\n");
-            chatArea.append("→ " + message + "\r\n");
-            setScrollMaximum();
-            buffWr.flush();
-            System.out.println("SEND: " + Client.jsonSend.toString());
-            Client.jsonSend.clear();
-        } catch (IOException ioex) {
-            JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
+        if (!cbPrivate.isSelected()) {
+            try {
+                Client.jsonSend.put("COD", "chat");
+                Client.jsonSend.put("STATUS", "broad");
+                Client.jsonSend.put("NOME", username);
+                Client.jsonSend.put("MSG", message);
+                buffWr.write(Client.jsonSend.toString() + "\r\n");
+                chatArea.append("→ " + message + "\r\n");
+                setScrollMaximum();
+                buffWr.flush();
+                System.out.println("SEND: " + Client.jsonSend.toString());
+                Client.jsonSend.clear();
+            } catch (IOException ioex) {
+                JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            String me = "";
+            try {
+                me = username + "(" + InetAddress.getLocalHost().getHostAddress() + ")";
+            } catch (UnknownHostException unkex) {
+                System.err.println(unkex);
+            }
+            try {
+                int selected = onlineClients.getSelectedIndex();
+                if (selected == -1) {
+                    JOptionPane.showMessageDialog(null, "Nenhum destinatário para mensagem privada foi selecionado!");
+                } else if (selected == 0) {
+                    JOptionPane.showMessageDialog(null, "Você não pode enviar mensagens privadas a si próprio!");
+                } else {
+                    Client.jsonSend.put("COD", "chat");
+                    Client.jsonSend.put("STATUS", "uni");
+                    Client.jsonSend.put("NOME", username);
+                    Client.jsonSend.put("MSG", message);
+                    JSONObject fromCliente = new JSONObject();
+                    JSONArray arr = new JSONArray();
+                    tipoCliente cDestino = listaClientes.get(selected);
+                    fromCliente.put("NOME", cDestino.getNome());
+                    fromCliente.put("IP", cDestino.getIp());
+                    fromCliente.put("PORTA", cDestino.getPorta());
+                    arr.add(fromCliente);
+                    Client.jsonSend.put("LISTACLIENTES", arr);
+                    buffWr.write(Client.jsonSend.toString() + "\r\n");
+                    chatArea.append("(PRIVATE TO " + cDestino.getNome() + ") → " + message + "\r\n");
+                    setScrollMaximum();
+                    buffWr.flush();
+                    System.out.println("SEND: " + Client.jsonSend.toString());
+                    Client.jsonSend.clear();
+                }
+            } catch (IOException ioex) {
+                JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
+            }
         }
+
     }
 
     public void receiveMsg() {
@@ -98,7 +151,7 @@ public class Client extends javax.swing.JFrame {
             InputStream in = this.connection.getInputStream();
             InputStreamReader inRd = new InputStreamReader(in);
             BufferedReader buffRd = new BufferedReader(inRd);
-            while (true) {
+            while (receiveFlag) {
                 if (buffRd.ready()) {
                     Client.jsonReceived = (JSONObject) JSONValue.parse(buffRd.readLine());
                     System.out.println("RECEIVE: " + Client.jsonReceived.toString());
@@ -129,9 +182,14 @@ public class Client extends javax.swing.JFrame {
                                     connection.close();
                                     inTXT.setEnabled(false);
                                     bSend.setEnabled(false);
+                                    bEmotes.setEnabled(false);
+                                    cbPrivate.setEnabled(false);
+                                    menuExit.setEnabled(false);
+                                    //bLogin.setEnabled(true);
                                     modelList.clear();
                                     msg = null;
                                     this.exitFlag = true;
+                                    receiveFlag = false;
                                     break;
                                 case "falha":
                                     chatArea.append("VOCÊ FALHOU AO SAIR DO CHAT!\r\n");
@@ -145,7 +203,7 @@ public class Client extends javax.swing.JFrame {
                             switch (msg) {
                                 case "uni":
                                     //UNICAST
-                                    msg = "(PRIVATE) " + (String) Client.jsonReceived.get("MSG");
+                                    msg = (String) Client.jsonReceived.get("MSG");
                                     break;
                                 case "broad":
                                     //BROADCAST
@@ -160,11 +218,11 @@ public class Client extends javax.swing.JFrame {
                             JSONArray lista = (JSONArray) Client.jsonReceived.get("LISTACLIENTE");
                             for (Object obj : lista) {
                                 JSONObject jsonobj = (JSONObject) obj;
-                                tipoCliente clt = new tipoCliente((String) jsonobj.get("NOME"), (String) jsonobj.get("IP"));
+                                tipoCliente clt = new tipoCliente((String) jsonobj.get("NOME"), (String) jsonobj.get("IP"), (String) jsonobj.get("PORTA"));
                                 Client.listaClientes.add(clt);
                             }
                             for (tipoCliente cliente : Client.listaClientes) {
-                                modelList.addElement(cliente.getNome());
+                                modelList.addElement(cliente.getNome() + " (" + cliente.getIp() + ")");
                             }
                             break;
 
@@ -214,8 +272,8 @@ public class Client extends javax.swing.JFrame {
         }
 
         field1.setText("localhost");
-        field2.setText("12345");
-        field3.setText("XABLAU");
+        field2.setText("123");
+        field3.setText("Fernando");
 
         Object[] message = {
             "Server IP:", field1,
@@ -241,7 +299,7 @@ public class Client extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Invalid Server PORT!", "ERROR SERVER PORT", JOptionPane.ERROR_MESSAGE);
                 configServer();
             }
-        } else if (option == -1) {
+        } else if (option == -1 || option == 2) {
             int confirm = JOptionPane.showConfirmDialog(null, "The CHAT will close. Confirm?", "EXIT", JOptionPane.YES_NO_OPTION);
             if (confirm == 0) {
                 System.exit(1);
@@ -327,9 +385,11 @@ public class Client extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         onlineClients = new javax.swing.JList();
         lUsers = new javax.swing.JLabel();
+        cbPrivate = new javax.swing.JCheckBox();
         jMenuBar1 = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
         menuSettings = new javax.swing.JMenuItem();
+        bLogin = new javax.swing.JMenuItem();
         menuExit = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
 
@@ -553,32 +613,50 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        lChat.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        lChat.setFont(new java.awt.Font("Arial", 0, 24)); // NOI18N
         lChat.setText("CHAT");
 
+        inTXT.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         inTXT.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 inTXTKeyPressed(evt);
             }
         });
 
+        bSend.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        bSend.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/send-icon.png"))); // NOI18N
         bSend.setText("SEND");
+        bSend.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        bSend.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        bSend.setIconTextGap(140);
         bSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bSendActionPerformed(evt);
             }
         });
+        bSend.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                bSendKeyPressed(evt);
+            }
+        });
 
         chatArea.setEditable(false);
         chatArea.setColumns(20);
+        chatArea.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         chatArea.setLineWrap(true);
         chatArea.setRows(5);
         jScrollPane3.setViewportView(chatArea);
 
+        bEmotes.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         bEmotes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/icon.png"))); // NOI18N
         bEmotes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 bEmotesActionPerformed(evt);
+            }
+        });
+        bEmotes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                bEmotesKeyPressed(evt);
             }
         });
 
@@ -615,18 +693,25 @@ public class Client extends javax.swing.JFrame {
                 .addGap(21, 21, 21))
         );
 
+        onlineClients.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         onlineClients.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        onlineClients.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane2.setViewportView(onlineClients);
 
-        lUsers.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lUsers.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
         lUsers.setText("Users Online");
 
-        menuFile.setText("File");
+        cbPrivate.setFont(new java.awt.Font("Arial", 0, 18)); // NOI18N
+        cbPrivate.setText("PRIVATE");
 
+        menuFile.setText("File");
+        menuFile.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+
+        menuSettings.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         menuSettings.setText("Server info");
         menuSettings.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -635,6 +720,16 @@ public class Client extends javax.swing.JFrame {
         });
         menuFile.add(menuSettings);
 
+        bLogin.setText("Log in");
+        bLogin.setEnabled(false);
+        bLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bLoginActionPerformed(evt);
+            }
+        });
+        menuFile.add(bLogin);
+
+        menuExit.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         menuExit.setText("Exit");
         menuExit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -646,6 +741,7 @@ public class Client extends javax.swing.JFrame {
         jMenuBar1.add(menuFile);
 
         menuHelp.setText("Help");
+        menuHelp.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jMenuBar1.add(menuHelp);
 
         setJMenuBar(jMenuBar1);
@@ -657,13 +753,11 @@ public class Client extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
-                        .addComponent(lUsers)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lUsers)
+                    .addComponent(cbPrivate))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -675,8 +769,10 @@ public class Client extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(lUsers)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(cbPrivate)))
+                .addGap(16, 16, 16))
         );
 
         pack();
@@ -843,6 +939,33 @@ public class Client extends javax.swing.JFrame {
         inTXT.setText(hist + "↔");
     }//GEN-LAST:event_jMenuItem25ActionPerformed
 
+    private void bSendKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bSendKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            sendMsg(inTXT.getText());
+            inTXT.setText("");
+        }
+    }//GEN-LAST:event_bSendKeyPressed
+
+    private void bEmotesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_bEmotesKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            sendMsg(inTXT.getText());
+            inTXT.setText("");
+        }
+    }//GEN-LAST:event_bEmotesKeyPressed
+
+    private void bLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bLoginActionPerformed
+        Client.this.dispose();
+        receiveFlag = true;
+        exitFlag = false;
+        Client app = new Client();
+        app.setVisible(true);
+        app.setFocusable(false);
+        app.repaint();
+        app.configServer();
+        app.connectServer();
+        app.receiveMsg();
+    }//GEN-LAST:event_bLoginActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -885,7 +1008,9 @@ public class Client extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bEmotes;
+    private javax.swing.JMenuItem bLogin;
     private javax.swing.JButton bSend;
+    private javax.swing.JCheckBox cbPrivate;
     private javax.swing.JTextArea chatArea;
     private javax.swing.JTextField inTXT;
     private javax.swing.JMenuBar jMenuBar1;
