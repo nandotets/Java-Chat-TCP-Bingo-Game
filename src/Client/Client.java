@@ -21,6 +21,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
@@ -52,12 +54,12 @@ public class Client extends javax.swing.JFrame {
      */
     public Client() {
         initComponents();
-        
+
         jsonSend = new JSONObject();
         jsonReceived = new JSONObject();
         listaClientes = new ArrayList<>();
         modelList = new DefaultListModel();
-        
+
         this.setLocationRelativeTo(null);
         onlineClients.setModel(modelList);
         popupmenu.setLayout(new GridLayout(5, 5));
@@ -76,9 +78,10 @@ public class Client extends javax.swing.JFrame {
             out = connection.getOutputStream();
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
-
+            setTitle("CHATeTs -- Your username: " + username);
             Client.jsonSend.put("COD", "login");
             Client.jsonSend.put("NOME", username);
+
             buffWr.write(Client.jsonSend.toString() + "\r\n");
             buffWr.flush();
             System.out.println("SEND: " + Client.jsonSend.toString());
@@ -109,15 +112,16 @@ public class Client extends javax.swing.JFrame {
         } else {
             String me = "";
             try {
-                me = username + "(" + InetAddress.getLocalHost().getHostAddress() + ")";
+                me = username + " (" + InetAddress.getLocalHost().getHostAddress() + ")";
             } catch (UnknownHostException unkex) {
                 System.err.println(unkex);
             }
             try {
                 int selected = onlineClients.getSelectedIndex();
+                String selectedValue = (String) onlineClients.getSelectedValue();
                 if (selected == -1) {
                     JOptionPane.showMessageDialog(null, "Nenhum destinatário para mensagem privada foi selecionado!");
-                } else if (selected == 0) {
+                } else if (me.equals(selectedValue)) {
                     JOptionPane.showMessageDialog(null, "Você não pode enviar mensagens privadas a si próprio!");
                 } else {
                     Client.jsonSend.put("COD", "chat");
@@ -126,12 +130,14 @@ public class Client extends javax.swing.JFrame {
                     Client.jsonSend.put("MSG", message);
                     JSONObject fromCliente = new JSONObject();
                     JSONArray arr = new JSONArray();
+
                     tipoCliente cDestino = listaClientes.get(selected);
+
                     fromCliente.put("NOME", cDestino.getNome());
                     fromCliente.put("IP", cDestino.getIp());
                     fromCliente.put("PORTA", cDestino.getPorta());
                     arr.add(fromCliente);
-                    Client.jsonSend.put("LISTACLIENTES", arr);
+                    Client.jsonSend.put("LISTACLIENTE", arr);
                     buffWr.write(Client.jsonSend.toString() + "\r\n");
                     chatArea.append("(PRIVATE TO " + cDestino.getNome() + ") → " + message + "\r\n");
                     setScrollMaximum();
@@ -271,7 +277,11 @@ public class Client extends javax.swing.JFrame {
             field2.setText("" + this.port);
         }
 
-        field1.setText("localhost");
+        try {
+            field1.setText(InetAddress.getLocalHost().getHostAddress());
+        } catch (UnknownHostException ex) {
+
+        }
         field2.setText("123");
         field3.setText("Fernando");
 
@@ -755,10 +765,12 @@ public class Client extends javax.swing.JFrame {
                 .addComponent(panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lUsers)
-                    .addComponent(cbPrivate))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(cbPrivate)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(lUsers)))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
