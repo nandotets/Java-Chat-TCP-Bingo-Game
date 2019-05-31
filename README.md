@@ -2,6 +2,7 @@
 - Java(TM) SE Runtime Environment (build 1.8.0_201-b09)
 - Java HotSpot(TM) 64-Bit Server VM (build 25.201-b09, mixed mode)
 - Library required: json-simple-1.1.1.jar
+- NetBeans IDE 8.0.2 (Build 201411181905)
 
 # BINGOOOO!
 
