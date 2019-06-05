@@ -21,8 +21,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollBar;
@@ -79,9 +77,11 @@ public class Client extends javax.swing.JFrame {
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
             setTitle("CHATeTs -- Your username: " + username);
-            Client.jsonSend.put("COD", "login");
+            Client.jsonSend.put("STATUS", "null");
+            Client.jsonSend.put("LISTACLIENTE", "null");
+            Client.jsonSend.put("MSG", "null");
             Client.jsonSend.put("NOME", username);
-
+            Client.jsonSend.put("COD", "login");
             buffWr.write(Client.jsonSend.toString() + "\r\n");
             buffWr.flush();
             System.out.println("SEND: " + Client.jsonSend.toString());
@@ -96,10 +96,11 @@ public class Client extends javax.swing.JFrame {
     public void sendMsg(String message) {
         if (!cbPrivate.isSelected()) {
             try {
-                Client.jsonSend.put("COD", "chat");
                 Client.jsonSend.put("STATUS", "broad");
-                Client.jsonSend.put("NOME", username);
+                Client.jsonSend.put("LISTACLIENTE", "null");
                 Client.jsonSend.put("MSG", message);
+                Client.jsonSend.put("NOME", username);
+                Client.jsonSend.put("COD", "chat");
                 buffWr.write(Client.jsonSend.toString() + "\r\n");
                 chatArea.append("→ " + message + "\r\n");
                 setScrollMaximum();
@@ -124,20 +125,20 @@ public class Client extends javax.swing.JFrame {
                 } else if (me.equals(selectedValue)) {
                     JOptionPane.showMessageDialog(null, "Você não pode enviar mensagens privadas a si próprio!");
                 } else {
-                    Client.jsonSend.put("COD", "chat");
                     Client.jsonSend.put("STATUS", "uni");
-                    Client.jsonSend.put("NOME", username);
-                    Client.jsonSend.put("MSG", message);
+
                     JSONObject fromCliente = new JSONObject();
                     JSONArray arr = new JSONArray();
-
                     tipoCliente cDestino = listaClientes.get(selected);
-
-                    fromCliente.put("NOME", cDestino.getNome());
-                    fromCliente.put("IP", cDestino.getIp());
                     fromCliente.put("PORTA", cDestino.getPorta());
+                    fromCliente.put("IP", cDestino.getIp());
+                    fromCliente.put("NOME", cDestino.getNome());
                     arr.add(fromCliente);
+
                     Client.jsonSend.put("LISTACLIENTE", arr);
+                    Client.jsonSend.put("MSG", message);
+                    Client.jsonSend.put("NOME", username);
+                    Client.jsonSend.put("COD", "chat");
                     buffWr.write(Client.jsonSend.toString() + "\r\n");
                     chatArea.append("(PRIVATE TO " + cDestino.getNome() + ") → " + message + "\r\n");
                     setScrollMaximum();
@@ -168,10 +169,12 @@ public class Client extends javax.swing.JFrame {
                             msg = (String) Client.jsonReceived.get("STATUS");
                             switch (msg) {
                                 case "sucesso":
-                                    msg = (String) Client.jsonReceived.get("MSG");
+                                    //msg = (String) Client.jsonReceived.get("MSG");
+                                    msg = null;
                                     break;
                                 case "falha":
-                                    msg = (String) Client.jsonReceived.get("MSG");
+                                    msg = null;
+                                    //msg = (String) Client.jsonReceived.get("MSG");
                                     break;
                             }
                             break;
@@ -251,8 +254,11 @@ public class Client extends javax.swing.JFrame {
         if (confirm == 0) {
             try {
                 Client.jsonSend.clear();
-                Client.jsonSend.put("COD", "logout");
+                Client.jsonSend.put("STATUS", "null");
+                Client.jsonSend.put("LISTACLIENTE", "null");
+                Client.jsonSend.put("MSG", "null");
                 Client.jsonSend.put("NOME", "" + this.username);
+                Client.jsonSend.put("COD", "logout");
                 buffWr.write(Client.jsonSend.toString() + "\r\n");
                 buffWr.flush();
                 System.out.println("SEND: " + Client.jsonSend.toString());

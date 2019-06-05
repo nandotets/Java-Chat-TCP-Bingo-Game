@@ -1,9 +1,3 @@
-- java version "1.8.0_201" 
-- Java(TM) SE Runtime Environment (build 1.8.0_201-b09)
-- Java HotSpot(TM) 64-Bit Server VM (build 25.201-b09, mixed mode)
-- Library required: json-simple-1.1.1.jar
-- NetBeans IDE 8.0.2 (Build 201411181905)
-
 # BINGOOOO!
 
 Eu não ganhei... É só o nome do JOGO.
@@ -18,7 +12,7 @@ Eu não ganhei... É só o nome do JOGO.
 
 ## Especificações
 
-Desenvolvido em linguagem de programação JAVA para a disciplina de Sistemas Distribuidos na Universidade Tecnológica Federal do Paraná (UTFPR).
+O jogo foi desnvolvido em linguagem de programação JAVA para a disciplina de Sistemas Distribuidos na Universidade Tecnológica Federal do Paraná (UTFPR).
 
 ### Requisitos Mínimos
 - RTX 2080 TI
