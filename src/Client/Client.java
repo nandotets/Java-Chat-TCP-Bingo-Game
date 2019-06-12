@@ -38,13 +38,14 @@ public class Client extends javax.swing.JFrame {
     private Socket connection;
     private OutputStream out;
     private Writer outWr;
-    private BufferedWriter buffWr;
-    private String host, username;
+    public static BufferedWriter buffWr;
+    public static String host, username;
     private int port;
     private Boolean exitFlag = false, receiveFlag = true;
-    private static JSONObject jsonSend;
-    private static JSONObject jsonReceived;
+    public static JSONObject jsonSend;
+    public static JSONObject jsonReceived;
     public static ArrayList<tipoCliente> listaClientes;
+    public static ArrayList<tipoCliente> listaHabilitados;
     private DefaultListModel modelList;
 
     /**
@@ -56,6 +57,7 @@ public class Client extends javax.swing.JFrame {
         jsonSend = new JSONObject();
         jsonReceived = new JSONObject();
         listaClientes = new ArrayList<>();
+        listaHabilitados = new ArrayList<>();
         modelList = new DefaultListModel();
 
         this.setLocationRelativeTo(null);
@@ -77,15 +79,15 @@ public class Client extends javax.swing.JFrame {
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
             setTitle("CHATeTs -- Your username: " + username);
-            Client.jsonSend.put("STATUS", "null");
-            Client.jsonSend.put("LISTACLIENTE", "null");
-            Client.jsonSend.put("MSG", "null");
-            Client.jsonSend.put("NOME", username);
-            Client.jsonSend.put("COD", "login");
-            buffWr.write(Client.jsonSend.toString() + "\r\n");
+            jsonSend.put("STATUS", null);
+            jsonSend.put("LISTACLIENTE", null);
+            jsonSend.put("MSG", null);
+            jsonSend.put("NOME", username);
+            jsonSend.put("COD", "login");
+            buffWr.write(jsonSend.toString() + "\r\n");
             buffWr.flush();
-            System.out.println("SEND: " + Client.jsonSend.toString());
-            Client.jsonSend.clear();
+            System.out.println("SEND: " + jsonSend.toString());
+            jsonSend.clear();
         } catch (IOException ioex) {
             JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
             configServer();
@@ -96,17 +98,17 @@ public class Client extends javax.swing.JFrame {
     public void sendMsg(String message) {
         if (!cbPrivate.isSelected()) {
             try {
-                Client.jsonSend.put("STATUS", "broad");
-                Client.jsonSend.put("LISTACLIENTE", "null");
-                Client.jsonSend.put("MSG", message);
-                Client.jsonSend.put("NOME", username);
-                Client.jsonSend.put("COD", "chat");
-                buffWr.write(Client.jsonSend.toString() + "\r\n");
+                jsonSend.put("STATUS", "broad");
+                jsonSend.put("LISTACLIENTE", null);
+                jsonSend.put("MSG", message);
+                jsonSend.put("NOME", username);
+                jsonSend.put("COD", "chat");
+                buffWr.write(jsonSend.toString() + "\r\n");
                 chatArea.append("→ " + message + "\r\n");
                 setScrollMaximum();
                 buffWr.flush();
-                System.out.println("SEND: " + Client.jsonSend.toString());
-                Client.jsonSend.clear();
+                System.out.println("SEND: " + jsonSend.toString());
+                jsonSend.clear();
             } catch (IOException ioex) {
                 JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
@@ -125,7 +127,7 @@ public class Client extends javax.swing.JFrame {
                 } else if (me.equals(selectedValue)) {
                     JOptionPane.showMessageDialog(null, "Você não pode enviar mensagens privadas a si próprio!");
                 } else {
-                    Client.jsonSend.put("STATUS", "uni");
+                    jsonSend.put("STATUS", "uni");
 
                     JSONObject fromCliente = new JSONObject();
                     JSONArray arr = new JSONArray();
@@ -135,16 +137,16 @@ public class Client extends javax.swing.JFrame {
                     fromCliente.put("NOME", cDestino.getNome());
                     arr.add(fromCliente);
 
-                    Client.jsonSend.put("LISTACLIENTE", arr);
-                    Client.jsonSend.put("MSG", message);
-                    Client.jsonSend.put("NOME", username);
-                    Client.jsonSend.put("COD", "chat");
-                    buffWr.write(Client.jsonSend.toString() + "\r\n");
+                    jsonSend.put("LISTACLIENTE", arr);
+                    jsonSend.put("MSG", message);
+                    jsonSend.put("NOME", username);
+                    jsonSend.put("COD", "chat");
+                    buffWr.write(jsonSend.toString() + "\r\n");
                     chatArea.append("(PRIVATE TO " + cDestino.getNome() + ") → " + message + "\r\n");
                     setScrollMaximum();
                     buffWr.flush();
-                    System.out.println("SEND: " + Client.jsonSend.toString());
-                    Client.jsonSend.clear();
+                    System.out.println("SEND: " + jsonSend.toString());
+                    jsonSend.clear();
                 }
             } catch (IOException ioex) {
                 JOptionPane.showMessageDialog(null, "Error connect to server... (" + host + ":" + port + ")", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -160,27 +162,27 @@ public class Client extends javax.swing.JFrame {
             BufferedReader buffRd = new BufferedReader(inRd);
             while (receiveFlag) {
                 if (buffRd.ready()) {
-                    Client.jsonReceived = (JSONObject) JSONValue.parse(buffRd.readLine());
-                    System.out.println("RECEIVE: " + Client.jsonReceived.toString());
-                    String msg = (String) Client.jsonReceived.get("COD");
+                    jsonReceived = (JSONObject) JSONValue.parse(buffRd.readLine());
+                    System.out.println("RECEIVE: " + jsonReceived.toString());
+                    String msg = (String) jsonReceived.get("COD");
                     switch (msg) {
-                        case "rlogin":
+                        case "rlogin": {
                             //LOGIN
-                            msg = (String) Client.jsonReceived.get("STATUS");
+                            msg = (String) jsonReceived.get("STATUS");
                             switch (msg) {
                                 case "sucesso":
-                                    //msg = (String) Client.jsonReceived.get("MSG");
-                                    msg = null;
+                                    System.out.println("Login successful!");
                                     break;
                                 case "falha":
-                                    msg = null;
-                                    //msg = (String) Client.jsonReceived.get("MSG");
+                                    System.out.println("Server returned error to login...");
                                     break;
                             }
+                            msg = null;
                             break;
-                        case "rlogout":
+                        }
+                        case "rlogout": {
                             //LOGOUT
-                            msg = (String) Client.jsonReceived.get("STATUS");
+                            msg = (String) jsonReceived.get("STATUS");
                             switch (msg) {
                                 case "sucesso":
                                     chatArea.append("Você saiu do chat...\r\n");
@@ -196,47 +198,82 @@ public class Client extends javax.swing.JFrame {
                                     menuExit.setEnabled(false);
                                     //bLogin.setEnabled(true);
                                     modelList.clear();
-                                    msg = null;
                                     this.exitFlag = true;
                                     receiveFlag = false;
                                     break;
                                 case "falha":
-                                    chatArea.append("VOCÊ FALHOU AO SAIR DO CHAT!\r\n");
+                                    chatArea.append("Erro ao sair do chat!\r\n");
                                     setScrollMaximum();
                                     break;
                             }
+                            msg = null;
                             break;
-                        case "chat":
+                        }
+                        case "chat": {
                             //MSG DE CHAT
-                            msg = (String) Client.jsonReceived.get("STATUS");
+                            msg = (String) jsonReceived.get("STATUS");
                             switch (msg) {
                                 case "uni":
                                     //UNICAST
-                                    msg = (String) Client.jsonReceived.get("MSG");
+                                    msg = (String) jsonReceived.get("MSG");
+                                    chatArea.append("(PRIVATE FROM " + (String) jsonReceived.get("NOME") + ") → " + msg + "\r\n");
+                                    setScrollMaximum();
+                                    msg = null;
                                     break;
                                 case "broad":
                                     //BROADCAST
-                                    msg = (String) Client.jsonReceived.get("MSG");
+                                    msg = (String) jsonReceived.get("MSG");
                                     break;
+                                default:
+                                    msg = null;
                             }
                             break;
-                        case "lista":
+                        }
+                        case "lista": {
                             //LISTA DE ONLINE
                             modelList.clear();
-                            Client.listaClientes.clear();
-                            JSONArray lista = (JSONArray) Client.jsonReceived.get("LISTACLIENTE");
+                            listaClientes.clear();
+                            JSONArray lista = (JSONArray) jsonReceived.get("LISTACLIENTE");
                             for (Object obj : lista) {
                                 JSONObject jsonobj = (JSONObject) obj;
                                 tipoCliente clt = new tipoCliente((String) jsonobj.get("NOME"), (String) jsonobj.get("IP"), (String) jsonobj.get("PORTA"));
-                                Client.listaClientes.add(clt);
+                                listaClientes.add(clt);
                             }
-                            for (tipoCliente cliente : Client.listaClientes) {
+                            for (tipoCliente cliente : listaClientes) {
                                 modelList.addElement(cliente.getNome() + " (" + cliente.getIp() + ")");
                             }
                             break;
+                        }
+                        case "rpronto": {
+                            msg = (String) jsonReceived.get("STATUS");
+                            switch (msg) {
+                                case "sucesso": {
+                                    ReadyBingoScreen.modelList.clear();
+                                    listaHabilitados.clear();
+                                    JSONArray lista = (JSONArray) jsonReceived.get("LISTACLIENTE");
+                                    for (Object obj : lista) {
+                                        JSONObject jsonobj = (JSONObject) obj;
+                                        tipoCliente clt = new tipoCliente((String) jsonobj.get("NOME"), (String) jsonobj.get("IP"), (String) jsonobj.get("PORTA"));
+                                        listaHabilitados.add(clt);
+                                    }
+                                    for (tipoCliente clienteHabilitado : listaHabilitados) {
+                                        ReadyBingoScreen.modelList.addElement(clienteHabilitado.getNome() + " (" + clienteHabilitado.getIp() + ")\r\n");
+                                    }
+                                    break;
+                                }
+                                case "falha": {
 
-                        default:
+                                    break;
+                                }
+                            }
+                            msg = null;
                             break;
+                        }
+
+                        default: {
+                            msg = null;
+                            break;
+                        }
                     }
                     if (msg != null && !msg.equals("lista")) {
                         chatArea.append(msg + "\r\n");
@@ -253,17 +290,21 @@ public class Client extends javax.swing.JFrame {
         int confirm = JOptionPane.showConfirmDialog(null, "Confirm to exit?", "EXIT", JOptionPane.YES_NO_OPTION);
         if (confirm == 0) {
             try {
-                Client.jsonSend.clear();
-                Client.jsonSend.put("STATUS", "null");
-                Client.jsonSend.put("LISTACLIENTE", "null");
-                Client.jsonSend.put("MSG", "null");
-                Client.jsonSend.put("NOME", "" + this.username);
-                Client.jsonSend.put("COD", "logout");
-                buffWr.write(Client.jsonSend.toString() + "\r\n");
+                jsonSend.clear();
+                jsonSend.put("STATUS", null);
+                jsonSend.put("LISTACLIENTE", null);
+                jsonSend.put("MSG", null);
+                jsonSend.put("NOME", "" + this.username);
+                jsonSend.put("COD", "logout");
+                buffWr.write(jsonSend.toString() + "\r\n");
                 buffWr.flush();
-                System.out.println("SEND: " + Client.jsonSend.toString());
+                System.out.println("SEND: " + jsonSend.toString());
             } catch (Exception ioex) {
                 JOptionPane.showMessageDialog(null, "Error to exit...", "ERROR", JOptionPane.ERROR_MESSAGE);
+                int option = JOptionPane.showConfirmDialog(null, "CLOSE", "Force shutdown?", JOptionPane.YES_NO_OPTION);
+                if (option == 0) {
+                    System.exit(1);
+                }
             }
         }
     }
@@ -288,7 +329,7 @@ public class Client extends javax.swing.JFrame {
         } catch (UnknownHostException ex) {
 
         }
-        field2.setText("123");
+        field2.setText("25000");
         field3.setText("Fernando");
 
         Object[] message = {
@@ -299,7 +340,7 @@ public class Client extends javax.swing.JFrame {
 
         int option = JOptionPane.showConfirmDialog(null, message, "SERVER CONNECTION SETTINGS", JOptionPane.OK_CANCEL_OPTION);
 
-        if (option == 0) {
+        if (option == JOptionPane.OK_OPTION) {
             try {
                 username = field3.getText();
                 host = field1.getText();
@@ -315,7 +356,7 @@ public class Client extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Invalid Server PORT!", "ERROR SERVER PORT", JOptionPane.ERROR_MESSAGE);
                 configServer();
             }
-        } else if (option == -1 || option == 2) {
+        } else if (option == JOptionPane.CLOSED_OPTION || option == JOptionPane.CANCEL_OPTION) {
             int confirm = JOptionPane.showConfirmDialog(null, "The CHAT will close. Confirm?", "EXIT", JOptionPane.YES_NO_OPTION);
             if (confirm == 0) {
                 System.exit(1);
@@ -407,6 +448,8 @@ public class Client extends javax.swing.JFrame {
         menuSettings = new javax.swing.JMenuItem();
         bLogin = new javax.swing.JMenuItem();
         menuExit = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        menuBingo = new javax.swing.JMenuItem();
         menuHelp = new javax.swing.JMenu();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -756,6 +799,18 @@ public class Client extends javax.swing.JFrame {
 
         jMenuBar1.add(menuFile);
 
+        jMenu1.setText("Games");
+
+        menuBingo.setText("BINGO");
+        menuBingo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuBingoActionPerformed(evt);
+            }
+        });
+        jMenu1.add(menuBingo);
+
+        jMenuBar1.add(jMenu1);
+
         menuHelp.setText("Help");
         menuHelp.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         jMenuBar1.add(menuHelp);
@@ -984,12 +1039,19 @@ public class Client extends javax.swing.JFrame {
         app.receiveMsg();
     }//GEN-LAST:event_bLoginActionPerformed
 
+    private void menuBingoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuBingoActionPerformed
+        ReadyBingoScreen ready = new ReadyBingoScreen();
+        ready.setVisible(true);
+        ready.setLocationRelativeTo(null);
+        ready.setAlwaysOnTop(false);
+    }//GEN-LAST:event_menuBingoActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         try {
-            ServerSocket onlyOne = new ServerSocket(2019);
+            //ServerSocket onlyOne = new ServerSocket(2019);
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(null, "Já existe outro Client aberto nesta máquina!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
             System.exit(1);
@@ -1031,6 +1093,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JCheckBox cbPrivate;
     private javax.swing.JTextArea chatArea;
     private javax.swing.JTextField inTXT;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
@@ -1062,6 +1125,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lChat;
     private javax.swing.JLabel lUsers;
+    private javax.swing.JMenuItem menuBingo;
     private javax.swing.JMenuItem menuExit;
     private javax.swing.JMenu menuFile;
     private javax.swing.JMenu menuHelp;
