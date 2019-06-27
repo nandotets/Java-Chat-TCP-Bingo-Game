@@ -5,9 +5,9 @@
  */
 package Server;
 
-import Tipos.tipoCliente;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
+import Misc.CardType;
+import Misc.Countdown;
+import Misc.ClientType;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -21,11 +21,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import javax.swing.JFrame;
+import java.util.Random;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -37,8 +34,9 @@ import org.json.simple.JSONValue;
  */
 public class Server extends Thread {
 
-    public static ArrayList<tipoCliente> listaClientes = new ArrayList<>();
-    public static ArrayList<tipoCliente> listaHabilitados = new ArrayList<>();
+    public static ArrayList<ClientType> clientList = new ArrayList<>();
+    public static ArrayList<ClientType> readyList = new ArrayList<>();
+    public static ArrayList<CardType> cardList = new ArrayList<>();
     private static ServerSocket server;
     private Socket connection;
     private InputStream in;
@@ -47,21 +45,18 @@ public class Server extends Thread {
     private BufferedWriter buffWr;
     private Writer outWr;
     private OutputStream out;
-    private static JTextArea ta = new JTextArea(250, 250);
-    private static JFrame frame = new JFrame();
-    private static JScrollPane jsp;
     private static JSONObject jsonSend = new JSONObject();
     private static JSONObject jsonReceived = new JSONObject();
-    private static JSONArray onlineList = new JSONArray();
+    public static Thread countdown = new Countdown(-1);
 
     public Server(Socket sClient) {
         this.connection = sClient;
-        setScrollMaximum();
+        ServerScreen.setScrollMaximum();
         try {
             in = sClient.getInputStream();
             inRead = new InputStreamReader(in);
             bufRead = new BufferedReader(inRead);
-        } catch (Exception ioex) {
+        } catch (IOException ioex) {
             System.err.println("Error: Server Constructor -> " + ioex);
         }
     }
@@ -69,16 +64,17 @@ public class Server extends Thread {
     @Override
     public void run() {
         String msg = "";
-        tipoCliente cliente = new tipoCliente("", this.connection.getInetAddress().getHostAddress(), String.valueOf(this.connection.getPort()));
+        ClientType cliente = new ClientType("", this.connection.getInetAddress().getHostAddress(), String.valueOf(this.connection.getPort()));
         try {
             out = connection.getOutputStream();
             outWr = new OutputStreamWriter(out);
             buffWr = new BufferedWriter(outWr);
 
             while (msg != null) {
+
                 msg = bufRead.readLine();
                 jsonReceived = (JSONObject) JSONValue.parse(msg);
-                ta.append("RECEIVE: " + msg + "\r\n");
+                ServerScreen.areaReceive.append("• " + msg + "\r\n");
                 msg = (String) jsonReceived.get("COD");
                 switch (msg) {
                     case "pronto": {
@@ -88,13 +84,36 @@ public class Server extends Thread {
                         msg = (String) jsonReceived.get("STATUS");
                         if (msg.equals("sucesso")) {
                             //Habilita cliente
-                            listaHabilitados.add(cliente);
-                            ta.append("--->" + cliente.getNome() + "(" + cliente.getIp() + ")" + " habilitado!\r\n");
-                        } else {
+                            if (readyList.add(cliente)) {
+                                System.out.println(cliente.getNome() + "(" + cliente.getIp() + ")" + " ready to play!");
+                                ServerScreen.contador.setText("30");
+                                Countdown.setNum(30);
+                                Countdown.setCount(30);
+                                sendCountdown("sucesso");
+                            }
+                        } else if (msg.equals("falha")) {
                             //Desabilita cliente
-                            listaHabilitados.remove(cliente);
-                            ta.append("--->" + cliente.getNome() + "(" + cliente.getIp() + ")" + " desabilitado!\r\n");
+                            if (readyList.remove(cliente)) {
+                                System.out.println(cliente.getNome() + "(" + cliente.getIp() + ")" + " unready to play...");
+                                if (readyList.isEmpty()) {
+                                    Countdown.setNum(-1);
+                                    Countdown.setCount(-1);
+                                    ServerScreen.contador.setText("30");
+                                    sendCountdown("falha");
+                                }
+                            }
                         }
+                        jsonSend.clear();
+                        jsonSend.put("CARTELA", null);
+                        jsonSend.put("STATUS", "sucesso");
+                        jsonSend.put("LISTACLIENTE", null);
+                        jsonSend.put("MSG", null);
+                        jsonSend.put("NOME", null);
+                        jsonSend.put("COD", "rpronto");
+                        cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
+                        ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                        ServerScreen.setScrollMaximum();
+                        cliente.getBuffWr().flush();
                         sendReadyList();
                         break;
                     }
@@ -102,30 +121,21 @@ public class Server extends Thread {
                         //LOGIN
                         cliente.setBuffWr(buffWr);
                         cliente.setNome((String) jsonReceived.get("NOME"));
-                        listaClientes.add(cliente);
-
+                        clientList.add(cliente);
                         jsonSend.clear();
+                        jsonSend.put("CARTELA", null);
                         jsonSend.put("STATUS", "sucesso");
                         jsonSend.put("LISTACLIENTE", null);
                         jsonSend.put("MSG", null);
                         jsonSend.put("NOME", null);
                         jsonSend.put("COD", "rlogin");
                         cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
+                        ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
                         cliente.getBuffWr().flush();
-                        ta.append("SEND TO '" + cliente.getNome() + "': " + jsonSend.toString() + "\r\n");
-                        ta.append("--->" + cliente.getNome() + "(" + cliente.getIp() + ")" + " connected!\r\n");
-                        jsonSend.clear();
-                        jsonSend.put("STATUS", "broad");
-                        jsonSend.put("LISTACLIENTE", null);
-                        jsonSend.put("MSG", "Seja bem-vindo ao CHATeTs " + cliente.getNome() + "!");
-                        jsonSend.put("NOME", null);
-                        jsonSend.put("COD", "chat");
-                        cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
-                        cliente.getBuffWr().flush();
-                        ta.append("SEND TO '" + cliente.getNome() + "': " + jsonSend.toString() + "\r\n");
-                        setScrollMaximum();
-                        broadcastMsg(cliente.getBuffWr());
-                        sendOnlineListBroadcast();
+                        System.out.println(cliente.getNome() + "(" + cliente.getIp() + ")" + " connected!");
+                        ServerScreen.setScrollMaximum();
+                        sendOnlineList();
+                        sendReadyList();
                         break;
                     }
                     case "logout": {
@@ -134,122 +144,239 @@ public class Server extends Thread {
                         cliente.setNome((String) jsonReceived.get("NOME"));
                         cliente.setIp(this.connection.getInetAddress().getHostAddress());
                         cliente.setPorta(String.valueOf(this.connection.getPort()));
-                        if (listaClientes.remove(cliente)) {
-                            listaHabilitados.remove(cliente);
-                            sendOnlineListBroadcast();
+                        if (clientList.remove(cliente)) {
+                            readyList.remove(cliente);
+                            sendOnlineList();
                             jsonSend.clear();
-                            jsonSend.put("STATUS", "broad");
-                            jsonSend.put("LISTACLIENTE", null);
-                            jsonSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
-                            jsonSend.put("NOME", null);
-                            jsonSend.put("COD", "chat");
-                            broadcastMsg(cliente.getBuffWr());
-                            jsonSend.clear();
+                            jsonSend.put("CARTELA", null);
                             jsonSend.put("STATUS", "sucesso");
                             jsonSend.put("LISTACLIENTE", null);
                             jsonSend.put("MSG", null);
                             jsonSend.put("NOME", null);
                             jsonSend.put("COD", "rlogout");
-                            ta.append("SEND TO '" + cliente.getNome() + "': " + jsonSend.toString() + "\r\n");
                             cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
+                            ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
                             cliente.getBuffWr().flush();
-                            ta.append("--> " + cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!\r\n");
+                            System.out.println(cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!");
                         } else {
+                            jsonSend.put("CARTELA", null);
                             jsonSend.put("STATUS", "falha");
                             jsonSend.put("LISTACLIENTE", null);
                             jsonSend.put("MSG", null);
                             jsonSend.put("NOME", null);
                             jsonSend.put("COD", "rlogout");
                             cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
+                            ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
                             cliente.getBuffWr().flush();
-                            ta.append("SEND TO '" + cliente.getNome() + "': " + jsonSend.toString() + "\r\n");
                         }
-                        setScrollMaximum();
+                        ServerScreen.setScrollMaximum();
                         break;
                     }
                     case "chat": {
                         //CHAT
                         msg = (String) jsonReceived.get("STATUS");
                         if (msg.equals("uni")) {
-                            jsonSend.clear();
-                            jsonSend.put("STATUS", "uni");
+                            JSONArray array = (JSONArray) jsonReceived.get("LISTACLIENTE");
+                            if (array != null) {
+                                JSONObject cDestino = (JSONObject) array.get(0);
+                                array.clear();
+                                JSONObject origem = new JSONObject();
+                                origem.put("PORTA", cliente.getPorta());
+                                origem.put("IP", cliente.getIp());
+                                origem.put("NOME", cliente.getNome());
+                                array.add(origem);
+
+                                msg = (String) jsonReceived.get("MSG");
+                                jsonSend.clear();
+                                jsonSend.put("CARTELA", null);
+                                jsonSend.put("STATUS", "uni");
+                                jsonSend.put("LISTACLIENTE", array);
+                                jsonSend.put("MSG", msg);
+                                jsonSend.put("NOME", null);
+                                jsonSend.put("COD", "chat");
+
+                                cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
+                                System.out.println(cliente.getNome() + " (PRIVATE TO " + cDestino.get("NOME") + ") → " + msg);
+                                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                                ServerScreen.setScrollMaximum();
+                                cliente.getBuffWr().flush();
+
+                                unicastMsg(cDestino);
+                            }
+                        } else if (msg.equals("broad")) {
                             JSONObject fromCliente = new JSONObject();
                             JSONArray arr = new JSONArray();
                             fromCliente.put("PORTA", cliente.getPorta());
                             fromCliente.put("IP", cliente.getIp());
                             fromCliente.put("NOME", cliente.getNome());
                             arr.add(fromCliente);
-                            jsonSend.put("LISTACLIENTE", arr);
                             msg = (String) jsonReceived.get("MSG");
-                            jsonSend.put("MSG", msg);
-                            msg = (String) jsonReceived.get("NOME");
-                            jsonSend.put("NOME", msg);
-                            jsonSend.put("COD", "chat");
-                            JSONArray array = (JSONArray) jsonReceived.get("LISTACLIENTE");
-                            JSONObject cDestino = (JSONObject) array.get(0);
-                            unicastMsg(cDestino);
-                        } else if (msg.equals("broad")) {
                             jsonSend.clear();
+                            jsonSend.put("CARTELA", null);
                             jsonSend.put("STATUS", "broad");
-                            jsonSend.put("LISTACLIENTE", null);
-                            msg = (String) jsonReceived.get("MSG");
-                            jsonSend.put("MSG", jsonReceived.get("NOME") + " → " + msg);
+                            jsonSend.put("LISTACLIENTE", arr);
+                            jsonSend.put("MSG", msg);
                             jsonSend.put("NOME", null);
                             jsonSend.put("COD", "chat");
-                            broadcastMsg(cliente.getBuffWr());
+                            broadcastMsg();
                             jsonSend.clear();
-                            System.out.println(jsonReceived.get("NOME") + " → " + msg);
-                            setScrollMaximum();
+                            System.out.println(cliente.getNome() + " → " + msg);
+                            ServerScreen.setScrollMaximum();
                             break;
                         }
                     }
                 }
             }
         } catch (Exception ex) {
-            if (listaClientes.remove(cliente)) {
-                listaHabilitados.remove(cliente);
-                jsonSend.clear();
-                jsonSend.put("STATUS", "broad");
-                jsonSend.put("LISTACLIENTE", null);
-                jsonSend.put("MSG", cliente.getNome() + " se desconectou do CHATeTs...");
-                jsonSend.put("NOME", null);
-                jsonSend.put("COD", "chat");
-                broadcastMsg(cliente.getBuffWr());
-                ta.append("--> " + cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!\r\n");
+            if (clientList.remove(cliente)) {
+                readyList.remove(cliente);
+                System.out.println(cliente.getNome() + "(" + cliente.getIp() + ")" + " disconnected!");
             }
-            sendOnlineListBroadcast();
-            setScrollMaximum();
+            sendReadyList();
+            sendOnlineList();
         }
     }
 
-    public void broadcastMsg(BufferedWriter bufWrOUT) {
-        BufferedWriter bufWrAUX;
-        String msg = (String) jsonSend.get("COD");
-        try {
-            for (tipoCliente clients : listaClientes) {
-                bufWrAUX = (BufferedWriter) clients.getBuffWr();
-                if (!(bufWrOUT == bufWrAUX)) {
-                    ta.append("SEND TO '" + clients.getNome() + "': " + jsonSend.toString() + "\r\n");
-                    setScrollMaximum();
-                    bufWrAUX.write(jsonSend.toString() + "\r\n");
-                    bufWrAUX.flush();
-                }
+    public static Boolean startGame() {
+        if (readyList.size() < 1) {
+            return false;
+        } else {
+            for (ClientType readyClient : readyList) {
+                ArrayList<Integer> numbers = generateCard(readyClient);
+                CardType card = new CardType(readyClient, numbers);
+                cardList.add(card);
             }
-        } catch (Exception ex) {
-            ta.append("Error to send broadcast message...\r\n");
+            sendCards();
+            return true;
+        }
+    }
+
+    public static ArrayList<Integer> generateCard(ClientType client) {
+        ArrayList<Integer> B = new ArrayList<>();
+        ArrayList<Integer> I = new ArrayList<>();
+        ArrayList<Integer> N = new ArrayList<>();
+        ArrayList<Integer> G = new ArrayList<>();
+        ArrayList<Integer> O = new ArrayList<>();
+        Random randomB = new Random();
+        Random randomI = new Random();
+        Random randomN = new Random();
+        Random randomG = new Random();
+        Random randomO = new Random();
+
+        for (int b = 1; b <= 15; b++) {
+            int randomb = randomB.nextInt(15 - 1) + 1;
+            if (numCheck(B, randomb)) {
+                B.add(randomb);
+            }
+        }
+
+        for (int i = 16; i <= 30; i++) {
+            int randomi = randomI.nextInt(30 - 16) + 16;
+            if (numCheck(I, randomi)) {
+                I.add(randomi);
+            }
+        }
+
+        for (int n = 31; n <= 45; n++) {
+            int randomn = randomN.nextInt(45 - 31) + 31;
+            if (numCheck(N, randomn)) {
+                N.add(randomn);
+            }
+        }
+
+        for (int g = 46; g <= 60; g++) {
+            int randomg = randomG.nextInt(60 - 46) + 46;
+            if (numCheck(G, randomg)) {
+                G.add(randomg);
+            }
+        }
+
+        for (int o = 61; o <= 75; o++) {
+            int randomo = randomO.nextInt(75 - 61) + 61;
+            if (numCheck(O, randomo)) {
+                O.add(randomo);
+            }
+        }
+
+        ArrayList<Integer> card = new ArrayList<>();
+
+        for (int b = 0; b < 5; b++) {
+            card.add(B.get(b));
+        }
+        for (int i = 0; i < 5; i++) {
+            card.add(I.get(i));
+        }
+        for (int n = 0; n < 5; n++) {
+            if (n == 2) {
+                card.add(0);
+            } else {
+                card.add(N.get(n));
+            }
+        }
+        for (int g = 0; g < 5; g++) {
+            card.add(G.get(g));
+        }
+        for (int o = 0; o < 5; o++) {
+            card.add(O.get(o));
+        }
+
+        return card;
+    }
+
+    public static boolean numCheck(ArrayList<Integer> box, int n) {
+        for (int i = 0; i < box.size(); i++) {
+            if (box.get(i) == n) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void broadcastMsg() {
+        BufferedWriter bufWrAUX;
+        try {
+            for (ClientType clients : clientList) {
+                bufWrAUX = (BufferedWriter) clients.getBuffWr();
+                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                ServerScreen.setScrollMaximum();
+                bufWrAUX.write(jsonSend.toString() + "\r\n");
+                bufWrAUX.flush();
+            }
+        } catch (IOException ex) {
             System.err.println("Error to send broadcast message: " + ex);
-            setScrollMaximum();
         }
         jsonSend.clear();
     }
 
-    public void sendOnlineListBroadcast() {
+    public void unicastMsg(JSONObject destino) {
+        try {
+            for (ClientType clients : clientList) {
+                String nome = clients.getNome();
+                String ip = clients.getIp();
+                if (nome.equals(destino.get("NOME").toString()) && ip.equals(destino.get("IP").toString())) {
+                    ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                    ServerScreen.setScrollMaximum();
+                    clients.getBuffWr().write(jsonSend.toString() + "\r\n");
+                    clients.getBuffWr().flush();
+                    break;
+                }
+            }
+            jsonSend.clear();
+        } catch (Exception ex) {
+            System.err.println("Error to send unicast message: " + ex);
+        }
+    }
+
+    public void sendOnlineList() {
         BufferedWriter bufWrAUX;
+        int i = 1;
         JSONArray jsonArr = new JSONArray();
         jsonSend.clear();
         jsonSend.put("COD", "lista");
         try {
-            for (tipoCliente clt : listaClientes) {
+            ServerScreen.areaOnline.setText("");
+            for (ClientType clt : clientList) {
+                ServerScreen.areaOnline.append(" " + i + ") " + clt.getNome() + " (" + clt.getIp() + ":" + clt.getPorta() + ")\r\n");
                 JSONObject jsonObj = new JSONObject();
                 jsonObj.put("PORTA", clt.getPorta());
                 jsonObj.put("IP", clt.getIp());
@@ -258,74 +385,109 @@ public class Server extends Thread {
             }
             jsonSend.put("LISTACLIENTE", jsonArr);
 
-            for (tipoCliente clients : listaClientes) {
+            for (ClientType clients : clientList) {
                 bufWrAUX = (BufferedWriter) clients.getBuffWr();
-                ta.append("SEND TO '" + clients.getNome() + "': " + jsonSend.toString() + "\r\n");
-                setScrollMaximum();
+                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                ServerScreen.setScrollMaximum();
                 bufWrAUX.write(jsonSend.toString() + "\r\n");
                 bufWrAUX.flush();
             }
             jsonArr.clear();
             jsonSend.clear();
         } catch (Exception ex) {
-            ta.append("Error to send online list broadcast ...\r\n");
             System.err.println("Error to send OnlineListBroadcast: " + ex);
-            setScrollMaximum();
-        }
-    }
-
-    public void unicastMsg(JSONObject destino) {
-        try {
-            for (tipoCliente clients : listaClientes) {
-                String nome = clients.getNome();
-                String ip = clients.getIp();
-                if (nome.equals(destino.get("NOME").toString()) && ip.equals(destino.get("IP").toString())) {
-                    ta.append("SEND TO '" + nome + "': " + jsonSend.toString() + "\r\n");
-                    setScrollMaximum();
-                    clients.getBuffWr().write(jsonSend.toString() + "\r\n");
-                    clients.getBuffWr().flush();
-                    break;
-                }
-            }
-            jsonSend.clear();
-        } catch (Exception ex) {
-            ta.append("Error to send unicast message...\r\n");
-            System.err.println("Error to send unicast message: " + ex);
-            setScrollMaximum();
         }
     }
 
     public void sendReadyList() {
         BufferedWriter bufWrAUX;
+        int i = 1;
         JSONArray jsonArr = new JSONArray();
-        for (tipoCliente clienteHabilitado : listaHabilitados) {
+        ServerScreen.areaReady.setText("");
+        for (ClientType clienteHabilitado : readyList) {
+            ServerScreen.areaReady.append(" " + i + ") " + clienteHabilitado.getNome() + " (" + clienteHabilitado.getIp() + ":" + clienteHabilitado.getPorta() + ")\r\n");
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("PORTA", clienteHabilitado.getPorta());
             jsonObj.put("IP", clienteHabilitado.getIp());
             jsonObj.put("NOME", clienteHabilitado.getNome());
             jsonArr.add(jsonObj);
+            i++;
         }
+
+        if (jsonArr.isEmpty()) {
+            jsonArr = null;
+        }
+
         try {
             jsonSend.clear();
-            jsonSend.put("STATUS", "sucesso");
+            jsonSend.put("CARTELA", null);
+            jsonSend.put("STATUS", null);
             jsonSend.put("LISTACLIENTE", jsonArr);
             jsonSend.put("MSG", null);
             jsonSend.put("NOME", null);
-            jsonSend.put("COD", "rpronto");
-            
-            for (tipoCliente clients : listaClientes) {
+            jsonSend.put("COD", "listapronto");
+
+            for (ClientType clients : clientList) {
                 bufWrAUX = (BufferedWriter) clients.getBuffWr();
                 bufWrAUX.write(jsonSend.toString() + "\r\n");
                 bufWrAUX.flush();
-                ta.append("SEND TO '" + clients.getNome() + "': " + jsonSend.toString() + "\r\n");
-                setScrollMaximum();
+                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                ServerScreen.setScrollMaximum();
             }
         } catch (Exception ex) {
-            ta.append("Error to send broadcast message...\r\n");
             System.err.println("Error to send broadcast message: " + ex);
-            setScrollMaximum();
+            ServerScreen.setScrollMaximum();
         }
         jsonSend.clear();
+    }
+
+    public void sendCountdown(String status) {
+        BufferedWriter bufWrAUX;
+        try {
+            jsonSend.clear();
+            jsonSend.put("CARTELA", null);
+            jsonSend.put("STATUS", status);
+            jsonSend.put("LISTACLIENTE", null);
+            jsonSend.put("MSG", null);
+            jsonSend.put("NOME", null);
+            jsonSend.put("COD", "tempo");
+
+            for (ClientType clients : clientList) {
+                bufWrAUX = (BufferedWriter) clients.getBuffWr();
+                bufWrAUX.write(jsonSend.toString() + "\r\n");
+                bufWrAUX.flush();
+                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                ServerScreen.setScrollMaximum();
+            }
+        } catch (Exception ex) {
+            System.err.println("Error to send broadcast message: " + ex);
+            ServerScreen.setScrollMaximum();
+        }
+    }
+
+    public static void sendCards() {
+        BufferedWriter bufWrAUX;
+        try {
+            jsonSend.clear();
+            jsonSend.put("CARTELA", cardList);
+            jsonSend.put("STATUS", null);
+            jsonSend.put("LISTACLIENTE", null);
+            jsonSend.put("MSG", null);
+            jsonSend.put("NOME", null);
+            jsonSend.put("COD", "cartela");
+
+            for (CardType card : cardList) {
+                jsonSend.put("CARTELA", card.getCard().toString());
+                bufWrAUX = (BufferedWriter) card.getClient().getBuffWr();
+                bufWrAUX.write(jsonSend.toString() + "\r\n");
+                bufWrAUX.flush();
+                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                ServerScreen.setScrollMaximum();
+            }
+        } catch (Exception ex) {
+            System.err.println("Error to send cards: " + ex);
+            ServerScreen.setScrollMaximum();
+        }
     }
 
     private static int configPort() {
@@ -355,26 +517,11 @@ public class Server extends Thread {
     }
 
     private static void initComponents(int port) throws UnknownHostException {
-        frame = new JFrame("CHATeTs Server. PORT:" + port);
-        ta = new JTextArea(35, 85);
-        ta.setEditable(false);
-        ta.setLineWrap(true);
-        frame.setLayout(new FlowLayout());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(980, 650);
-        frame.setMinimumSize(new Dimension(980, 650));
+        ServerScreen frame = new ServerScreen();
+        frame.setTitle("CHATeTs Server. PORT:" + port);
         frame.setLocationRelativeTo(null);
-        jsp = new JScrollPane(ta);
-        frame.getContentPane().add(jsp);
-        ta.append("Server opened! " + InetAddress.getLocalHost().getHostAddress() + ":" + port + "\r\n");
-        setScrollMaximum();
+        System.out.println("Server opened! " + InetAddress.getLocalHost().getHostAddress() + ":" + port);
         frame.setVisible(true);
-    }
-
-    private static void setScrollMaximum() {
-        JScrollBar x = jsp.getVerticalScrollBar();
-        x.setValue(x.getMaximum());
-        jsp.setVerticalScrollBar(x);
     }
 
     public static void main(String[] args) {
@@ -382,13 +529,14 @@ public class Server extends Thread {
             int portConfig = configPort();
             server = new ServerSocket(portConfig);
             initComponents(portConfig);
+            countdown.start();
             while (true) { //Mantem servidor ativo mesmo com desconexões de clientes
                 Socket clientC = server.accept();
                 Thread t = new Server(clientC);
                 t.start();
             }
         } catch (IOException ioex) {
-            System.err.println("Exception Server main()" + ioex);
+            JOptionPane.showMessageDialog(null, "Another server already exists on this pc!", "ERRO", JOptionPane.INFORMATION_MESSAGE);
         } catch (IllegalArgumentException argex) {
             System.err.println("Invalid PORT!");
         }

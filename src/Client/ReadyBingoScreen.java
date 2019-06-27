@@ -6,7 +6,6 @@
 package Client;
 
 import java.io.IOException;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,7 +14,6 @@ import javax.swing.JOptionPane;
  */
 public class ReadyBingoScreen extends javax.swing.JFrame {
 
-    public static DefaultListModel modelList = new DefaultListModel();
 
     /**
      * Creates new form PreparedBingoScreen
@@ -24,7 +22,7 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         bNo.setSelected(true);
-        readyClients.setModel(modelList);
+        areaReady.setEditable(false);
     }
 
     /**
@@ -39,12 +37,13 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         bYes = new javax.swing.JToggleButton();
         bNo = new javax.swing.JToggleButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        readyClients = new javax.swing.JList();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        areaReady = new javax.swing.JTextArea();
+        contador = new javax.swing.JLabel();
+        COUNTDOWN = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Ready?");
-        setMaximumSize(new java.awt.Dimension(409, 181));
         setMinimumSize(new java.awt.Dimension(409, 181));
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -72,14 +71,18 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
             }
         });
 
-        readyClients.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        readyClients.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
-        readyClients.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        jScrollPane2.setViewportView(readyClients);
+        areaReady.setColumns(20);
+        areaReady.setRows(5);
+        jScrollPane1.setViewportView(areaReady);
+
+        contador.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        contador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        contador.setText("30");
+
+        COUNTDOWN.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        COUNTDOWN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        COUNTDOWN.setText("<html> COUNTDOWN<br> START GAME</html>");
+        COUNTDOWN.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,12 +91,16 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(70, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(bYes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(COUNTDOWN)
+                            .addComponent(contador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(bNo))
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(70, 70, 70))
         );
         layout.setVerticalGroup(
@@ -101,13 +108,17 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addGap(53, 53, 53)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bYes)
-                    .addComponent(bNo))
+                .addGap(16, 16, 16)
+                .addComponent(COUNTDOWN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(3, 3, 3)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(bYes)
+                        .addComponent(bNo))
+                    .addComponent(contador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         pack();
@@ -167,10 +178,12 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel COUNTDOWN;
+    public static javax.swing.JTextArea areaReady;
     private javax.swing.JToggleButton bNo;
     private javax.swing.JToggleButton bYes;
+    public static javax.swing.JLabel contador;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane2;
-    public static javax.swing.JList readyClients;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }
