@@ -407,7 +407,7 @@ public class BingoScreen extends javax.swing.JFrame {
         jLabel10.setPreferredSize(new java.awt.Dimension(50, 50));
 
         pedra.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
-        pedra.setText("10");
+        pedra.setText("00");
 
         contador.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         contador.setText("10");

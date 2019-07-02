@@ -86,30 +86,47 @@ public class Server extends Thread {
                         for (int i = 0; i < cardList.size(); i++) {
                             if (cliente.getNome().equals((String) cardList.get(i).getClient().getNome())) {
                                 if (cardList.get(i).getHas().size() >= 3) {;
+                                    JSONArray array = new JSONArray();
+                                    JSONObject origem = new JSONObject();
+                                    origem.put("PORTA", cliente.getPorta());
+                                    origem.put("IP", cliente.getIp());
+                                    origem.put("NOME", cliente.getNome());
+                                    array.add(origem);
                                     jsonSend.clear();
+                                    jsonSend.put("CARTELA", null);
+                                    jsonSend.put("LISTACLIENTE", array);
+                                    jsonSend.put("MSG", null);
+                                    jsonSend.put("NOME", null);
+                                    jsonSend.put("COD", "rbingo");
                                     jsonSend.put("STATUS", "sucesso");
+                                    for (ClientType clients : readyList) {
+                                        bufWrAUX = (BufferedWriter) clients.getBuffWr();
+                                        bufWrAUX.write(jsonSend.toString() + "\r\n");
+                                        bufWrAUX.flush();
+                                        ServerScreen.areaReceive.append("• " + jsonSend.toString() + "\r\n");
+                                        ServerScreen.setScrollMaximum();
+                                    }
+                                    Countdown.setCountGame(-1);
 
                                 } else {
+                                    JSONArray array = new JSONArray();
+                                    JSONObject origem = new JSONObject();
+                                    origem.put("PORTA", cliente.getPorta());
+                                    origem.put("IP", cliente.getIp());
+                                    origem.put("NOME", cliente.getNome());
+                                    array.add(origem);
                                     jsonSend.clear();
                                     jsonSend.put("STATUS", "falha");
-                                }
-                                JSONArray array = new JSONArray();
-                                JSONObject origem = new JSONObject();
-                                 origem.put("PORTA", cliente.getPorta());
-                                origem.put("IP", cliente.getIp());
-                                origem.put("NOME", cliente.getNome());
-                                array.add(origem);
-                                jsonSend.put("CARTELA", null);
-                                jsonSend.put("LISTACLIENTE", array);
-                                jsonSend.put("MSG", null);
-                                jsonSend.put("NOME", null);
-                                jsonSend.put("COD", "rbingo");
-                                for (ClientType clients : readyList) {
-                                    bufWrAUX = (BufferedWriter) clients.getBuffWr();
-                                    bufWrAUX.write(jsonSend.toString() + "\r\n");
-                                    bufWrAUX.flush();
+                                    jsonSend.put("CARTELA", null);
+                                    jsonSend.put("LISTACLIENTE", array);
+                                    jsonSend.put("MSG", null);
+                                    jsonSend.put("NOME", null);
+                                    jsonSend.put("COD", "rbingo");
+                                    cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
                                     ServerScreen.areaReceive.append("• " + jsonSend.toString() + "\r\n");
                                     ServerScreen.setScrollMaximum();
+                                    cliente.getBuffWr().flush();
+                                    
                                 }
                             }
                         }
@@ -465,7 +482,7 @@ public class Server extends Thread {
         int i = 1;
         JSONArray jsonArr = new JSONArray();
         ServerScreen.areaReady.setText("");
-        for (ClientType clienteHabilitado : readyList) {
+        for (ClientType clienteHabilitado : clientList) {
             ServerScreen.areaReady.append(" " + i + ") " + clienteHabilitado.getNome() + " (" + clienteHabilitado.getIp() + ":" + clienteHabilitado.getPorta() + ")\r\n");
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("PORTA", clienteHabilitado.getPorta());

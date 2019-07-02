@@ -339,6 +339,8 @@ public class Client extends javax.swing.JFrame {
                                 break;
                             }
                             case "sorteado": {
+                                Countdown.setNumGame(10);
+                                Countdown.setCountGame(10);
                                 ArrayList<Integer> cartela = (ArrayList<Integer>) jsonReceived.get("CARTELA");
                                 BingoScreen.pedra.setText(String.valueOf(cartela.get(0)));
                                 msg = null;
@@ -348,13 +350,12 @@ public class Client extends javax.swing.JFrame {
                                 msg = (String) jsonReceived.get("STATUS");
                                 switch (msg) {
                                     case "sucesso": {
+                                        bingoScreen.setVisible(false);
+                                        
                                         JSONArray lista = (JSONArray) jsonReceived.get("LISTACLIENTE");
                                         if (lista != null) {
                                             JSONObject origem = (JSONObject) lista.get(0);
-                                            if (origem.get("IP").equals(host)) {
-                                                bingoScreen.setVisible(false);
-                                                JOptionPane.showMessageDialog(null, "Você Ganhou não faço ideia de como vas aconteceu!!!");
-                                            }
+                                            JOptionPane.showMessageDialog(null, "Você Ganhou não faço ideia de como vas aconteceu!!!"+origem.get("NOME"));
                                         }
                                         break;
                                     }

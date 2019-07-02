@@ -58,7 +58,7 @@ public class Countdown extends Thread implements Runnable {
     }
     
     public void chose() {
-        setCount(getNumGame());
+        setCountGame(getNumGame());
         while (true) {
             System.out.flush();
             if (getNumGame() != -1) {
@@ -70,6 +70,12 @@ public class Countdown extends Thread implements Runnable {
                         Server.sendNumber();
                         Countdown.setCountGame(10);
                         Countdown.setNumGame(10);                       
+                    }
+                    if(getCount() == -2){
+                        Countdown.setCountGame(0);
+                        Countdown.setNumGame(0);   
+                        Countdown.setNum(-1);
+                        run();
                     }
                 } catch (Exception ex) {
                     countdownGameClient();
