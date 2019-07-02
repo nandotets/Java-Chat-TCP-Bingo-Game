@@ -5,6 +5,7 @@
  */
 package Client;
 
+import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -34,31 +35,31 @@ public class BingoScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel12 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
-        jToggleButton3 = new javax.swing.JToggleButton();
-        jToggleButton4 = new javax.swing.JToggleButton();
-        jToggleButton5 = new javax.swing.JToggleButton();
-        jToggleButton6 = new javax.swing.JToggleButton();
-        jToggleButton7 = new javax.swing.JToggleButton();
-        jToggleButton8 = new javax.swing.JToggleButton();
-        jToggleButton9 = new javax.swing.JToggleButton();
-        jToggleButton10 = new javax.swing.JToggleButton();
-        jToggleButton11 = new javax.swing.JToggleButton();
-        jToggleButton12 = new javax.swing.JToggleButton();
-        jToggleButton13 = new javax.swing.JToggleButton();
-        jToggleButton14 = new javax.swing.JToggleButton();
-        jToggleButton15 = new javax.swing.JToggleButton();
-        jToggleButton16 = new javax.swing.JToggleButton();
-        jToggleButton17 = new javax.swing.JToggleButton();
-        jToggleButton18 = new javax.swing.JToggleButton();
-        jToggleButton19 = new javax.swing.JToggleButton();
-        jToggleButton20 = new javax.swing.JToggleButton();
-        jToggleButton21 = new javax.swing.JToggleButton();
-        jToggleButton22 = new javax.swing.JToggleButton();
-        jToggleButton23 = new javax.swing.JToggleButton();
-        jToggleButton24 = new javax.swing.JToggleButton();
-        jToggleButton25 = new javax.swing.JToggleButton();
+        nb0 = new javax.swing.JToggleButton();
+        nb2 = new javax.swing.JToggleButton();
+        nb1 = new javax.swing.JToggleButton();
+        nb4 = new javax.swing.JToggleButton();
+        nb3 = new javax.swing.JToggleButton();
+        nb7 = new javax.swing.JToggleButton();
+        nb6 = new javax.swing.JToggleButton();
+        nb9 = new javax.swing.JToggleButton();
+        nb8 = new javax.swing.JToggleButton();
+        nb5 = new javax.swing.JToggleButton();
+        nb12 = new javax.swing.JToggleButton();
+        nb11 = new javax.swing.JToggleButton();
+        nb14 = new javax.swing.JToggleButton();
+        nb13 = new javax.swing.JToggleButton();
+        nb17 = new javax.swing.JToggleButton();
+        nb16 = new javax.swing.JToggleButton();
+        nb19 = new javax.swing.JToggleButton();
+        nb18 = new javax.swing.JToggleButton();
+        nb15 = new javax.swing.JToggleButton();
+        nb10 = new javax.swing.JToggleButton();
+        nb22 = new javax.swing.JToggleButton();
+        nb21 = new javax.swing.JToggleButton();
+        nb24 = new javax.swing.JToggleButton();
+        nb23 = new javax.swing.JToggleButton();
+        nb20 = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -69,6 +70,8 @@ public class BingoScreen extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        pedra = new javax.swing.JLabel();
+        contador = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 500));
@@ -76,135 +79,255 @@ public class BingoScreen extends javax.swing.JFrame {
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/bingo-logo.png"))); // NOI18N
 
-        jToggleButton1.setText("jToggleButton1");
-        jToggleButton1.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton1.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton1.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jToggleButton2.setText("jToggleButton1");
-        jToggleButton2.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton2.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton2.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jToggleButton3.setText("jToggleButton1");
-        jToggleButton3.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton3.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton3.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jToggleButton4.setText("jToggleButton1");
-        jToggleButton4.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton4.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton4.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jToggleButton5.setText("jToggleButton1");
-        jToggleButton5.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton5.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton5.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jToggleButton6.setText("jToggleButton1");
-        jToggleButton6.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton6.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton6.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jToggleButton7.setText("jToggleButton1");
-        jToggleButton7.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton7.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton7.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jToggleButton8.setText("jToggleButton1");
-        jToggleButton8.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton8.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton8.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jToggleButton9.setText("jToggleButton1");
-        jToggleButton9.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton9.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton9.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jToggleButton10.setText("jToggleButton1");
-        jToggleButton10.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton10.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton10.setPreferredSize(new java.awt.Dimension(50, 50));
-        jToggleButton10.addActionListener(new java.awt.event.ActionListener() {
+        nb0.setText("jToggleButton1");
+        nb0.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb0.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb0.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton10ActionPerformed(evt);
+                nb0ActionPerformed(evt);
             }
         });
 
-        jToggleButton11.setText("jToggleButton1");
-        jToggleButton11.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton11.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton11.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb2.setText("jToggleButton1");
+        nb2.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb2.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb2.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb2ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton12.setText("jToggleButton1");
-        jToggleButton12.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton12.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton12.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb1.setText("jToggleButton1");
+        nb1.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb1.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb1.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb1ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton13.setText("jToggleButton1");
-        jToggleButton13.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton13.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton13.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb4.setText("jToggleButton1");
+        nb4.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb4.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb4.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb4ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton14.setText("jToggleButton1");
-        jToggleButton14.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton14.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton14.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb3.setText("jToggleButton1");
+        nb3.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb3.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb3.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb3ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton15.setText("jToggleButton1");
-        jToggleButton15.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton15.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton15.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb7.setText("jToggleButton1");
+        nb7.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb7.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb7.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb7ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton16.setText("jToggleButton1");
-        jToggleButton16.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton16.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton16.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb6.setText("jToggleButton1");
+        nb6.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb6.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb6.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb6ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton17.setText("jToggleButton1");
-        jToggleButton17.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton17.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton17.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb9.setText("jToggleButton1");
+        nb9.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb9.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb9.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb9ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton18.setText("jToggleButton1");
-        jToggleButton18.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton18.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton18.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb8.setText("jToggleButton1");
+        nb8.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb8.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb8.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb8ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton19.setText("jToggleButton1");
-        jToggleButton19.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton19.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton19.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb5.setText("jToggleButton1");
+        nb5.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb5.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb5.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb5ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton20.setText("jToggleButton1");
-        jToggleButton20.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton20.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton20.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb12.setText("jToggleButton1");
+        nb12.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb12.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb12.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb12ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton21.setText("jToggleButton1");
-        jToggleButton21.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton21.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton21.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb11.setText("jToggleButton1");
+        nb11.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb11.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb11.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb11ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton22.setText("jToggleButton1");
-        jToggleButton22.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton22.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton22.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb14.setText("jToggleButton1");
+        nb14.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb14.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb14.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb14ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton23.setText("jToggleButton1");
-        jToggleButton23.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton23.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton23.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb13.setText("jToggleButton1");
+        nb13.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb13.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb13.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb13ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton24.setText("jToggleButton1");
-        jToggleButton24.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton24.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton24.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb17.setText("jToggleButton1");
+        nb17.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb17.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb17.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb17ActionPerformed(evt);
+            }
+        });
 
-        jToggleButton25.setText("jToggleButton1");
-        jToggleButton25.setMaximumSize(new java.awt.Dimension(50, 50));
-        jToggleButton25.setMinimumSize(new java.awt.Dimension(50, 50));
-        jToggleButton25.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb16.setText("jToggleButton1");
+        nb16.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb16.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb16.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb16ActionPerformed(evt);
+            }
+        });
+
+        nb19.setText("jToggleButton1");
+        nb19.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb19.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb19.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb19ActionPerformed(evt);
+            }
+        });
+
+        nb18.setText("jToggleButton1");
+        nb18.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb18.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb18.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb18ActionPerformed(evt);
+            }
+        });
+
+        nb15.setText("jToggleButton1");
+        nb15.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb15.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb15.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb15ActionPerformed(evt);
+            }
+        });
+
+        nb10.setText("jToggleButton1");
+        nb10.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb10.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb10.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb10ActionPerformed(evt);
+            }
+        });
+
+        nb22.setText("jToggleButton1");
+        nb22.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb22.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb22.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb22ActionPerformed(evt);
+            }
+        });
+
+        nb21.setText("jToggleButton1");
+        nb21.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb21.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb21.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb21ActionPerformed(evt);
+            }
+        });
+
+        nb24.setText("jToggleButton1");
+        nb24.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb24.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb24.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb24ActionPerformed(evt);
+            }
+        });
+
+        nb23.setText("jToggleButton1");
+        nb23.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb23.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb23.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb23ActionPerformed(evt);
+            }
+        });
+
+        nb20.setText("jToggleButton1");
+        nb20.setMaximumSize(new java.awt.Dimension(50, 50));
+        nb20.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb20.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb20ActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -277,6 +400,12 @@ public class BingoScreen extends javax.swing.JFrame {
         jLabel10.setMinimumSize(new java.awt.Dimension(50, 50));
         jLabel10.setPreferredSize(new java.awt.Dimension(50, 50));
 
+        pedra.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        pedra.setText("10");
+
+        contador.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        contador.setText("10");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -295,47 +424,54 @@ public class BingoScreen extends javax.swing.JFrame {
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jToggleButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jToggleButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jToggleButton7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jToggleButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(nb8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nb9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nb6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(nb7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jToggleButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton11, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(nb10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jToggleButton16, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
-                    .addComponent(jToggleButton15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb18, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jToggleButton25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb22, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(nb24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(124, 124, 124))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(pedra)
+                .addGap(51, 51, 51))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(411, Short.MAX_VALUE)
+                    .addComponent(contador)
+                    .addGap(41, 41, 41)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -355,77 +491,468 @@ public class BingoScreen extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jToggleButton10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(nb0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(11, 11, 11)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jToggleButton3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jToggleButton5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nb3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButton4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(nb4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jToggleButton20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nb10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(12, 12, 12)
-                        .addComponent(jToggleButton12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nb11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jToggleButton11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nb12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jToggleButton14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nb13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jToggleButton13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nb14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jToggleButton19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jToggleButton25, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(nb15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(nb20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(12, 12, 12)
-                        .addComponent(jToggleButton16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nb16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jToggleButton15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nb17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jToggleButton18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nb18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jToggleButton17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(nb19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(62, 62, 62)
+                        .addGap(3, 3, 3)
+                        .addComponent(pedra)
+                        .addGap(2, 2, 2)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jToggleButton7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nb6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButton6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nb7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nb8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButton8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(nb9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jToggleButton22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nb21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButton21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nb22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButton24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(nb23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jToggleButton23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addGap(40, 40, 40))
+                                .addComponent(nb24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(57, 57, 57))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addContainerGap(416, Short.MAX_VALUE)
+                    .addComponent(contador)
+                    .addGap(47, 47, 47)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton10ActionPerformed
+    private void nb5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb5ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb5.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb5ActionPerformed
+
+    private void nb0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb0ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb0.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb0ActionPerformed
+
+    private void nb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb1ActionPerformed
+                Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb1.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb1ActionPerformed
+
+    private void nb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb2ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb2.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb2ActionPerformed
+
+    private void nb3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb3ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb3.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb3ActionPerformed
+
+    private void nb4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb4ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb4.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb4ActionPerformed
+
+    private void nb6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb6ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb6.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb6ActionPerformed
+
+    private void nb7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb7ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb7.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb7ActionPerformed
+
+    private void nb8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb8ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb8.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb8ActionPerformed
+
+    private void nb9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb9ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb9.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb9ActionPerformed
+
+    private void nb10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb10ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb10.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb10ActionPerformed
+
+    private void nb11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb11ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb11.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb11ActionPerformed
+
+    private void nb12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb12ActionPerformed
+        JOptionPane.showMessageDialog(null, "NÃO PRECISA CONFIRMAR O TCP PORRA", "ERROR", JOptionPane.ERROR_MESSAGE);
+    }//GEN-LAST:event_nb12ActionPerformed
+
+    private void nb13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb13ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb13.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb13ActionPerformed
+
+    private void nb14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb14ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb14.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb14ActionPerformed
+
+    private void nb15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb15ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb15.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb15ActionPerformed
+
+    private void nb16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb16ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb16.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb16ActionPerformed
+
+    private void nb17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb17ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb17.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb17ActionPerformed
+
+    private void nb18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb18ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb18.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb18ActionPerformed
+
+    private void nb19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb19ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb19.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb19ActionPerformed
+
+    private void nb20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb20ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb20.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb20ActionPerformed
+
+    private void nb21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb21ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb21.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb21ActionPerformed
+
+    private void nb22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb22ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb22.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb22ActionPerformed
+
+    private void nb23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb23ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb23.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb23ActionPerformed
+
+    private void nb24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb24ActionPerformed
+        Client.jsonSend.put("STATUS", "sucesso");
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "marca");
+        Client.jsonSend.put("CARTELA", Integer.valueOf(nb24.getText()));
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_nb24ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -463,6 +990,7 @@ public class BingoScreen extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public static javax.swing.JLabel contador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
@@ -474,30 +1002,31 @@ public class BingoScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton10;
-    private javax.swing.JToggleButton jToggleButton11;
-    private javax.swing.JToggleButton jToggleButton12;
-    private javax.swing.JToggleButton jToggleButton13;
-    private javax.swing.JToggleButton jToggleButton14;
-    private javax.swing.JToggleButton jToggleButton15;
-    private javax.swing.JToggleButton jToggleButton16;
-    private javax.swing.JToggleButton jToggleButton17;
-    private javax.swing.JToggleButton jToggleButton18;
-    private javax.swing.JToggleButton jToggleButton19;
-    private javax.swing.JToggleButton jToggleButton2;
-    private javax.swing.JToggleButton jToggleButton20;
-    private javax.swing.JToggleButton jToggleButton21;
-    private javax.swing.JToggleButton jToggleButton22;
-    private javax.swing.JToggleButton jToggleButton23;
-    private javax.swing.JToggleButton jToggleButton24;
-    private javax.swing.JToggleButton jToggleButton25;
-    private javax.swing.JToggleButton jToggleButton3;
-    private javax.swing.JToggleButton jToggleButton4;
-    private javax.swing.JToggleButton jToggleButton5;
-    private javax.swing.JToggleButton jToggleButton6;
-    private javax.swing.JToggleButton jToggleButton7;
-    private javax.swing.JToggleButton jToggleButton8;
-    private javax.swing.JToggleButton jToggleButton9;
+    public static javax.swing.JToggleButton nb0;
+    public static javax.swing.JToggleButton nb1;
+    public static javax.swing.JToggleButton nb10;
+    public static javax.swing.JToggleButton nb11;
+    public static javax.swing.JToggleButton nb12;
+    public static javax.swing.JToggleButton nb13;
+    public static javax.swing.JToggleButton nb14;
+    public static javax.swing.JToggleButton nb15;
+    public static javax.swing.JToggleButton nb16;
+    public static javax.swing.JToggleButton nb17;
+    public static javax.swing.JToggleButton nb18;
+    public static javax.swing.JToggleButton nb19;
+    public static javax.swing.JToggleButton nb2;
+    public static javax.swing.JToggleButton nb20;
+    public static javax.swing.JToggleButton nb21;
+    public static javax.swing.JToggleButton nb22;
+    public static javax.swing.JToggleButton nb23;
+    public static javax.swing.JToggleButton nb24;
+    public static javax.swing.JToggleButton nb3;
+    public static javax.swing.JToggleButton nb4;
+    public static javax.swing.JToggleButton nb5;
+    public static javax.swing.JToggleButton nb6;
+    public static javax.swing.JToggleButton nb7;
+    public static javax.swing.JToggleButton nb8;
+    public static javax.swing.JToggleButton nb9;
+    public static javax.swing.JLabel pedra;
     // End of variables declaration//GEN-END:variables
 }

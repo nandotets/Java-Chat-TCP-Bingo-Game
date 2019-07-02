@@ -15,6 +15,7 @@ public class CardType {
 
     private ClientType client;
     private ArrayList<Integer> card;
+    private ArrayList<Integer> has;
 
     public CardType(ClientType client, ArrayList<Integer> card) {
         this.client = client;
@@ -47,6 +48,20 @@ public class CardType {
      */
     public void setCard(ArrayList<Integer> card) {
         this.card = card;
+    }
+
+    /**
+     * @return the has
+     */
+    public ArrayList<Integer> getHas() {
+        return has;
+    }
+
+    /**
+     * @param has the has to set
+     */
+    public void setHas(int has) {
+        this.has.add(has);
     }
 
 }

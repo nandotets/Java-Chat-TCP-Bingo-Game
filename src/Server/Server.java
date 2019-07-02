@@ -45,6 +45,7 @@ public class Server extends Thread {
     private BufferedWriter buffWr;
     private Writer outWr;
     private OutputStream out;
+    private static ArrayList<Integer> draw = new ArrayList<>();
     private static JSONObject jsonSend = new JSONObject();
     private static JSONObject jsonReceived = new JSONObject();
     public static Thread countdown = new Countdown(-1);
@@ -77,6 +78,20 @@ public class Server extends Thread {
                 ServerScreen.areaReceive.append("• " + msg + "\r\n");
                 msg = (String) jsonReceived.get("COD");
                 switch (msg) {
+                    case "marca": {
+                        cliente.setBuffWr(buffWr);
+                        cliente.setNome((String) jsonReceived.get("NOME"));
+                        for (CardType card : cardList) {
+                            if (cliente.getNome().equals(card.getClient().getNome())){
+                                card.setHas(10);
+                            }
+                        }/*
+                        for (CardType card : cardList) {
+                            ServerScreen.tenho.append("• " + card.getClient().getIp() +"   "+card.getClient().getNome()+"   "+card.getHas()+"\r\n");
+                        }*/
+                        break;
+                    }
+                    
                     case "pronto": {
                         //Recebe nome
                         cliente.setBuffWr(buffWr);
@@ -249,6 +264,12 @@ public class Server extends Thread {
             sendCards();
             return true;
         }
+    }
+    
+    
+    public static Integer drawNumber() {
+        Random randomD = new Random();
+        return randomD.nextInt(75 - 1) + 1;        
     }
 
     public static ArrayList<Integer> generateCard(ClientType client) {
@@ -446,7 +467,7 @@ public class Server extends Thread {
         try {
             jsonSend.clear();
             jsonSend.put("CARTELA", null);
-            jsonSend.put("STATUS", status);
+            jsonSend.put("STATUS", null);
             jsonSend.put("LISTACLIENTE", null);
             jsonSend.put("MSG", null);
             jsonSend.put("NOME", null);
@@ -477,7 +498,37 @@ public class Server extends Thread {
             jsonSend.put("COD", "cartela");
 
             for (CardType card : cardList) {
-                jsonSend.put("CARTELA", card.getCard().toString());
+                jsonSend.put("CARTELA", card.getCard());
+                bufWrAUX = (BufferedWriter) card.getClient().getBuffWr();
+                bufWrAUX.write(jsonSend.toString() + "\r\n");
+                bufWrAUX.flush();
+                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                ServerScreen.setScrollMaximum();
+            }
+        } catch (Exception ex) {
+            System.err.println("Error to send cards: " + ex);
+            ServerScreen.setScrollMaximum();
+        }
+    }
+    
+    
+    public static void sendNumber() {
+        BufferedWriter bufWrAUX;
+        int drawnb = drawNumber();
+        
+        try {
+            jsonSend.clear();
+            while(!numCheck(draw, drawnb)){
+                drawnb = drawNumber();
+            }
+            
+            jsonSend.put("CARTELA", drawnb);
+            jsonSend.put("STATUS", null);
+            jsonSend.put("LISTACLIENTE", null);
+            jsonSend.put("MSG", null);
+            jsonSend.put("NOME", null);
+            jsonSend.put("COD", "sorteado");
+            for (CardType card : cardList) {
                 bufWrAUX = (BufferedWriter) card.getClient().getBuffWr();
                 bufWrAUX.write(jsonSend.toString() + "\r\n");
                 bufWrAUX.flush();

@@ -295,21 +295,52 @@ public class Client extends javax.swing.JFrame {
                                 break;
                             }
                             case "tempo": {
-                                msg = (String) jsonReceived.get("STATUS");
-                                switch (msg) {
-                                    case "sucesso": {
-                                        ReadyBingoScreen.contador.setText("30");
-                                        Countdown.setNum(30);
-                                        Countdown.setCount(30);
-                                        break;
-                                    }
-                                    case "falha": {
-                                        Countdown.setNum(-1);
-                                        Countdown.setCount(-1);
-                                        ReadyBingoScreen.contador.setText("30");
-                                        break;
-                                    }
-                                }
+                                ReadyBingoScreen.contador.setText("30");
+                                Countdown.setNum(30);
+                                Countdown.setCount(30);
+                                msg = null;
+                                break;
+                            }
+                            case "cartela":{
+                                ArrayList<Integer> cartela =  (ArrayList<Integer>) jsonReceived.get("CARTELA");
+                                bingoScreen.setVisible(true);
+                                bingoScreen.setLocationRelativeTo(null);
+                                bingoScreen.setAlwaysOnTop(true);
+                                readyScreen.setVisible(false);
+                                        
+                                BingoScreen.nb0.setText(String.valueOf(cartela.get(0)));
+                                BingoScreen.nb1.setText(String.valueOf(cartela.get(1)));
+                                BingoScreen.nb2.setText(String.valueOf(cartela.get(2)));
+                                BingoScreen.nb3.setText(String.valueOf(cartela.get(3)));
+                                BingoScreen.nb4.setText(String.valueOf(cartela.get(4)));
+                                BingoScreen.nb5.setText(String.valueOf(cartela.get(5)));
+                                BingoScreen.nb6.setText(String.valueOf(cartela.get(6)));
+                                BingoScreen.nb7.setText(String.valueOf(cartela.get(7)));
+                                BingoScreen.nb8.setText(String.valueOf(cartela.get(8)));
+                                BingoScreen.nb9.setText(String.valueOf(cartela.get(9)));
+                                BingoScreen.nb10.setText(String.valueOf(cartela.get(10)));
+                                BingoScreen.nb11.setText(String.valueOf(cartela.get(11)));
+                                BingoScreen.nb12.setText(String.valueOf(cartela.get(12)));
+                                BingoScreen.nb13.setText(String.valueOf(cartela.get(13)));
+                                BingoScreen.nb14.setText(String.valueOf(cartela.get(14)));
+                                BingoScreen.nb15.setText(String.valueOf(cartela.get(15)));
+                                BingoScreen.nb16.setText(String.valueOf(cartela.get(16)));
+                                BingoScreen.nb17.setText(String.valueOf(cartela.get(17)));
+                                BingoScreen.nb18.setText(String.valueOf(cartela.get(18)));
+                                BingoScreen.nb19.setText(String.valueOf(cartela.get(19)));
+                                BingoScreen.nb20.setText(String.valueOf(cartela.get(20)));
+                                BingoScreen.nb21.setText(String.valueOf(cartela.get(21)));
+                                BingoScreen.nb22.setText(String.valueOf(cartela.get(22)));
+                                BingoScreen.nb23.setText(String.valueOf(cartela.get(23)));
+                                BingoScreen.nb24.setText(String.valueOf(cartela.get(24)));
+                                
+                                msg = null;
+                                break;
+                            }
+                            case "sorteado":{
+                                msg = String.valueOf(jsonReceived.get("CARTELA"));
+                                BingoScreen.pedra.setText(msg);
+                                
                                 msg = null;
                                 break;
                             }
