@@ -6,6 +6,7 @@
 package Client;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -78,6 +79,11 @@ public class BingoScreen extends javax.swing.JFrame {
         setResizable(false);
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/bingo-logo.png"))); // NOI18N
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
 
         nb0.setText("jToggleButton1");
         nb0.setMaximumSize(new java.awt.Dimension(50, 50));
@@ -567,12 +573,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void nb5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb5ActionPerformed
-        Client.jsonSend.put("STATUS", "sucesso");
+       ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb5.getText()));
+         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb5.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -583,12 +591,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb5ActionPerformed
 
     private void nb0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb0ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb0.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb0.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -599,12 +609,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb0ActionPerformed
 
     private void nb1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb1ActionPerformed
-                Client.jsonSend.put("STATUS", "sucesso");
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb1.getText()));
+        Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb1.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -615,12 +627,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb1ActionPerformed
 
     private void nb2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb2ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb2.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb2.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -631,12 +645,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb2ActionPerformed
 
     private void nb3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb3ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb3.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb3.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -647,12 +663,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb3ActionPerformed
 
     private void nb4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb4ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb4.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb4.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -663,12 +681,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb4ActionPerformed
 
     private void nb6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb6ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb6.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb6.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -679,12 +699,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb6ActionPerformed
 
     private void nb7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb7ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb7.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb7.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -695,12 +717,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb7ActionPerformed
 
     private void nb8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb8ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb8.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb8.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -711,12 +735,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb8ActionPerformed
 
     private void nb9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb9ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb9.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb9.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -727,12 +753,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb9ActionPerformed
 
     private void nb10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb10ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb10.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb10.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -743,12 +771,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb10ActionPerformed
 
     private void nb11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb11ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb11.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb11.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -759,16 +789,18 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb11ActionPerformed
 
     private void nb12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb12ActionPerformed
-        JOptionPane.showMessageDialog(null, "NÃO PRECISA CONFIRMAR O TCP PORRA", "ERROR", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "NÃO PRECISA CONFIRMAR O TCP\nLink para comprovar\nhttps://en.wikipedia.org/wiki/Transmission_Control_Protocol", "ERROR", JOptionPane.ERROR_MESSAGE);
     }//GEN-LAST:event_nb12ActionPerformed
 
     private void nb13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb13ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb13.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb13.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -779,12 +811,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb13ActionPerformed
 
     private void nb14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb14ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb14.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb14.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -795,12 +829,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb14ActionPerformed
 
     private void nb15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb15ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb15.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb15.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -811,12 +847,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb15ActionPerformed
 
     private void nb16ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb16ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb16.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb16.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -827,12 +865,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb16ActionPerformed
 
     private void nb17ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb17ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb17.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb17.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -843,12 +883,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb17ActionPerformed
 
     private void nb18ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb18ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb18.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb18.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -859,12 +901,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb18ActionPerformed
 
     private void nb19ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb19ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb19.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb19.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -875,12 +919,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb19ActionPerformed
 
     private void nb20ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb20ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb20.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb20.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -891,12 +937,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb20ActionPerformed
 
     private void nb21ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb21ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb21.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb21.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -907,12 +955,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb21ActionPerformed
 
     private void nb22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb22ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb22.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb22.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -923,12 +973,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb22ActionPerformed
 
     private void nb23ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb23ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb23.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb23.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -939,12 +991,14 @@ public class BingoScreen extends javax.swing.JFrame {
     }//GEN-LAST:event_nb23ActionPerformed
 
     private void nb24ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nb24ActionPerformed
+        ArrayList<Integer> cartela = new ArrayList<Integer>();
+        cartela.add(Integer.valueOf(nb24.getText()));
         Client.jsonSend.put("STATUS", "sucesso");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);
         Client.jsonSend.put("NOME", Client.username);
         Client.jsonSend.put("COD", "marca");
-        Client.jsonSend.put("CARTELA", Integer.valueOf(nb24.getText()));
+        Client.jsonSend.put("CARTELA", cartela);
         try {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
@@ -953,6 +1007,22 @@ public class BingoScreen extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_nb24ActionPerformed
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
+        Client.jsonSend.put("STATUS", null);
+        Client.jsonSend.put("LISTACLIENTE", null);
+        Client.jsonSend.put("MSG", null);
+        Client.jsonSend.put("NOME", Client.username);
+        Client.jsonSend.put("COD", "bingo");
+        Client.jsonSend.put("CARTELA", null);
+        try {
+            Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
+            Client.buffWr.flush();
+            System.out.println("SEND: " + Client.jsonSend.toString());
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+        }                                  
+    }//GEN-LAST:event_jLabel12MouseClicked
 
     /**
      * @param args the command line arguments

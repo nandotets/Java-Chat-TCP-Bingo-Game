@@ -284,9 +284,9 @@ public class Client extends javax.swing.JFrame {
                                 msg = (String) jsonReceived.get("STATUS");
                                 switch (msg) {
                                     case "sucesso": {
-
                                         break;
                                     }
+
                                     case "falha": {
 
                                         break;
@@ -294,6 +294,7 @@ public class Client extends javax.swing.JFrame {
                                 }
                                 break;
                             }
+
                             case "tempo": {
                                 ReadyBingoScreen.contador.setText("30");
                                 Countdown.setNum(30);
@@ -301,13 +302,13 @@ public class Client extends javax.swing.JFrame {
                                 msg = null;
                                 break;
                             }
-                            case "cartela":{
-                                ArrayList<Integer> cartela =  (ArrayList<Integer>) jsonReceived.get("CARTELA");
+                            case "cartela": {
+                                ArrayList<Integer> cartela = (ArrayList<Integer>) jsonReceived.get("CARTELA");
                                 bingoScreen.setVisible(true);
                                 bingoScreen.setLocationRelativeTo(null);
                                 bingoScreen.setAlwaysOnTop(true);
                                 readyScreen.setVisible(false);
-                                        
+
                                 BingoScreen.nb0.setText(String.valueOf(cartela.get(0)));
                                 BingoScreen.nb1.setText(String.valueOf(cartela.get(1)));
                                 BingoScreen.nb2.setText(String.valueOf(cartela.get(2)));
@@ -333,15 +334,35 @@ public class Client extends javax.swing.JFrame {
                                 BingoScreen.nb22.setText(String.valueOf(cartela.get(22)));
                                 BingoScreen.nb23.setText(String.valueOf(cartela.get(23)));
                                 BingoScreen.nb24.setText(String.valueOf(cartela.get(24)));
-                                
+
                                 msg = null;
                                 break;
                             }
-                            case "sorteado":{
-                                msg = String.valueOf(jsonReceived.get("CARTELA"));
-                                BingoScreen.pedra.setText(msg);
-                                
+                            case "sorteado": {
+                                ArrayList<Integer> cartela = (ArrayList<Integer>) jsonReceived.get("CARTELA");
+                                BingoScreen.pedra.setText(String.valueOf(cartela.get(0)));
                                 msg = null;
+                                break;
+                            }
+                            case "rbingo": {
+                                msg = (String) jsonReceived.get("STATUS");
+                                switch (msg) {
+                                    case "sucesso": {
+                                        JSONArray lista = (JSONArray) jsonReceived.get("LISTACLIENTE");
+                                        if (lista != null) {
+                                            JSONObject origem = (JSONObject) lista.get(0);
+                                            if (origem.get("IP").equals(host)) {
+                                                bingoScreen.setVisible(false);
+                                                JOptionPane.showMessageDialog(null, "Você Ganhou não faço ideia de como vas aconteceu!!!");
+                                            }
+                                        }
+                                        break;
+                                    }
+                                    case "falha": {
+                                        JOptionPane.showMessageDialog(null, "Ninguem ganhou nada!!!");
+                                        break;
+                                    }
+                                }
                                 break;
                             }
                         }

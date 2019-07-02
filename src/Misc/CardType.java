@@ -20,6 +20,7 @@ public class CardType {
     public CardType(ClientType client, ArrayList<Integer> card) {
         this.client = client;
         this.card = card;
+        this.has = new ArrayList<Integer>();
     }
 
     /**
