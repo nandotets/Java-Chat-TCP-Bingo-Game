@@ -47,7 +47,7 @@ public class Countdown extends Thread implements Runnable {
                             setNumGame(0);
                             chose();
                             Countdown.setCount(30);
-                            Countdown.setNum(-1);
+                            Countdown.setNum(30);
                         }
                     }
                 } catch (Exception ex) {
@@ -71,11 +71,8 @@ public class Countdown extends Thread implements Runnable {
                         Countdown.setCountGame(10);
                         Countdown.setNumGame(10);                       
                     }
-                    if(getCount() == -2){
-                        Countdown.setCountGame(0);
-                        Countdown.setNumGame(0);   
-                        Countdown.setNum(-1);
-                        run();
+                    if(getCountGame() == -2){
+                        break;  
                     }
                 } catch (Exception ex) {
                     countdownGameClient();

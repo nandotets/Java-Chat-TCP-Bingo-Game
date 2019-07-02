@@ -311,6 +311,7 @@ public class Server extends Thread {
     }
 
     public static Boolean startGame() {
+        draw.clear();
         if (readyList.size() < 1) {
             return false;
         } else {
