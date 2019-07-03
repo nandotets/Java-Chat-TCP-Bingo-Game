@@ -287,11 +287,14 @@ public class Client extends javax.swing.JFrame {
                                 msg = (String) jsonReceived.get("STATUS");
                                 switch (msg) {
                                     case "sucesso": {
-
+                                        Countdown.setCount(30);
+                                        Countdown.setNum(30);
+                                        Countdown.setCountGame(-1);
+                                        Countdown.setNumGame(-1);
                                         break;
                                     }
 
-                                    case "falha": {
+                                    default: {
 
                                         break;
                                     }
@@ -310,7 +313,6 @@ public class Client extends javax.swing.JFrame {
                                 ArrayList<Integer> cartela = (ArrayList<Integer>) jsonReceived.get("CARTELA");
                                 bingoScreen.setVisible(true);
                                 bingoScreen.setLocationRelativeTo(null);
-                                bingoScreen.setAlwaysOnTop(true);
                                 readyScreen.setVisible(false);
 
                                 BingoScreen.nb0.setText(String.valueOf(cartela.get(0)));
@@ -338,7 +340,32 @@ public class Client extends javax.swing.JFrame {
                                 BingoScreen.nb22.setText(String.valueOf(cartela.get(22)));
                                 BingoScreen.nb23.setText(String.valueOf(cartela.get(23)));
                                 BingoScreen.nb24.setText(String.valueOf(cartela.get(24)));
-
+                                BingoScreen.nb0.setSelected(false);
+                                BingoScreen.nb1.setSelected(false);
+                                BingoScreen.nb2.setSelected(false);
+                                BingoScreen.nb3.setSelected(false);
+                                BingoScreen.nb4.setSelected(false);
+                                BingoScreen.nb5.setSelected(false);
+                                BingoScreen.nb6.setSelected(false);
+                                BingoScreen.nb7.setSelected(false);
+                                BingoScreen.nb8.setSelected(false);
+                                BingoScreen.nb9.setSelected(false);
+                                BingoScreen.nb10.setSelected(false);
+                                BingoScreen.nb11.setSelected(false);
+                                BingoScreen.nb12.setSelected(false);
+                                BingoScreen.nb13.setSelected(false);
+                                BingoScreen.nb14.setSelected(false);
+                                BingoScreen.nb15.setSelected(false);
+                                BingoScreen.nb16.setSelected(false);
+                                BingoScreen.nb17.setSelected(false);
+                                BingoScreen.nb18.setSelected(false);
+                                BingoScreen.nb19.setSelected(false);
+                                BingoScreen.nb20.setSelected(false);
+                                BingoScreen.nb21.setSelected(false);
+                                BingoScreen.nb22.setSelected(false);
+                                BingoScreen.nb23.setSelected(false);
+                                BingoScreen.nb24.setSelected(false);
+                                BingoScreen.pedra.setText("");
                                 msg = null;
                                 break;
                             }
@@ -358,8 +385,6 @@ public class Client extends javax.swing.JFrame {
                                 } else if (sorteadoInt <= 75) {
                                     BingoScreen.pedra.setText("O " + sorteadoString);
                                 }
-
-                                //BingoScreen.pedra.setText(sorteadoString);
                                 msg = null;
                                 break;
                             }
@@ -370,9 +395,20 @@ public class Client extends javax.swing.JFrame {
                                         JSONArray lista = (JSONArray) jsonReceived.get("LISTACLIENTE");
                                         if (lista != null) {
                                             JSONObject origem = (JSONObject) lista.get(0);
-                                            if (origem.get("IP").equals(host)) {
-                                                bingoScreen.setVisible(false);
-                                                JOptionPane.showMessageDialog(null, "Você Ganhou não faço ideia de como mas aconteceu!!!");
+                                            JOptionPane.showMessageDialog(null, origem.get("NOME") + " ganhou! Não faço ideia de como, mas aconteceu!!!");
+                                            bingoScreen.dispose();
+                                            jsonSend.clear();
+                                            jsonSend.put("LISTACLIENTE", null);
+                                            jsonSend.put("STATUS", "falha");
+                                            jsonSend.put("MSG", null);
+                                            jsonSend.put("NOME", Client.username);
+                                            jsonSend.put("COD", "pronto");
+                                            try {
+                                                buffWr.write(Client.jsonSend.toString() + "\r\n");
+                                                buffWr.flush();
+                                                System.out.println("SEND: " + Client.jsonSend.toString());
+                                            } catch (IOException ex) {
+                                                //JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
                                             }
                                         }
                                         break;
@@ -1151,6 +1187,10 @@ public class Client extends javax.swing.JFrame {
         readyScreen.setVisible(true);
         readyScreen.setLocationRelativeTo(null);
         readyScreen.setAlwaysOnTop(false);
+        Countdown.setCount(30);
+        Countdown.setNum(30);
+        Countdown.setNumGame(-1);
+        Countdown.setCountGame(-1);
     }//GEN-LAST:event_menuBingoActionPerformed
 
     /**

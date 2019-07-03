@@ -86,30 +86,46 @@ public class Server extends Thread {
                         for (int i = 0; i < cardList.size(); i++) {
                             if (cliente.getNome().equals((String) cardList.get(i).getClient().getNome())) {
                                 if (cardList.get(i).getHas().size() >= 3) {;
+                                    JSONArray array = new JSONArray();
+                                    JSONObject origem = new JSONObject();
+                                    origem.put("PORTA", cliente.getPorta());
+                                    origem.put("IP", cliente.getIp());
+                                    origem.put("NOME", cliente.getNome());
+                                    array.add(origem);
                                     jsonSend.clear();
+                                    jsonSend.put("CARTELA", null);
+                                    jsonSend.put("LISTACLIENTE", array);
+                                    jsonSend.put("MSG", null);
+                                    jsonSend.put("NOME", null);
+                                    jsonSend.put("COD", "rbingo");
                                     jsonSend.put("STATUS", "sucesso");
-
+                                    for (ClientType clients : readyList) {
+                                        bufWrAUX = (BufferedWriter) clients.getBuffWr();
+                                        bufWrAUX.write(jsonSend.toString() + "\r\n");
+                                        bufWrAUX.flush();
+                                        ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                                        ServerScreen.setScrollMaximum();
+                                    }
+                                    gameReset();
                                 } else {
+                                    JSONArray array = new JSONArray();
+                                    JSONObject origem = new JSONObject();
+                                    origem.put("PORTA", cliente.getPorta());
+                                    origem.put("IP", cliente.getIp());
+                                    origem.put("NOME", cliente.getNome());
+                                    array.add(origem);
                                     jsonSend.clear();
                                     jsonSend.put("STATUS", "falha");
-                                }
-                                JSONArray array = new JSONArray();
-                                JSONObject origem = new JSONObject();
-                                origem.put("PORTA", cliente.getPorta());
-                                origem.put("IP", cliente.getIp());
-                                origem.put("NOME", cliente.getNome());
-                                array.add(origem);
-                                jsonSend.put("CARTELA", null);
-                                jsonSend.put("LISTACLIENTE", array);
-                                jsonSend.put("MSG", null);
-                                jsonSend.put("NOME", null);
-                                jsonSend.put("COD", "rbingo");
-                                for (ClientType clients : readyList) {
-                                    bufWrAUX = (BufferedWriter) clients.getBuffWr();
-                                    bufWrAUX.write(jsonSend.toString() + "\r\n");
-                                    bufWrAUX.flush();
+                                    jsonSend.put("CARTELA", null);
+                                    jsonSend.put("LISTACLIENTE", array);
+                                    jsonSend.put("MSG", null);
+                                    jsonSend.put("NOME", null);
+                                    jsonSend.put("COD", "rbingo");
+                                    cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
                                     ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
                                     ServerScreen.setScrollMaximum();
+                                    cliente.getBuffWr().flush();
+
                                 }
                             }
                         }
@@ -153,8 +169,11 @@ public class Server extends Thread {
                                 System.out.println(cliente.getNome() + "(" + cliente.getIp() + ")" + " unready to play...");
                                 if (readyList.isEmpty()) {
                                     Countdown.setNum(-1);
-                                    Countdown.setCount(-1);
+                                    Countdown.setCount(30);
+                                    Countdown.setNumGame(-1);
+                                    Countdown.setCountGame(10);
                                     ServerScreen.contador.setText("30");
+                                    gameReset();
                                 }
                             }
                         }
@@ -546,9 +565,9 @@ public class Server extends Thread {
                 }
             } catch (Exception ex) {
                 if (readyList.isEmpty()) {
-                    Countdown.setNum(-1);
+                    Countdown.setNum(30);
                     Countdown.setCount(-1);
-                    Countdown.setNumGame(-1);
+                    Countdown.setNumGame(10);
                     Countdown.setCountGame(-1);
                     ServerScreen.contador.setText("30");
                 }
@@ -567,8 +586,8 @@ public class Server extends Thread {
                     drawnb = drawNumber();
                 }
                 draw.add(drawnb);
-                System.out.println(draw.toString());
-                ArrayList<Integer> drawarray = new ArrayList<Integer>();
+                ServerScreen.pedras.append(draw.toString()+"\r\n");
+                ArrayList<Integer> drawarray = new ArrayList<>();
                 drawarray.add(drawnb);
                 jsonSend.put("CARTELA", drawarray);
                 jsonSend.put("STATUS", null);
@@ -585,22 +604,29 @@ public class Server extends Thread {
                 }
             } catch (Exception ex) {
                 if (readyList.isEmpty()) {
-                    Countdown.setNum(-1);
+                    Countdown.setNum(30);
                     Countdown.setCount(-1);
-                    Countdown.setNumGame(-1);
+                    Countdown.setNumGame(10);
                     Countdown.setCountGame(-1);
                     ServerScreen.contador.setText("30");
                 }
                 ServerScreen.setScrollMaximum();
             }
         } else {
-            Countdown.setNum(-1);
+            Countdown.setNum(30);
             Countdown.setCount(-1);
-            Countdown.setNumGame(-1);
+            Countdown.setNumGame(10);
             Countdown.setCountGame(-1);
             ServerScreen.contador.setText("30");
             ServerScreen.setScrollMaximum();
         }
+    }
+
+    private static void gameReset() {
+        cardList.clear();
+        draw.clear();
+        ServerScreen.pedras.setText("");
+        
     }
 
     private static int configPort() {

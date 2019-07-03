@@ -67,6 +67,10 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="paneReady1" max="32767" attributes="0"/>
                   </Group>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="RECEIVE_MESSAGES1" max="32767" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -98,9 +102,11 @@
                       <Component id="contador" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace pref="21" max="32767" attributes="0"/>
+              <Component id="RECEIVE_MESSAGES1" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Component id="paneReady1" min="-2" pref="138" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -239,7 +245,7 @@
         <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
           <ComponentRef name="contador"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="&lt;html&gt; COUNTDOWN&lt;br&gt; START GAME&lt;/html&gt;"/>
+        <Property name="text" type="java.lang.String" value="COUNTDOWN"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
       </Properties>
     </Component>
@@ -265,6 +271,7 @@
       <SubComponents>
         <Component class="javax.swing.JTextArea" name="pedras">
           <Properties>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="columns" type="int" value="20"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
@@ -274,5 +281,17 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JLabel" name="RECEIVE_MESSAGES1">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="18" style="1"/>
+        </Property>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="labelFor" type="java.awt.Component" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="areaReceive"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="GAME LOG"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>

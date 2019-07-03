@@ -38,18 +38,19 @@ public class Countdown extends Thread implements Runnable {
                     ServerScreen.contador.setText(getCount() + "");
                     Thread.sleep(1000);
                     setCount(getCount() - 1);
-                    if (getCount() == -1) {
-                        if (!Server.startGame()) {
-                            Countdown.setCount(30);
-                            Countdown.setNum(30);
-                            Countdown.setCountGame(-1);
-                            Countdown.setNumGame(-1);
-                        } else {
-                            setCountGame(0);
-                            setNumGame(0);
+                    if (getCount() == 0) {
+                        if (Server.startGame()) {
+                            setCountGame(10);
+                            setNumGame(10);
+                            setCount(30);
+                            setNum(-1);
                             chose();
-                            Countdown.setCount(30);
-                            Countdown.setNum(-1);
+                        } else {
+                            setCount(30);
+                            setNum(30);
+                            setCountGame(-1);
+                            setNumGame(10);
+
                         }
                     }
                 } catch (Exception ex) {
@@ -60,7 +61,6 @@ public class Countdown extends Thread implements Runnable {
     }
 
     public void chose() {
-        setCount(getNumGame());
         while (true) {
             System.out.flush();
             if (getNumGame() != -1) {
@@ -84,21 +84,20 @@ public class Countdown extends Thread implements Runnable {
 
     private void countdownClient() {
         while (true) {
+            System.out.flush();
             if (getNum() != -1) {
                 try {
                     ReadyBingoScreen.contador.setText(getCount() + "");
                     Thread.sleep(1000);
                     setCount(getCount() - 1);
                     if (getCount() == -1) {
-                        Countdown.setCountGame(10);
-                        Countdown.setNumGame(10);
-                        countdownGameClient();
+                        setCountGame(10);
+                        setNumGame(10);
                         setCount(getNum());
+                        countdownGameClient();
                     }
                 } catch (Exception ex) {
                 }
-            } else {
-                break;
             }
         }
 
@@ -106,6 +105,7 @@ public class Countdown extends Thread implements Runnable {
 
     private void countdownGameClient() {
         while (true) {
+            System.out.flush();
             if (getNumGame() != -1) {
                 try {
                     BingoScreen.contador.setText(getCountGame() + "");
@@ -116,8 +116,6 @@ public class Countdown extends Thread implements Runnable {
                     }
                 } catch (Exception ex) {
                 }
-            } else {
-                break;
             }
         }
     }

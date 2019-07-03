@@ -21,7 +21,7 @@ public class BingoScreen extends javax.swing.JFrame {
     public BingoScreen() {
         initComponents();
         setLocationRelativeTo(null);
-
+        
     }
 
     /**
@@ -34,53 +34,54 @@ public class BingoScreen extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel12 = new javax.swing.JLabel();
-        nb0 = new javax.swing.JToggleButton();
-        nb2 = new javax.swing.JToggleButton();
-        nb1 = new javax.swing.JToggleButton();
-        nb4 = new javax.swing.JToggleButton();
-        nb3 = new javax.swing.JToggleButton();
-        nb7 = new javax.swing.JToggleButton();
-        nb6 = new javax.swing.JToggleButton();
-        nb9 = new javax.swing.JToggleButton();
-        nb8 = new javax.swing.JToggleButton();
-        nb5 = new javax.swing.JToggleButton();
-        nb12 = new javax.swing.JToggleButton();
-        nb11 = new javax.swing.JToggleButton();
-        nb14 = new javax.swing.JToggleButton();
-        nb13 = new javax.swing.JToggleButton();
-        nb17 = new javax.swing.JToggleButton();
-        nb16 = new javax.swing.JToggleButton();
-        nb19 = new javax.swing.JToggleButton();
-        nb18 = new javax.swing.JToggleButton();
-        nb15 = new javax.swing.JToggleButton();
-        nb10 = new javax.swing.JToggleButton();
-        nb22 = new javax.swing.JToggleButton();
-        nb21 = new javax.swing.JToggleButton();
-        nb24 = new javax.swing.JToggleButton();
-        nb23 = new javax.swing.JToggleButton();
-        nb20 = new javax.swing.JToggleButton();
+        pedra = new javax.swing.JLabel();
+        contador = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        pedra = new javax.swing.JLabel();
-        contador = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        nb0 = new javax.swing.JToggleButton();
+        nb5 = new javax.swing.JToggleButton();
+        nb10 = new javax.swing.JToggleButton();
+        nb15 = new javax.swing.JToggleButton();
+        nb20 = new javax.swing.JToggleButton();
+        nb1 = new javax.swing.JToggleButton();
+        nb6 = new javax.swing.JToggleButton();
+        nb11 = new javax.swing.JToggleButton();
+        nb16 = new javax.swing.JToggleButton();
+        nb21 = new javax.swing.JToggleButton();
+        nb2 = new javax.swing.JToggleButton();
+        nb7 = new javax.swing.JToggleButton();
+        nb12 = new javax.swing.JToggleButton();
+        nb17 = new javax.swing.JToggleButton();
+        nb22 = new javax.swing.JToggleButton();
+        nb3 = new javax.swing.JToggleButton();
+        nb8 = new javax.swing.JToggleButton();
+        nb13 = new javax.swing.JToggleButton();
+        nb18 = new javax.swing.JToggleButton();
+        nb23 = new javax.swing.JToggleButton();
+        nb4 = new javax.swing.JToggleButton();
+        nb9 = new javax.swing.JToggleButton();
+        nb14 = new javax.swing.JToggleButton();
+        nb19 = new javax.swing.JToggleButton();
+        nb24 = new javax.swing.JToggleButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMinimumSize(new java.awt.Dimension(500, 500));
-        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
             }
         });
 
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Assets/bingo-logo.png"))); // NOI18N
         jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -88,256 +89,15 @@ public class BingoScreen extends javax.swing.JFrame {
             }
         });
 
-        nb0.setText("jToggleButton1");
-        nb0.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb0.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb0.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb0.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb0ActionPerformed(evt);
-            }
-        });
+        pedra.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        pedra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        pedra.setBorder(new javax.swing.border.MatteBorder(null));
 
-        nb2.setText("jToggleButton1");
-        nb2.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb2.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb2.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb2ActionPerformed(evt);
-            }
-        });
+        contador.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
+        contador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        contador.setText("10");
 
-        nb1.setText("jToggleButton1");
-        nb1.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb1.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb1.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb1ActionPerformed(evt);
-            }
-        });
-
-        nb4.setText("jToggleButton1");
-        nb4.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb4.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb4.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb4ActionPerformed(evt);
-            }
-        });
-
-        nb3.setText("jToggleButton1");
-        nb3.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb3.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb3.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb3ActionPerformed(evt);
-            }
-        });
-
-        nb7.setText("jToggleButton1");
-        nb7.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb7.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb7.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb7ActionPerformed(evt);
-            }
-        });
-
-        nb6.setText("jToggleButton1");
-        nb6.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb6.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb6.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb6ActionPerformed(evt);
-            }
-        });
-
-        nb9.setText("jToggleButton1");
-        nb9.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb9.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb9.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb9ActionPerformed(evt);
-            }
-        });
-
-        nb8.setText("jToggleButton1");
-        nb8.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb8.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb8.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb8ActionPerformed(evt);
-            }
-        });
-
-        nb5.setText("jToggleButton1");
-        nb5.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb5.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb5.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb5ActionPerformed(evt);
-            }
-        });
-
-        nb12.setText("jToggleButton1");
-        nb12.setEnabled(false);
-        nb12.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb12.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb12.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb12.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb12ActionPerformed(evt);
-            }
-        });
-
-        nb11.setText("jToggleButton1");
-        nb11.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb11.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb11.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb11ActionPerformed(evt);
-            }
-        });
-
-        nb14.setText("jToggleButton1");
-        nb14.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb14.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb14.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb14.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb14ActionPerformed(evt);
-            }
-        });
-
-        nb13.setText("jToggleButton1");
-        nb13.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb13.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb13.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb13.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb13ActionPerformed(evt);
-            }
-        });
-
-        nb17.setText("jToggleButton1");
-        nb17.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb17.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb17.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb17.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb17ActionPerformed(evt);
-            }
-        });
-
-        nb16.setText("jToggleButton1");
-        nb16.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb16.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb16.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb16.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb16ActionPerformed(evt);
-            }
-        });
-
-        nb19.setText("jToggleButton1");
-        nb19.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb19.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb19.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb19.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb19ActionPerformed(evt);
-            }
-        });
-
-        nb18.setText("jToggleButton1");
-        nb18.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb18.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb18.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb18.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb18ActionPerformed(evt);
-            }
-        });
-
-        nb15.setText("jToggleButton1");
-        nb15.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb15.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb15.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb15.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb15ActionPerformed(evt);
-            }
-        });
-
-        nb10.setText("jToggleButton1");
-        nb10.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb10.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb10.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb10ActionPerformed(evt);
-            }
-        });
-
-        nb22.setText("jToggleButton1");
-        nb22.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb22.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb22.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb22.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb22ActionPerformed(evt);
-            }
-        });
-
-        nb21.setText("jToggleButton1");
-        nb21.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb21.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb21.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb21.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb21ActionPerformed(evt);
-            }
-        });
-
-        nb24.setText("jToggleButton1");
-        nb24.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb24.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb24.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb24.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb24ActionPerformed(evt);
-            }
-        });
-
-        nb23.setText("jToggleButton1");
-        nb23.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb23.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb23.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb23.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb23ActionPerformed(evt);
-            }
-        });
-
-        nb20.setText("jToggleButton1");
-        nb20.setMaximumSize(new java.awt.Dimension(50, 50));
-        nb20.setMinimumSize(new java.awt.Dimension(50, 50));
-        nb20.setPreferredSize(new java.awt.Dimension(50, 50));
-        nb20.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                nb20ActionPerformed(evt);
-            }
-        });
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -345,6 +105,7 @@ public class BingoScreen extends javax.swing.JFrame {
         jLabel1.setMaximumSize(new java.awt.Dimension(50, 50));
         jLabel1.setMinimumSize(new java.awt.Dimension(50, 50));
         jLabel1.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, -1, -1));
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -352,6 +113,7 @@ public class BingoScreen extends javax.swing.JFrame {
         jLabel2.setMaximumSize(new java.awt.Dimension(50, 50));
         jLabel2.setMinimumSize(new java.awt.Dimension(50, 50));
         jLabel2.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 0, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -360,13 +122,7 @@ public class BingoScreen extends javax.swing.JFrame {
         jLabel3.setMinimumSize(new java.awt.Dimension(50, 50));
         jLabel3.setName(""); // NOI18N
         jLabel3.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("O");
-        jLabel4.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel4.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel4.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -374,208 +130,356 @@ public class BingoScreen extends javax.swing.JFrame {
         jLabel5.setMaximumSize(new java.awt.Dimension(50, 50));
         jLabel5.setMinimumSize(new java.awt.Dimension(50, 50));
         jLabel5.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, -1, -1));
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("O");
+        jLabel4.setMaximumSize(new java.awt.Dimension(50, 50));
+        jLabel4.setMinimumSize(new java.awt.Dimension(50, 50));
+        jLabel4.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(298, 0, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("1");
-        jLabel6.setMaximumSize(new java.awt.Dimension(50, 50));
+        jLabel6.setMaximumSize(new java.awt.Dimension(60, 60));
         jLabel6.setMinimumSize(new java.awt.Dimension(50, 50));
         jLabel6.setPreferredSize(new java.awt.Dimension(50, 50));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("3");
-        jLabel7.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel7.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel7.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("2");
-        jLabel8.setMaximumSize(new java.awt.Dimension(50, 50));
+        jLabel8.setMaximumSize(new java.awt.Dimension(60, 60));
         jLabel8.setMinimumSize(new java.awt.Dimension(50, 50));
         jLabel8.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 120, -1, -1));
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("5");
-        jLabel9.setMaximumSize(new java.awt.Dimension(50, 50));
-        jLabel9.setMinimumSize(new java.awt.Dimension(50, 50));
-        jLabel9.setPreferredSize(new java.awt.Dimension(50, 50));
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("3");
+        jLabel7.setMaximumSize(new java.awt.Dimension(60, 60));
+        jLabel7.setMinimumSize(new java.awt.Dimension(50, 50));
+        jLabel7.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 180, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("4");
-        jLabel10.setMaximumSize(new java.awt.Dimension(50, 50));
+        jLabel10.setMaximumSize(new java.awt.Dimension(60, 60));
         jLabel10.setMinimumSize(new java.awt.Dimension(50, 50));
         jLabel10.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 240, -1, -1));
 
-        pedra.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
-        pedra.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        pedra.setText("10");
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("5");
+        jLabel9.setMaximumSize(new java.awt.Dimension(60, 60));
+        jLabel9.setMinimumSize(new java.awt.Dimension(50, 50));
+        jLabel9.setPreferredSize(new java.awt.Dimension(50, 50));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 300, -1, -1));
 
-        contador.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
-        contador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        contador.setText("10");
+        nb0.setText("99");
+        nb0.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb0.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb0.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb0ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb0, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, -1, -1));
+
+        nb5.setText("99");
+        nb5.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb5.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb5.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb5ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb5, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 60, -1, -1));
+
+        nb10.setText("99");
+        nb10.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb10.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb10.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb10ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, -1, -1));
+
+        nb15.setText("99");
+        nb15.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb15.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb15.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb15.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb15ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb15, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 60, -1, -1));
+
+        nb20.setText("99");
+        nb20.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb20.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb20.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb20.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb20ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb20, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 60, -1, -1));
+
+        nb1.setText("99");
+        nb1.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb1.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb1.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, -1, -1));
+
+        nb6.setText("99");
+        nb6.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb6.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb6.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb6ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 120, -1, -1));
+
+        nb11.setText("99");
+        nb11.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb11.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb11.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb11ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb11, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, -1, -1));
+
+        nb16.setText("99");
+        nb16.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb16.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb16.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb16.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb16ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb16, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, -1, -1));
+
+        nb21.setText("99");
+        nb21.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb21.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb21.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb21.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb21ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb21, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 120, -1, -1));
+
+        nb2.setText("99");
+        nb2.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb2.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb2.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, -1, -1));
+
+        nb7.setText("99");
+        nb7.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb7.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb7.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb7ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb7, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 180, -1, -1));
+
+        nb12.setText("jToggleButton1");
+        nb12.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb12.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb12.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb12ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb12, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 180, -1, -1));
+
+        nb17.setText("99");
+        nb17.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb17.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb17.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb17.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb17ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb17, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, -1, -1));
+
+        nb22.setText("99");
+        nb22.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb22.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb22.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb22ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb22, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 180, -1, -1));
+
+        nb3.setText("99");
+        nb3.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb3.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb3.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, -1, -1));
+
+        nb8.setText("99");
+        nb8.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb8.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb8.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb8ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb8, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, -1, -1));
+
+        nb13.setText("99");
+        nb13.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb13.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb13.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb13.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb13ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb13, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 240, -1, -1));
+
+        nb18.setText("99");
+        nb18.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb18.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb18.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb18.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb18ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb18, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, 51, -1));
+
+        nb23.setText("99");
+        nb23.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb23.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb23.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb23.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb23ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb23, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, -1, -1));
+
+        nb4.setText("99");
+        nb4.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb4.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb4.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb4ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb4, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, -1, -1));
+
+        nb9.setText("99");
+        nb9.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb9.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb9.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb9ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb9, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, -1, -1));
+
+        nb14.setText("99");
+        nb14.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb14.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb14.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb14ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb14, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, -1, -1));
+
+        nb19.setText("99");
+        nb19.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb19.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb19.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb19.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb19ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb19, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 49, -1));
+
+        nb24.setText("99");
+        nb24.setMaximumSize(new java.awt.Dimension(60, 60));
+        nb24.setMinimumSize(new java.awt.Dimension(50, 50));
+        nb24.setPreferredSize(new java.awt.Dimension(50, 50));
+        nb24.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                nb24ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(nb24, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 300, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(150, 150, 150)
-                .addComponent(jLabel12)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(57, Short.MAX_VALUE)
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(pedra, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 370, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(nb0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nb5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(nb10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nb15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nb20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(nb1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nb2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nb3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(nb4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(nb9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nb14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(9, 9, 9)
-                                .addComponent(nb19, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nb24, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(nb8, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(7, 7, 7)
-                                .addComponent(nb13, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nb18, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nb23, javax.swing.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(nb7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(nb12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(nb17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(nb6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(nb11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(nb16, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(nb21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(pedra, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                    .addComponent(contador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addComponent(contador, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel12)
-                        .addGap(41, 41, 41)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(nb0, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(nb5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(nb10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(nb15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(nb20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(4, 4, 4)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(184, 184, 184)
-                        .addComponent(pedra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(5, 5, 5)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(nb1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(nb2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb22, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(nb3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(nb23, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(nb4, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(184, 184, 184)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(contador, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(nb9, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(nb14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(nb19, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(nb24, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE)))))))
-                .addGap(52, 52, 52))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel12)
+                .addGap(18, 18, 18)
+                .addComponent(pedra, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(contador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)))
         );
 
         pack();
@@ -1046,7 +950,7 @@ public class BingoScreen extends javax.swing.JFrame {
             Client.buffWr.flush();
             System.out.println("SEND: " + Client.jsonSend.toString());
         } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_formWindowClosing
 
@@ -1064,6 +968,7 @@ public class BingoScreen extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     public static javax.swing.JToggleButton nb0;
     public static javax.swing.JToggleButton nb1;
     public static javax.swing.JToggleButton nb10;

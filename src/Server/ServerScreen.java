@@ -132,6 +132,7 @@ public class ServerScreen extends javax.swing.JFrame {
         contador.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         contador.setText("30");
 
+        pedras.setEditable(false);
         pedras.setColumns(20);
         pedras.setRows(5);
         paneReady1.setViewportView(pedras);
