@@ -268,15 +268,18 @@ public class Client extends javax.swing.JFrame {
                                 ReadyBingoScreen.areaReady.setText("");
                                 readyList.clear();
                                 JSONArray lista = (JSONArray) jsonReceived.get("LISTACLIENTE");
+                                int i = 1;
                                 if (lista != null) {
                                     for (Object obj : lista) {
                                         JSONObject jsonobj = (JSONObject) obj;
                                         ClientType clt = new ClientType((String) jsonobj.get("NOME"), (String) jsonobj.get("IP"), (String) jsonobj.get("PORTA"));
                                         if (ReadyBingoScreen.areaReady.isVisible()) {
-                                            ReadyBingoScreen.areaReady.append(jsonobj.get("NOME") + " (" + jsonobj.get("IP") + ":" + jsonobj.get("PORTA") + ")\r\n");
+                                            ReadyBingoScreen.areaReady.append(i + ") " + jsonobj.get("NOME") + " (" + jsonobj.get("IP") + ":" + jsonobj.get("PORTA") + ")\r\n");
                                         }
+                                        i++;
                                         readyList.add(clt);
                                     }
+                                    i = 0;
                                 }
                                 break;
                             }
@@ -284,6 +287,7 @@ public class Client extends javax.swing.JFrame {
                                 msg = (String) jsonReceived.get("STATUS");
                                 switch (msg) {
                                     case "sucesso": {
+
                                         break;
                                     }
 
@@ -334,40 +338,28 @@ public class Client extends javax.swing.JFrame {
                                 BingoScreen.nb22.setText(String.valueOf(cartela.get(22)));
                                 BingoScreen.nb23.setText(String.valueOf(cartela.get(23)));
                                 BingoScreen.nb24.setText(String.valueOf(cartela.get(24)));
-                                BingoScreen.nb0.setSelected(false);
-                                BingoScreen.nb1.setSelected(false);
-                                BingoScreen.nb2.setSelected(false);
-                                BingoScreen.nb3.setSelected(false);
-                                BingoScreen.nb4.setSelected(false);
-                                BingoScreen.nb5.setSelected(false);
-                                BingoScreen.nb6.setSelected(false);
-                                BingoScreen.nb7.setSelected(false);
-                                BingoScreen.nb8.setSelected(false);
-                                BingoScreen.nb9.setSelected(false);
-                                BingoScreen.nb10.setSelected(false);
-                                BingoScreen.nb11.setSelected(false);
-                                BingoScreen.nb12.setSelected(false);
-                                BingoScreen.nb13.setSelected(false);
-                                BingoScreen.nb14.setSelected(false);
-                                BingoScreen.nb15.setSelected(false);
-                                BingoScreen.nb16.setSelected(false);
-                                BingoScreen.nb17.setSelected(false);
-                                BingoScreen.nb18.setSelected(false);
-                                BingoScreen.nb19.setSelected(false);
-                                BingoScreen.nb20.setSelected(false);
-                                BingoScreen.nb21.setSelected(false);
-                                BingoScreen.nb22.setSelected(false);
-                                BingoScreen.nb23.setSelected(false);
-                                BingoScreen.nb24.setSelected(false);
 
                                 msg = null;
                                 break;
                             }
                             case "sorteado": {
-                                Countdown.setNumGame(10);
-                                Countdown.setCountGame(10);
                                 ArrayList<Integer> cartela = (ArrayList<Integer>) jsonReceived.get("CARTELA");
-                                BingoScreen.pedra.setText(String.valueOf(cartela.get(0)));
+                                String sorteadoString = String.valueOf(cartela.get(0));
+                                int sorteadoInt = Integer.valueOf(sorteadoString);
+
+                                if (sorteadoInt <= 15) {
+                                    BingoScreen.pedra.setText("B " + sorteadoString);
+                                } else if (sorteadoInt <= 30) {
+                                    BingoScreen.pedra.setText("I " + sorteadoString);
+                                } else if (sorteadoInt <= 45) {
+                                    BingoScreen.pedra.setText("N " + sorteadoString);
+                                } else if (sorteadoInt <= 60) {
+                                    BingoScreen.pedra.setText("G " + sorteadoString);
+                                } else if (sorteadoInt <= 75) {
+                                    BingoScreen.pedra.setText("O " + sorteadoString);
+                                }
+
+                                //BingoScreen.pedra.setText(sorteadoString);
                                 msg = null;
                                 break;
                             }
@@ -375,12 +367,13 @@ public class Client extends javax.swing.JFrame {
                                 msg = (String) jsonReceived.get("STATUS");
                                 switch (msg) {
                                     case "sucesso": {
-                                        bingoScreen.setVisible(false);
-                                        
                                         JSONArray lista = (JSONArray) jsonReceived.get("LISTACLIENTE");
                                         if (lista != null) {
                                             JSONObject origem = (JSONObject) lista.get(0);
-                                            JOptionPane.showMessageDialog(null, "Você Ganhou não faço ideia de como vas aconteceu!!!"+origem.get("NOME"));
+                                            if (origem.get("IP").equals(host)) {
+                                                bingoScreen.setVisible(false);
+                                                JOptionPane.showMessageDialog(null, "Você Ganhou não faço ideia de como mas aconteceu!!!");
+                                            }
                                         }
                                         break;
                                     }

@@ -75,6 +75,7 @@ public class ServerScreen extends javax.swing.JFrame {
         contador = new javax.swing.JLabel();
         paneReady1 = new javax.swing.JScrollPane();
         pedras = new javax.swing.JTextArea();
+        RECEIVE_MESSAGES1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(647, 497));
@@ -124,7 +125,7 @@ public class ServerScreen extends javax.swing.JFrame {
         COUNTDOWN.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         COUNTDOWN.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         COUNTDOWN.setLabelFor(contador);
-        COUNTDOWN.setText("<html> COUNTDOWN<br> START GAME</html>");
+        COUNTDOWN.setText("COUNTDOWN");
         COUNTDOWN.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
         contador.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -134,6 +135,11 @@ public class ServerScreen extends javax.swing.JFrame {
         pedras.setColumns(20);
         pedras.setRows(5);
         paneReady1.setViewportView(pedras);
+
+        RECEIVE_MESSAGES1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        RECEIVE_MESSAGES1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        RECEIVE_MESSAGES1.setLabelFor(areaReceive);
+        RECEIVE_MESSAGES1.setText("GAME LOG");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -155,7 +161,7 @@ public class ServerScreen extends javax.swing.JFrame {
                                     .addComponent(READY_CLIENTS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(42, 42, 42)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(COUNTDOWN)
+                                    .addComponent(COUNTDOWN, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(contador, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(0, 27, Short.MAX_VALUE))
                             .addComponent(paneReceive)
@@ -163,7 +169,10 @@ public class ServerScreen extends javax.swing.JFrame {
                             .addComponent(SEND_MESSAGES, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(paneReady1)))
+                        .addComponent(paneReady1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(RECEIVE_MESSAGES1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -186,12 +195,14 @@ public class ServerScreen extends javax.swing.JFrame {
                     .addComponent(paneOnline, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(paneReady, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(COUNTDOWN, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(COUNTDOWN)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(contador)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addComponent(RECEIVE_MESSAGES1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(paneReady1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16))
         );
 
         getAccessibleContext().setAccessibleDescription("");
@@ -213,6 +224,7 @@ public class ServerScreen extends javax.swing.JFrame {
     private javax.swing.JLabel ONLINE_CLIENTS;
     private javax.swing.JLabel READY_CLIENTS;
     private javax.swing.JLabel RECEIVE_MESSAGES;
+    private javax.swing.JLabel RECEIVE_MESSAGES1;
     private javax.swing.JLabel SEND_MESSAGES;
     public static javax.swing.JTextArea areaOnline;
     public static javax.swing.JTextArea areaReady;

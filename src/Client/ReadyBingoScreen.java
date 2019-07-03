@@ -157,6 +157,8 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
             Client.buffWr.write(Client.jsonSend.toString() + "\r\n");
             Client.buffWr.flush();
             System.out.println("SEND: " + Client.jsonSend.toString());
+            bYes.setSelected(false);
+            bNo.setSelected(true);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
         }
@@ -180,8 +182,8 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel COUNTDOWN;
     public static javax.swing.JTextArea areaReady;
-    private javax.swing.JToggleButton bNo;
-    private javax.swing.JToggleButton bYes;
+    public static javax.swing.JToggleButton bNo;
+    public static javax.swing.JToggleButton bYes;
     public static javax.swing.JLabel contador;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;

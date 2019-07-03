@@ -18,7 +18,7 @@ public class Countdown extends Thread implements Runnable {
 
     private static int num;
     private static int count;
-    
+
     private static int numGame;
     private static int countGame;
 
@@ -42,23 +42,25 @@ public class Countdown extends Thread implements Runnable {
                         if (!Server.startGame()) {
                             Countdown.setCount(30);
                             Countdown.setNum(30);
+                            Countdown.setCountGame(-1);
+                            Countdown.setNumGame(-1);
                         } else {
                             setCountGame(0);
                             setNumGame(0);
                             chose();
                             Countdown.setCount(30);
-                            Countdown.setNum(30);
+                            Countdown.setNum(-1);
                         }
                     }
                 } catch (Exception ex) {
-                        countdownClient();
+                    countdownClient();
                 }
             }
         }
     }
-    
+
     public void chose() {
-        setCountGame(getNumGame());
+        setCount(getNumGame());
         while (true) {
             System.out.flush();
             if (getNumGame() != -1) {
@@ -69,14 +71,13 @@ public class Countdown extends Thread implements Runnable {
                     if (getCountGame() == -1) {
                         Server.sendNumber();
                         Countdown.setCountGame(10);
-                        Countdown.setNumGame(10);                       
-                    }
-                    if(getCountGame() == -2){
-                        break;  
+                        Countdown.setNumGame(10);
                     }
                 } catch (Exception ex) {
                     countdownGameClient();
                 }
+            } else {
+                break;
             }
         }
     }
@@ -90,29 +91,33 @@ public class Countdown extends Thread implements Runnable {
                     setCount(getCount() - 1);
                     if (getCount() == -1) {
                         Countdown.setCountGame(10);
-                        Countdown.setNumGame(10);  
+                        Countdown.setNumGame(10);
                         countdownGameClient();
                         setCount(getNum());
                     }
                 } catch (Exception ex) {
                 }
+            } else {
+                break;
             }
         }
 
     }
-    
-    private void countdownGameClient(){
-        while(true){
-            if(getNumGame() != -1){
-                try{
+
+    private void countdownGameClient() {
+        while (true) {
+            if (getNumGame() != -1) {
+                try {
                     BingoScreen.contador.setText(getCountGame() + "");
                     Thread.sleep(1000);
-                 setCountGame(getCountGame() - 1);
+                    setCountGame(getCountGame() - 1);
                     if (getCountGame() == -1) {
                         setCountGame(getNumGame());
                     }
                 } catch (Exception ex) {
                 }
+            } else {
+                break;
             }
         }
     }
@@ -144,7 +149,7 @@ public class Countdown extends Thread implements Runnable {
     public static void setNumGame(int aNum) {
         numGame = aNum;
     }
-    
+
     /**
      * @return the count
      */
@@ -158,7 +163,7 @@ public class Countdown extends Thread implements Runnable {
     public static void setCount(int aCount) {
         count = aCount;
     }
-    
+
     /**
      * @return the countGame
      */
