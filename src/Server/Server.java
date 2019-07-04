@@ -180,6 +180,7 @@ public class Server extends Thread {
 
                                         ServerScreen.setScrollMaximum();
                                     }
+                                    sendReadyList();
                                     sendCountdown();
                                 }
                             } else {
