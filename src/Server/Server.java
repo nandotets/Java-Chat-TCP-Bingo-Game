@@ -152,7 +152,6 @@ public class Server extends Thread {
                     }
                     case "pronto": {
                         //Recebe nome
-
                         cliente.setBuffWr(buffWr);
                         cliente.setNome((String) jsonReceived.get("NOME"));
                         msg = (String) jsonReceived.get("STATUS");
@@ -164,6 +163,23 @@ public class Server extends Thread {
                                     ServerScreen.contador.setText("30");
                                     Countdown.setNum(30);
                                     Countdown.setCount(30);
+                                    try {
+                                        jsonSend.clear();
+                                        jsonSend.put("CARTELA", null);
+                                        jsonSend.put("STATUS", "sucesso");
+                                        jsonSend.put("LISTACLIENTE", null);
+                                        jsonSend.put("MSG", null);
+                                        jsonSend.put("NOME", null);
+                                        jsonSend.put("COD", "rpronto");
+                                        cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
+                                        cliente.getBuffWr().flush();
+                                        ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                                        ServerScreen.setScrollMaximum();
+
+                                    } catch (Exception ex) {
+
+                                        ServerScreen.setScrollMaximum();
+                                    }
                                     sendCountdown();
                                 }
                             } else {
@@ -553,26 +569,6 @@ public class Server extends Thread {
 
     public void sendCountdown() {
         BufferedWriter bufWrAUX;
-        try {
-            jsonSend.clear();
-            jsonSend.put("CARTELA", null);
-            jsonSend.put("STATUS", "sucesso");
-            jsonSend.put("LISTACLIENTE", null);
-            jsonSend.put("MSG", null);
-            jsonSend.put("NOME", null);
-            jsonSend.put("COD", "rpronto");
-
-            for (ClientType clients : readyList) {
-                bufWrAUX = (BufferedWriter) clients.getBuffWr();
-                bufWrAUX.write(jsonSend.toString() + "\r\n");
-                bufWrAUX.flush();
-                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
-                ServerScreen.setScrollMaximum();
-            }
-        } catch (Exception ex) {
-
-            ServerScreen.setScrollMaximum();
-        }
         try {
             jsonSend.clear();
             jsonSend.put("CARTELA", null);
