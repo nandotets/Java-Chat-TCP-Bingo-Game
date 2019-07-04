@@ -191,10 +191,23 @@ public class Server extends Thread {
                                     Countdown.setCountGame(10);
                                     ServerScreen.contador.setText("30");
                                     gameReset();
+                                    jsonSend.clear();
+                                    jsonSend.put("CARTELA", null);
+                                    jsonSend.put("STATUS", "falha");
+                                    jsonSend.put("LISTACLIENTE", null);
+                                    jsonSend.put("MSG", null);
+                                    jsonSend.put("NOME", null);
+                                    jsonSend.put("COD", "rpronto");
+                                    cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
+                                    ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                                    ServerScreen.setScrollMaximum();
+                                    cliente.getBuffWr().flush();
+                                    sendReadyList();
+                                    break;
                                 }
                             }
                         }
-                        jsonSend.clear();
+                        /*jsonSend.clear();
                         jsonSend.put("CARTELA", null);
                         jsonSend.put("STATUS", "sucesso");
                         jsonSend.put("LISTACLIENTE", null);
@@ -205,7 +218,7 @@ public class Server extends Thread {
                         ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
                         ServerScreen.setScrollMaximum();
                         cliente.getBuffWr().flush();
-                        sendReadyList();
+                        sendReadyList();*/
                         break;
                     }
                     case "login": {
@@ -501,7 +514,7 @@ public class Server extends Thread {
         int i = 1;
         JSONArray jsonArr = new JSONArray();
         ServerScreen.areaReady.setText("");
-        for (ClientType clienteHabilitado : readyList) {
+        for (ClientType clienteHabilitado : clientList) {
             ServerScreen.areaReady.append(" " + i + ") " + clienteHabilitado.getNome() + " (" + clienteHabilitado.getIp() + ":" + clienteHabilitado.getPorta() + ")\r\n");
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("PORTA", clienteHabilitado.getPorta());

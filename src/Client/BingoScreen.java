@@ -442,7 +442,7 @@ public class BingoScreen extends javax.swing.JFrame {
                 nb19ActionPerformed(evt);
             }
         });
-        jPanel1.add(nb19, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 49, -1));
+        jPanel1.add(nb19, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 300, 50, -1));
 
         nb24.setText("99");
         nb24.setMaximumSize(new java.awt.Dimension(60, 60));
