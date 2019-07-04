@@ -556,6 +556,26 @@ public class Server extends Thread {
         try {
             jsonSend.clear();
             jsonSend.put("CARTELA", null);
+            jsonSend.put("STATUS", "sucesso");
+            jsonSend.put("LISTACLIENTE", null);
+            jsonSend.put("MSG", null);
+            jsonSend.put("NOME", null);
+            jsonSend.put("COD", "rpronto");
+
+            for (ClientType clients : clientList) {
+                bufWrAUX = (BufferedWriter) clients.getBuffWr();
+                bufWrAUX.write(jsonSend.toString() + "\r\n");
+                bufWrAUX.flush();
+                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                ServerScreen.setScrollMaximum();
+            }
+        } catch (Exception ex) {
+
+            ServerScreen.setScrollMaximum();
+        }
+        try {
+            jsonSend.clear();
+            jsonSend.put("CARTELA", null);
             jsonSend.put("STATUS", null);
             jsonSend.put("LISTACLIENTE", null);
             jsonSend.put("MSG", null);
