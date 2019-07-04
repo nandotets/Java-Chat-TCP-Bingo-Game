@@ -223,7 +223,8 @@ public class Client extends javax.swing.JFrame {
                                         case "uni":
                                             //UNICAST
                                             msg = (String) jsonReceived.get("MSG");
-                                            if (origem.get("NOME").toString().equals(username) && origem.get("IP").toString().equals(host)) {
+                                            //if (origem.get("NOME").toString().equals(username) && origem.get("IP").toString().equals(host)) 
+                                            if (origem.get("NOME").toString().equals(username)){
                                                 //chatArea.append("(PRIVATE TO " + origem.get("NOME") + ") → " + msg + "\r\n");
                                             } else {
                                                 chatArea.append("(PRIVATE FROM " + origem.get("NOME") + ") → " + msg + "\r\n");
