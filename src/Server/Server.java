@@ -562,7 +562,7 @@ public class Server extends Thread {
             jsonSend.put("NOME", null);
             jsonSend.put("COD", "rpronto");
 
-            for (ClientType clients : clientList) {
+            for (ClientType clients : readyList) {
                 bufWrAUX = (BufferedWriter) clients.getBuffWr();
                 bufWrAUX.write(jsonSend.toString() + "\r\n");
                 bufWrAUX.flush();
