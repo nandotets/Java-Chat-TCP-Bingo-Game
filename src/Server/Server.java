@@ -108,6 +108,8 @@ public class Server extends Thread {
                                         ServerScreen.setScrollMaximum();
                                     }
                                     gameReset();
+                                    readyList.clear();
+                                    sendReadyList();
                                 } else {
                                     JSONArray array = new JSONArray();
                                     JSONObject origem = new JSONObject();
@@ -208,6 +210,7 @@ public class Server extends Thread {
                                     Countdown.setCountGame(10);
                                     ServerScreen.contador.setText("30");
                                     gameReset();
+                                    sendReadyList();
                                     jsonSend.clear();
                                     jsonSend.put("CARTELA", null);
                                     jsonSend.put("STATUS", "falha");
@@ -222,6 +225,8 @@ public class Server extends Thread {
                                     sendReadyList();
                                     break;
                                 }
+                                
+                                sendReadyList();
                             }
                         }
                         /*jsonSend.clear();
@@ -531,7 +536,7 @@ public class Server extends Thread {
         int i = 1;
         JSONArray jsonArr = new JSONArray();
         ServerScreen.areaReady.setText("");
-        for (ClientType clienteHabilitado : clientList) {
+        for (ClientType clienteHabilitado : readyList) {
             ServerScreen.areaReady.append(" " + i + ") " + clienteHabilitado.getNome() + " (" + clienteHabilitado.getIp() + ":" + clienteHabilitado.getPorta() + ")\r\n");
             JSONObject jsonObj = new JSONObject();
             jsonObj.put("PORTA", clienteHabilitado.getPorta());
@@ -541,9 +546,9 @@ public class Server extends Thread {
             i++;
         }
 
-        if (jsonArr.isEmpty()) {
+        /*if (jsonArr.isEmpty()) {
             jsonArr = null;
-        }
+        }*/
 
         try {
             jsonSend.clear();
@@ -554,7 +559,7 @@ public class Server extends Thread {
             jsonSend.put("NOME", null);
             jsonSend.put("COD", "listapronto");
 
-            for (ClientType clients : readyList) {
+            for (ClientType clients : clientList) {
                 bufWrAUX = (BufferedWriter) clients.getBuffWr();
                 bufWrAUX.write(jsonSend.toString() + "\r\n");
                 bufWrAUX.flush();
