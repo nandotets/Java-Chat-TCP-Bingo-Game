@@ -293,26 +293,31 @@ public class Client extends javax.swing.JFrame {
                                         Countdown.setNumGame(-1);
                                         break;
                                     }
-
-                                    default: {
-
+                                    case "falha": {
+                                        msg = (String) jsonReceived.get("MSG");
+                                        JOptionPane.showMessageDialog(null, msg, "AVISO", JOptionPane.INFORMATION_MESSAGE);
+                                        gameReset();
                                         break;
                                     }
                                 }
-                                break;
+                                msg = null;
                             }
 
                             case "tempo": {
                                 ReadyBingoScreen.contador.setText("30");
                                 Countdown.setNum(30);
                                 Countdown.setCount(30);
+                                Countdown.setCountGame(-1);
+                                Countdown.setNumGame(-1);
                                 msg = null;
                                 break;
                             }
                             case "cartela": {
+
                                 ArrayList<Integer> cartela = (ArrayList<Integer>) jsonReceived.get("CARTELA");
                                 bingoScreen.setVisible(true);
                                 bingoScreen.setLocationRelativeTo(null);
+                                bingoScreen.setTitle("Bingo card - " +username);
                                 readyScreen.setVisible(false);
 
                                 BingoScreen.nb0.setText(String.valueOf(cartela.get(0)));
@@ -340,32 +345,7 @@ public class Client extends javax.swing.JFrame {
                                 BingoScreen.nb22.setText(String.valueOf(cartela.get(22)));
                                 BingoScreen.nb23.setText(String.valueOf(cartela.get(23)));
                                 BingoScreen.nb24.setText(String.valueOf(cartela.get(24)));
-                                BingoScreen.nb0.setSelected(false);
-                                BingoScreen.nb1.setSelected(false);
-                                BingoScreen.nb2.setSelected(false);
-                                BingoScreen.nb3.setSelected(false);
-                                BingoScreen.nb4.setSelected(false);
-                                BingoScreen.nb5.setSelected(false);
-                                BingoScreen.nb6.setSelected(false);
-                                BingoScreen.nb7.setSelected(false);
-                                BingoScreen.nb8.setSelected(false);
-                                BingoScreen.nb9.setSelected(false);
-                                BingoScreen.nb10.setSelected(false);
-                                BingoScreen.nb11.setSelected(false);
-                                BingoScreen.nb12.setSelected(false);
-                                BingoScreen.nb13.setSelected(false);
-                                BingoScreen.nb14.setSelected(false);
-                                BingoScreen.nb15.setSelected(false);
-                                BingoScreen.nb16.setSelected(false);
-                                BingoScreen.nb17.setSelected(false);
-                                BingoScreen.nb18.setSelected(false);
-                                BingoScreen.nb19.setSelected(false);
-                                BingoScreen.nb20.setSelected(false);
-                                BingoScreen.nb21.setSelected(false);
-                                BingoScreen.nb22.setSelected(false);
-                                BingoScreen.nb23.setSelected(false);
-                                BingoScreen.nb24.setSelected(false);
-                                BingoScreen.pedra.setText("");
+
                                 msg = null;
                                 break;
                             }
@@ -537,6 +517,44 @@ public class Client extends javax.swing.JFrame {
         JScrollBar y = jScrollPane3.getVerticalScrollBar();
         y.setValue(y.getMaximum());
         jScrollPane3.setVerticalScrollBar(y);
+    }
+
+    public static void gameReset() {
+        BingoScreen.nb0.setSelected(false);
+        BingoScreen.nb1.setSelected(false);
+        BingoScreen.nb2.setSelected(false);
+        BingoScreen.nb3.setSelected(false);
+        BingoScreen.nb4.setSelected(false);
+        BingoScreen.nb5.setSelected(false);
+        BingoScreen.nb6.setSelected(false);
+        BingoScreen.nb7.setSelected(false);
+        BingoScreen.nb8.setSelected(false);
+        BingoScreen.nb9.setSelected(false);
+        BingoScreen.nb10.setSelected(false);
+        BingoScreen.nb11.setSelected(false);
+        BingoScreen.nb12.setSelected(false);
+        BingoScreen.nb13.setSelected(false);
+        BingoScreen.nb14.setSelected(false);
+        BingoScreen.nb15.setSelected(false);
+        BingoScreen.nb16.setSelected(false);
+        BingoScreen.nb17.setSelected(false);
+        BingoScreen.nb18.setSelected(false);
+        BingoScreen.nb19.setSelected(false);
+        BingoScreen.nb20.setSelected(false);
+        BingoScreen.nb21.setSelected(false);
+        BingoScreen.nb22.setSelected(false);
+        BingoScreen.nb23.setSelected(false);
+        BingoScreen.nb24.setSelected(false);
+        BingoScreen.pedra.setText("");
+        if (ReadyBingoScreen.bYes.isSelected()) {
+            ReadyBingoScreen.bNo.setSelected(true);
+            ReadyBingoScreen.bYes.setSelected(false);
+        }
+        ReadyBingoScreen.contador.setText("30");
+        Countdown.setCount(-1);
+        Countdown.setNum(-1);
+        Countdown.setNumGame(-1);
+        Countdown.setCountGame(-1);
     }
 
     /**
@@ -1187,10 +1205,7 @@ public class Client extends javax.swing.JFrame {
         readyScreen.setVisible(true);
         readyScreen.setLocationRelativeTo(null);
         readyScreen.setAlwaysOnTop(false);
-        Countdown.setCount(30);
-        Countdown.setNum(30);
-        Countdown.setNumGame(-1);
-        Countdown.setCountGame(-1);
+        gameReset();
     }//GEN-LAST:event_menuBingoActionPerformed
 
     /**

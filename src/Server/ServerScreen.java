@@ -48,6 +48,10 @@ public class ServerScreen extends javax.swing.JFrame {
         x = paneReady.getVerticalScrollBar();
         x.setValue(x.getMaximum());
         paneReady.setVerticalScrollBar(x);
+        
+        x = panePedras.getVerticalScrollBar();
+        x.setValue(x.getMaximum());
+        panePedras.setVerticalScrollBar(x);
     }
 
     /**
@@ -73,11 +77,11 @@ public class ServerScreen extends javax.swing.JFrame {
         READY_CLIENTS = new javax.swing.JLabel();
         COUNTDOWN = new javax.swing.JLabel();
         contador = new javax.swing.JLabel();
-        paneReady1 = new javax.swing.JScrollPane();
+        panePedras = new javax.swing.JScrollPane();
         pedras = new javax.swing.JTextArea();
         RECEIVE_MESSAGES1 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(647, 497));
         setMinimumSize(new java.awt.Dimension(647, 497));
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -86,18 +90,22 @@ public class ServerScreen extends javax.swing.JFrame {
             }
         });
 
+        areaReceive.setEditable(false);
         areaReceive.setColumns(20);
         areaReceive.setRows(5);
         paneReceive.setViewportView(areaReceive);
 
+        areaSend.setEditable(false);
         areaSend.setColumns(20);
         areaSend.setRows(5);
         paneSend.setViewportView(areaSend);
 
+        areaOnline.setEditable(false);
         areaOnline.setColumns(20);
         areaOnline.setRows(5);
         paneOnline.setViewportView(areaOnline);
 
+        areaReady.setEditable(false);
         areaReady.setColumns(20);
         areaReady.setRows(5);
         paneReady.setViewportView(areaReady);
@@ -135,7 +143,7 @@ public class ServerScreen extends javax.swing.JFrame {
         pedras.setEditable(false);
         pedras.setColumns(20);
         pedras.setRows(5);
-        paneReady1.setViewportView(pedras);
+        panePedras.setViewportView(pedras);
 
         RECEIVE_MESSAGES1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         RECEIVE_MESSAGES1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -170,7 +178,7 @@ public class ServerScreen extends javax.swing.JFrame {
                             .addComponent(SEND_MESSAGES, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(paneReady1))
+                        .addComponent(panePedras))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(RECEIVE_MESSAGES1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -202,7 +210,7 @@ public class ServerScreen extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(RECEIVE_MESSAGES1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(paneReady1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panePedras, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(16, 16, 16))
         );
 
@@ -233,8 +241,8 @@ public class ServerScreen extends javax.swing.JFrame {
     public static javax.swing.JTextArea areaSend;
     public static javax.swing.JLabel contador;
     public static javax.swing.JScrollPane paneOnline;
+    public static javax.swing.JScrollPane panePedras;
     public static javax.swing.JScrollPane paneReady;
-    public static javax.swing.JScrollPane paneReady1;
     public static javax.swing.JScrollPane paneReceive;
     public static javax.swing.JScrollPane paneSend;
     public static javax.swing.JTextArea pedras;

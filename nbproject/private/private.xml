@@ -3,12 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/magnus/NetBeansProjects/Java-Chat-TCP-Bingo-Game/src/Server/ServerScreen.java</file>
-            <file>file:/home/magnus/NetBeansProjects/Java-Chat-TCP-Bingo-Game/src/Client/BingoScreen.java</file>
-            <file>file:/home/magnus/NetBeansProjects/Java-Chat-TCP-Bingo-Game/src/Client/Client.java</file>
-            <file>file:/home/magnus/NetBeansProjects/Java-Chat-TCP-Bingo-Game/src/Server/Server.java</file>
-            <file>file:/home/magnus/NetBeansProjects/Java-Chat-TCP-Bingo-Game/src/Misc/Countdown.java</file>
-            <file>file:/home/magnus/NetBeansProjects/Java-Chat-TCP-Bingo-Game/src/Misc/CardType.java</file>
+            <file>file:/C:/Users/Fernando/Google%20Drive/UTFPR/Sistemas%20Distribuidos/NetBeansProjects/chatTCP/src/Server/Server.java</file>
+            <file>file:/C:/Users/Fernando/Google%20Drive/UTFPR/Sistemas%20Distribuidos/NetBeansProjects/chatTCP/src/Client/BingoScreen.java</file>
+            <file>file:/C:/Users/Fernando/Google%20Drive/UTFPR/Sistemas%20Distribuidos/NetBeansProjects/chatTCP/src/Client/Client.java</file>
+            <file>file:/C:/Users/Fernando/Google%20Drive/UTFPR/Sistemas%20Distribuidos/NetBeansProjects/chatTCP/src/Server/ServerScreen.java</file>
+            <file>file:/C:/Users/Fernando/Google%20Drive/UTFPR/Sistemas%20Distribuidos/NetBeansProjects/chatTCP/src/Client/ReadyBingoScreen.java</file>
+            <file>file:/C:/Users/Fernando/Google%20Drive/UTFPR/Sistemas%20Distribuidos/NetBeansProjects/chatTCP/src/Misc/Countdown.java</file>
         </group>
     </open-files>
 </project-private>

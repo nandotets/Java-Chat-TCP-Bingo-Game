@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
  */
 public class ReadyBingoScreen extends javax.swing.JFrame {
 
-
     /**
      * Creates new form PreparedBingoScreen
      */
@@ -137,8 +136,9 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
             bYes.setSelected(false);
             noReady();
         }
+        Client.gameReset();
         bNo.setSelected(true);
-
+        areaReady.setText("");
     }//GEN-LAST:event_bNoActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -147,7 +147,7 @@ public class ReadyBingoScreen extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
-    private void noReady() {
+    private static void noReady() {
         Client.jsonSend.put("STATUS", "falha");
         Client.jsonSend.put("LISTACLIENTE", null);
         Client.jsonSend.put("MSG", null);

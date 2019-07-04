@@ -37,6 +37,7 @@ public class Server extends Thread {
     public static ArrayList<ClientType> clientList = new ArrayList<>();
     public static ArrayList<ClientType> readyList = new ArrayList<>();
     public static ArrayList<CardType> cardList = new ArrayList<>();
+    public static Boolean gameStatus = false;
     private static ServerSocket server;
     private Socket connection;
     private InputStream in;
@@ -151,17 +152,33 @@ public class Server extends Thread {
                     }
                     case "pronto": {
                         //Recebe nome
+
                         cliente.setBuffWr(buffWr);
                         cliente.setNome((String) jsonReceived.get("NOME"));
                         msg = (String) jsonReceived.get("STATUS");
                         if (msg.equals("sucesso")) {
-                            //Habilita cliente
-                            if (readyList.add(cliente)) {
-                                System.out.println(cliente.getNome() + "(" + cliente.getIp() + ")" + " ready to play!");
-                                ServerScreen.contador.setText("30");
-                                Countdown.setNum(30);
-                                Countdown.setCount(30);
-                                sendCountdown();
+                            if (!gameStatus) {
+                                //Habilita cliente
+                                if (readyList.add(cliente)) {
+                                    System.out.println(cliente.getNome() + "(" + cliente.getIp() + ")" + " ready to play!");
+                                    ServerScreen.contador.setText("30");
+                                    Countdown.setNum(30);
+                                    Countdown.setCount(30);
+                                    sendCountdown();
+                                }
+                            } else {
+                                jsonSend.clear();
+                                jsonSend.put("CARTELA", null);
+                                jsonSend.put("STATUS", "falha");
+                                jsonSend.put("LISTACLIENTE", null);
+                                jsonSend.put("MSG", "Já existe um jogo em andamento. Aguarde o término do mesmo para entrar na fila de prontos.");
+                                jsonSend.put("NOME", null);
+                                jsonSend.put("COD", "rpronto");
+                                cliente.getBuffWr().write(jsonSend.toString() + "\r\n");
+                                ServerScreen.areaSend.append("• " + jsonSend.toString() + "\r\n");
+                                ServerScreen.setScrollMaximum();
+                                cliente.getBuffWr().flush();
+                                break;
                             }
                         } else if (msg.equals("falha")) {
                             //Desabilita cliente
@@ -313,8 +330,10 @@ public class Server extends Thread {
 
     public static Boolean startGame() {
         if (readyList.isEmpty()) {
+            gameStatus = false;
             return false;
         } else {
+            gameStatus = true;
             for (ClientType readyClient : readyList) {
                 ArrayList<Integer> numbers = generateCard(readyClient);
                 CardType card = new CardType(readyClient, numbers);
@@ -586,7 +605,7 @@ public class Server extends Thread {
                     drawnb = drawNumber();
                 }
                 draw.add(drawnb);
-                ServerScreen.pedras.append(draw.toString()+"\r\n");
+                ServerScreen.pedras.append(draw.toString() + "\r\n");
                 ArrayList<Integer> drawarray = new ArrayList<>();
                 drawarray.add(drawnb);
                 jsonSend.put("CARTELA", drawarray);
@@ -623,10 +642,10 @@ public class Server extends Thread {
     }
 
     private static void gameReset() {
+        gameStatus = false;
         cardList.clear();
         draw.clear();
         ServerScreen.pedras.setText("");
-        
     }
 
     private static int configPort() {

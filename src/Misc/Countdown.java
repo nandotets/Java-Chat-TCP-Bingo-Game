@@ -50,7 +50,6 @@ public class Countdown extends Thread implements Runnable {
                             setNum(30);
                             setCountGame(-1);
                             setNumGame(10);
-
                         }
                     }
                 } catch (Exception ex) {
