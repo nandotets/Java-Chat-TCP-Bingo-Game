@@ -110,6 +110,8 @@ public class Server extends Thread {
                                     gameReset();
                                     readyList.clear();
                                     sendReadyList();
+                                    Countdown.setNumGame(-1);
+                                    Countdown.setCountGame(10);
                                 } else {
                                     JSONArray array = new JSONArray();
                                     JSONObject origem = new JSONObject();

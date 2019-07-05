@@ -115,6 +115,8 @@ public class Countdown extends Thread implements Runnable {
                     }
                 } catch (Exception ex) {
                 }
+            }else{
+                break;
             }
         }
     }

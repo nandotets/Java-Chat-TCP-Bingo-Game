@@ -33,25 +33,11 @@ public class ServerScreen extends javax.swing.JFrame {
     }
 
     public static void setScrollMaximum() {
-        JScrollBar x = paneReceive.getVerticalScrollBar();
-        x.setValue(x.getMaximum());
-        paneReceive.setVerticalScrollBar(x);
-
-        x = paneSend.getVerticalScrollBar();
-        x.setValue(x.getMaximum());
-        paneSend.setVerticalScrollBar(x);
-
-        x = paneOnline.getVerticalScrollBar();
-        x.setValue(x.getMaximum());
-        paneOnline.setVerticalScrollBar(x);
-
-        x = paneReady.getVerticalScrollBar();
-        x.setValue(x.getMaximum());
-        paneReady.setVerticalScrollBar(x);
-        
-        x = panePedras.getVerticalScrollBar();
-        x.setValue(x.getMaximum());
-        panePedras.setVerticalScrollBar(x);
+        areaReceive.setCaretPosition(areaReceive.getDocument().getLength());
+        areaSend.setCaretPosition(areaSend.getDocument().getLength());
+        areaReady.setCaretPosition(areaReady.getDocument().getLength());
+        areaOnline.setCaretPosition(areaOnline.getDocument().getLength());
+        pedras.setCaretPosition(pedras.getDocument().getLength());
     }
 
     /**

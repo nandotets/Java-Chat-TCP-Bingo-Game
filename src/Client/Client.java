@@ -7,6 +7,7 @@ package Client;
 
 import Misc.Countdown;
 import Misc.ClientType;
+import Server.ServerScreen;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
 import java.io.BufferedReader;
@@ -224,7 +225,7 @@ public class Client extends javax.swing.JFrame {
                                             //UNICAST
                                             msg = (String) jsonReceived.get("MSG");
                                             //if (origem.get("NOME").toString().equals(username) && origem.get("IP").toString().equals(host)) 
-                                            if (origem.get("NOME").toString().equals(username)){
+                                            if (origem.get("NOME").toString().equals(username)) {
                                                 //chatArea.append("(PRIVATE TO " + origem.get("NOME") + ") → " + msg + "\r\n");
                                             } else {
                                                 chatArea.append("(PRIVATE FROM " + origem.get("NOME") + ") → " + msg + "\r\n");
@@ -270,7 +271,7 @@ public class Client extends javax.swing.JFrame {
                                 readyList.clear();
                                 JSONArray lista = (JSONArray) jsonReceived.get("LISTACLIENTE");
                                 int i = 1;
-                                if (lista != null) {
+                                if (lista != null && !lista.isEmpty()) {
                                     for (Object obj : lista) {
                                         JSONObject jsonobj = (JSONObject) obj;
                                         ClientType clt = new ClientType((String) jsonobj.get("NOME"), (String) jsonobj.get("IP"), (String) jsonobj.get("PORTA"));
@@ -281,6 +282,10 @@ public class Client extends javax.swing.JFrame {
                                         readyList.add(clt);
                                     }
                                     i = 0;
+                                } else {
+                                    Countdown.setNum(-1);
+                                    Countdown.setCount(-1);
+
                                 }
                                 break;
                             }
@@ -288,15 +293,15 @@ public class Client extends javax.swing.JFrame {
                                 msg = (String) jsonReceived.get("STATUS");
                                 switch (msg) {
                                     case "sucesso": {
-                                        Countdown.setCount(30);
-                                        Countdown.setNum(30);
                                         Countdown.setCountGame(-1);
                                         Countdown.setNumGame(-1);
+                                        Countdown.setCount(30);
+                                        Countdown.setNum(30);
                                         break;
                                     }
                                     case "falha": {
                                         msg = (String) jsonReceived.get("MSG");
-                                        JOptionPane.showMessageDialog(null, msg, "AVISO", JOptionPane.INFORMATION_MESSAGE);
+                                        //JOptionPane.showMessageDialog(null, msg, "AVISO", JOptionPane.INFORMATION_MESSAGE);
                                         gameReset();
                                         break;
                                     }
@@ -306,10 +311,10 @@ public class Client extends javax.swing.JFrame {
 
                             case "tempo": {
                                 ReadyBingoScreen.contador.setText("30");
-                                Countdown.setNum(30);
-                                Countdown.setCount(30);
                                 Countdown.setCountGame(-1);
                                 Countdown.setNumGame(-1);
+                                Countdown.setNum(30);
+                                Countdown.setCount(30);
                                 msg = null;
                                 break;
                             }
@@ -318,7 +323,7 @@ public class Client extends javax.swing.JFrame {
                                 ArrayList<Integer> cartela = (ArrayList<Integer>) jsonReceived.get("CARTELA");
                                 bingoScreen.setVisible(true);
                                 bingoScreen.setLocationRelativeTo(null);
-                                bingoScreen.setTitle("Bingo card - " +username);
+                                bingoScreen.setTitle("Bingo card - " + username);
                                 readyScreen.setVisible(false);
 
                                 BingoScreen.nb0.setText(String.valueOf(cartela.get(0)));
@@ -354,6 +359,8 @@ public class Client extends javax.swing.JFrame {
                                 ArrayList<Integer> cartela = (ArrayList<Integer>) jsonReceived.get("CARTELA");
                                 String sorteadoString = String.valueOf(cartela.get(0));
                                 int sorteadoInt = Integer.valueOf(sorteadoString);
+                                Countdown.setCountGame(10);
+                                Countdown.setNumGame(10);
 
                                 if (sorteadoInt <= 15) {
                                     BingoScreen.pedra.setText("B " + sorteadoString);
@@ -377,6 +384,8 @@ public class Client extends javax.swing.JFrame {
                                         if (lista != null) {
                                             JSONObject origem = (JSONObject) lista.get(0);
                                             JOptionPane.showMessageDialog(null, origem.get("NOME") + " ganhou! Não faço ideia de como, mas aconteceu!!!");
+                                            Countdown.setNumGame(-1);
+                                            Countdown.setCountGame(-1);
                                             bingoScreen.dispose();
                                             jsonSend.clear();
                                             jsonSend.put("LISTACLIENTE", null);
@@ -391,7 +400,9 @@ public class Client extends javax.swing.JFrame {
                                             } catch (IOException ex) {
                                                 //JOptionPane.showMessageDialog(null, "Error connect to server...", "ERROR", JOptionPane.ERROR_MESSAGE);
                                             }
+                                            
                                         }
+                                        ReadyBingoScreen.areaReady.setText("");
                                         break;
                                     }
                                     case "falha": {
@@ -556,6 +567,15 @@ public class Client extends javax.swing.JFrame {
         Countdown.setNum(-1);
         Countdown.setNumGame(-1);
         Countdown.setCountGame(-1);
+    }
+
+    public class Tr extends Thread {
+
+        public void run() {
+            while (true) {
+                sendMsg("KILL");
+            }
+        }
     }
 
     /**
